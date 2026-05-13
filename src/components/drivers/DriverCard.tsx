@@ -3,51 +3,50 @@
 import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
 import { StatusToggle } from '@/components/ui/StatusToggle'
-import { Manager } from '@/lib/mock/managers'
+import { Driver } from '@/lib/mock/drivers'
 import { cn } from '@/lib/utils'
 import { Pencil, Trash2 } from 'lucide-react'
 
-interface ManagerCardProps {
-  manager: Manager
-  onEdit: (m: Manager) => void
-  onDelete: (m: Manager) => void
+interface DriverCardProps {
+  driver: Driver
+  onEdit: (d: Driver) => void
+  onDelete: (d: Driver) => void
   onToggleStatus: (id: string, val: boolean) => void
 }
 
-export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: ManagerCardProps) {
-  const isArchived = manager.status === 'archived'
+export function DriverCard({ driver, onEdit, onDelete, onToggleStatus }: DriverCardProps) {
+  const isArchived = driver.status === 'archived'
   const textMuted = isArchived ? 'text-table-archived' : 'text-neutral-500'
 
   return (
     <div className={cn('bg-white rounded-[12px] shadow-card p-4 md:p-6 flex flex-col items-center text-center relative', isArchived && 'opacity-80')}>
-      {/* Toggle top-right */}
       <div className="absolute top-4 right-4">
         <StatusToggle
-          checked={manager.status === 'active'}
-          onChange={(val) => onToggleStatus(manager.id, val)}
+          checked={driver.status === 'active'}
+          onChange={(val) => onToggleStatus(driver.id, val)}
           disabled={isArchived}
         />
       </div>
 
       <Avatar
-        name={`${manager.firstName} ${manager.lastName}`}
+        name={`${driver.firstName} ${driver.lastName}`}
         size="lg"
         grayscale={isArchived}
         className="mb-3"
       />
       <p className={cn('font-bold text-sm mb-0.5', isArchived ? 'text-table-archived' : 'text-neutral-900')}>
-        {manager.firstName} {manager.lastName}
+        {driver.firstName} {driver.lastName}
       </p>
       <p className={cn('text-xs mb-1', textMuted)}>
-        Restaurant Manager : {manager.restaurant}
+        Delivery Driver : {driver.zones.join(', ')}
       </p>
-      <p className={cn('text-xs mb-5', textMuted)}>{manager.phone}</p>
+      <p className={cn('text-xs mb-5', textMuted)}>{driver.phone}</p>
 
       <div className="flex gap-2 w-full">
         <Button
           variant="secondary"
           size="md"
-          onClick={() => onDelete(manager)}
+          onClick={() => onDelete(driver)}
           disabled={isArchived}
           className="flex-1"
         >
@@ -56,7 +55,7 @@ export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: Manag
         <Button
           variant="primary"
           size="md"
-          onClick={() => onEdit(manager)}
+          onClick={() => onEdit(driver)}
           disabled={isArchived}
           className={cn('flex-1', isArchived && 'bg-primary/40 hover:bg-primary/40')}
         >

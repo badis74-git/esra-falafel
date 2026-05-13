@@ -7,11 +7,11 @@ import { SelectDropdown } from '@/components/ui/SelectDropdown'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { MapPreview } from '@/components/ui/MapPreview'
 import { ProfilePictureUpload } from '@/components/ui/ProfilePictureUpload'
-import { mockRestaurants } from '@/lib/mock/managers'
+import { mockZones, mockRestaurantsForDrivers } from '@/lib/mock/drivers'
 import { Mail, X } from 'lucide-react'
 import { useState } from 'react'
 
-interface CreateManagerModalProps {
+interface CreateDriverModalProps {
   onClose: () => void
   onCreated: (email: string) => void
 }
@@ -20,7 +20,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="text-sm font-semibold text-primary mb-3">{children}</h3>
 }
 
-export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalProps) {
+export function CreateDriverModal({ onClose, onCreated }: CreateDriverModalProps) {
   const [active, setActive] = useState(true)
   const [photo, setPhoto] = useState<string | null>(null)
   const [firstName, setFirstName] = useState('')
@@ -31,9 +31,10 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
   const [number, setNumber] = useState('')
   const [zip, setZip] = useState('')
   const [city, setCity] = useState('')
-  const [restaurant, setRestaurant] = useState('')
+  const [zone, setZone] = useState('')
+  const [restaurants, setRestaurants] = useState('')
 
-  const isFilled = firstName && lastName && email && restaurant
+  const isFilled = firstName && lastName && email && zone
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -46,7 +47,7 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <div className="flex items-center gap-3">
-            <h2 className="text-base font-bold text-neutral-900">Add New Manager</h2>
+            <h2 className="text-base font-bold text-neutral-900">Add New Driver</h2>
             <StatusToggle checked={active} onChange={setActive} />
           </div>
           <button onClick={onClose} className="text-neutral-500 hover:text-neutral-700 transition-colors">
@@ -56,25 +57,22 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
 
         {/* Scrollable body */}
         <div className="overflow-y-auto flex-1 px-6 py-5 scrollbar-thin">
-          <form onSubmit={handleSubmit} id="create-form">
+          <form onSubmit={handleSubmit} id="create-driver-form">
             <ProfilePictureUpload
               src={photo}
               onChange={(src) => setPhoto(src)}
               onDelete={() => setPhoto(null)}
             />
 
-            {/* Personal Information */}
             <SectionTitle>Personal Information</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
               <Input
                 id="firstName" label="First Name *" placeholder="First Name"
                 value={firstName} onChange={(e) => setFirstName(e.target.value)}
-                leftIcon={<User size={15} />}
               />
               <Input
                 id="lastName" label="Last Name *" placeholder="Last Name"
                 value={lastName} onChange={(e) => setLastName(e.target.value)}
-                leftIcon={<User size={15} />}
               />
               <Input
                 id="email" label="Email *" type="email" placeholder="email@domain.com"
@@ -89,7 +87,6 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
               />
             </div>
 
-            {/* Address Details */}
             <SectionTitle>Address Details</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
               <Input id="street" placeholder="Street" label="Street" value={street} onChange={(e) => setStreet(e.target.value)} />
@@ -101,16 +98,24 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
               <MapPreview />
             </div>
 
-            {/* Assigned Restaurant */}
-            <SectionTitle>Assigned Restaurant</SectionTitle>
-            <SelectDropdown
-              options={mockRestaurants}
-              value={restaurant}
-              onChange={setRestaurant}
-              placeholder="Select Restaurant"
-              label="Restaurant *"
-              required
-            />
+            <SectionTitle>Assigned Zone &amp; Restaurants</SectionTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <SelectDropdown
+                options={mockZones}
+                value={zone}
+                onChange={setZone}
+                placeholder="Select Zone"
+                label="Assigned Zone *"
+                required
+              />
+              <SelectDropdown
+                options={mockRestaurantsForDrivers}
+                value={restaurants}
+                onChange={setRestaurants}
+                placeholder="Select Restaurants"
+                label="Assigned Restaurants *"
+              />
+            </div>
           </form>
         </div>
 
@@ -119,12 +124,12 @@ export function CreateManagerModal({ onClose, onCreated }: CreateManagerModalPro
           <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>Cancel</Button>
           <Button
             type="submit"
-            form="create-form"
+            form="create-driver-form"
             variant="primary"
             fullWidth={false}
             disabled={!isFilled}
           >
-            + Create Manager
+            + Create Driver
           </Button>
         </div>
       </div>

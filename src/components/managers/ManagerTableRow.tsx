@@ -1,7 +1,7 @@
 'use client'
 
 import { Avatar } from '@/components/ui/Avatar'
-import { StatusToggle } from './StatusToggle'
+import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Manager } from '@/lib/mock/managers'
 import { cn } from '@/lib/utils'
 import { MoreVertical, Pencil, Trash2 } from 'lucide-react'

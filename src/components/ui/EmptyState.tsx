@@ -1,6 +1,14 @@
 import { Plus, User } from 'lucide-react'
 
-export function EmptyState() {
+interface EmptyStateProps {
+  title?: string
+  subtitle?: string
+}
+
+export function EmptyState({
+  title = 'No Active Restaurant Managers',
+  subtitle = 'Send an invitation to add users to your system.',
+}: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <div className="relative">
@@ -19,8 +27,8 @@ export function EmptyState() {
         </div>
       </div>
       <div className="text-center">
-        <h3 className="font-bold text-neutral-900 text-base">No Active Restaurant Managers</h3>
-        <p className="text-sm text-neutral-500 mt-1">Send an invitation to add users to your system.</p>
+        <h3 className="font-bold text-neutral-900 text-base">{title}</h3>
+        <p className="text-sm text-neutral-500 mt-1">{subtitle}</p>
       </div>
     </div>
   )

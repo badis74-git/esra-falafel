@@ -7,12 +7,12 @@ import { SelectDropdown } from '@/components/ui/SelectDropdown'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { MapPreview } from '@/components/ui/MapPreview'
 import { ProfilePictureUpload } from '@/components/ui/ProfilePictureUpload'
-import { Manager, mockRestaurants } from '@/lib/mock/managers'
+import { Driver, mockZones, mockDriverStatuses } from '@/lib/mock/drivers'
 import { Mail, Save, X } from 'lucide-react'
 import { useState } from 'react'
 
-interface UpdateManagerModalProps {
-  manager: Manager
+interface UpdateDriverModalProps {
+  driver: Driver
   onClose: () => void
   onSaved: () => void
 }
@@ -21,20 +21,19 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="text-sm font-semibold text-primary mb-3">{children}</h3>
 }
 
-export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerModalProps) {
-  const [active, setActive] = useState(manager.status === 'active')
-  const [photo, setPhoto] = useState<string | null>(manager.avatar)
-  const [firstName, setFirstName] = useState(manager.firstName)
-  const [lastName, setLastName] = useState(manager.lastName)
-  const [email, setEmail] = useState(manager.email)
-  const [phone, setPhone] = useState(manager.phone)
+export function UpdateDriverModal({ driver, onClose, onSaved }: UpdateDriverModalProps) {
+  const [active, setActive] = useState(driver.status === 'active')
+  const [photo, setPhoto] = useState<string | null>(driver.avatar)
+  const [firstName, setFirstName] = useState(driver.firstName)
+  const [lastName, setLastName] = useState(driver.lastName)
+  const [email, setEmail] = useState(driver.email)
+  const [phone, setPhone] = useState(driver.phone)
   const [street, setStreet] = useState('Musterstrasse')
   const [number, setNumber] = useState('12')
   const [zip, setZip] = useState('3000')
   const [city, setCity] = useState('Bern')
-  const [restaurant, setRestaurant] = useState(
-    mockRestaurants.find((r) => r.label === manager.restaurant)?.value ?? ''
-  )
+  const [zone, setZone] = useState(driver.zones.join(', '))
+  const [status, setStatus] = useState(driver.status === 'archived' ? 'inactive' : driver.status)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -48,7 +47,7 @@ export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerM
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <div className="flex items-center gap-3">
             <h2 className="text-base font-bold text-neutral-900">
-              {manager.firstName} {manager.lastName}
+              {driver.firstName} {driver.lastName}
             </h2>
             <StatusToggle checked={active} onChange={setActive} />
           </div>
@@ -58,7 +57,7 @@ export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerM
         </div>
 
         <div className="overflow-y-auto flex-1 px-6 py-5 scrollbar-thin">
-          <form onSubmit={handleSubmit} id="update-form">
+          <form onSubmit={handleSubmit} id="update-driver-form">
             <ProfilePictureUpload
               src={photo}
               onChange={(src) => setPhoto(src)}
@@ -67,10 +66,10 @@ export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerM
 
             <SectionTitle>Personal Information</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-              <Input id="firstName" label="First Name *" value={firstName} onChange={(e) => setFirstName(e.target.value)} leftIcon={<User size={15} />} />
-              <Input id="lastName" label="Last Name *" value={lastName} onChange={(e) => setLastName(e.target.value)} leftIcon={<User size={15} />} />
+              <Input id="firstName" label="First Name *" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+              <Input id="lastName" label="Last Name *" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               <Input id="email" label="Email *" type="email" value={email} onChange={(e) => setEmail(e.target.value)} leftIcon={<Mail size={15} />} />
-              <PhoneInput label="Phone number" countryCode="DE" dialCode="+41" value={phone} onChange={setPhone} />
+              <PhoneInput label="Phone Number" countryCode="DE" dialCode="+41" value={phone} onChange={setPhone} />
             </div>
 
             <SectionTitle>Address Details</SectionTitle>
@@ -82,14 +81,30 @@ export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerM
             </div>
             <div className="mb-5"><MapPreview /></div>
 
-            <SectionTitle>Assigned Restaurant</SectionTitle>
-            <SelectDropdown options={mockRestaurants} value={restaurant} onChange={setRestaurant} label="Restaurant *" required placeholder="Select Restaurant" />
+            <SectionTitle>Assigned Zone</SectionTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <SelectDropdown
+                options={mockZones}
+                value={zone}
+                onChange={setZone}
+                label="Assigned Zone *"
+                required
+                placeholder="Select Zone"
+              />
+              <SelectDropdown
+                options={mockDriverStatuses}
+                value={status}
+                onChange={setStatus}
+                label="Status"
+                placeholder="Select Status"
+              />
+            </div>
           </form>
         </div>
 
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-table-border flex-shrink-0">
           <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>Cancel</Button>
-          <Button type="submit" form="update-form" variant="primary" fullWidth={false}>
+          <Button type="submit" form="update-driver-form" variant="primary" fullWidth={false}>
             <Save size={14} /> Save Changes
           </Button>
         </div>

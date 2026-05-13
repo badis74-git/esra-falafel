@@ -13,7 +13,7 @@ const navItems = [
   { label: 'Delivery Zones', icon: MapPin, href: '/delivery-zones' },
   { label: 'Restaurants', icon: Store, href: '/restaurants' },
   { label: 'Restaurant Managers', icon: UserCheck, href: '/managers' },
-  { label: 'Delivery Drivers', icon: Truck, href: '/delivery-drivers' },
+  { label: 'Delivery Drivers', icon: Truck, href: '/drivers' },
   { label: 'Customers', icon: Users, href: '/customers' },
   { label: 'Orders', icon: Package, href: '/orders' },
   { label: 'Menu', icon: BookOpen, href: '/menu' },
