@@ -94,7 +94,7 @@ export function UpdateDriverModal({ driver, onClose, onSaved }: UpdateDriverModa
               <SelectDropdown
                 options={mockDriverStatuses}
                 value={status}
-                onChange={setStatus}
+                onChange={(val) => setStatus(val as 'active' | 'inactive')}
                 label="Status"
                 placeholder="Select Status"
               />

@@ -8,7 +8,7 @@ import { StatusToggle } from '@/components/ui/StatusToggle'
 import { MapPreview } from '@/components/ui/MapPreview'
 import { ProfilePictureUpload } from '@/components/ui/ProfilePictureUpload'
 import { Manager, mockRestaurants } from '@/lib/mock/managers'
-import { Mail, Save, X } from 'lucide-react'
+import { Mail, Save, User, X } from 'lucide-react'
 import { useState } from 'react'
 
 interface UpdateManagerModalProps {
