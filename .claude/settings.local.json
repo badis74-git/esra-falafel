@@ -9,7 +9,8 @@
       "Bash(disown)",
       "Bash(curl *)",
       "Bash(pnpm dev *)",
-      "Bash(kill 15821)"
+      "Bash(kill 15821)",
+      "Bash(chmod +x *)"
     ]
   }
 }
