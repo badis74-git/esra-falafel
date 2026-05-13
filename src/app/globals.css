@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Auth colors */
+  --color-primary: #2D6A3F;
+  --color-primary-dark: #1E4D2B;
+  --color-primary-light: #EAF2EC;
+  --color-accent-orange: #C97B2E;
+  --color-neutral-900: #1A1A1A;
+  --color-neutral-700: #3D3D3D;
+  --color-neutral-500: #6B7280;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-100: #F9FAFB;
+  --color-neutral-white: #FFFFFF;
+  --color-error: #EF4444;
+  --color-error-border: #FCA5A5;
+  --color-error-bg: #FEF2F2;
+
+  /* Dashboard / Managers colors */
+  --color-stat-orange: #F97316;
+  --color-stat-orange-bg: #FFF7ED;
+  --color-stat-green: #16A34A;
+  --color-stat-green-bg: #F0FDF4;
+  --color-stat-yellow: #EAB308;
+  --color-stat-yellow-bg: #FEFCE8;
+  --color-stat-red: #DC2626;
+  --color-stat-red-bg: #FEF2F2;
+  --color-sidebar-bg: #2D6A3F;
+  --color-sidebar-active: rgba(255,255,255,0.15);
+  --color-sidebar-hover: rgba(255,255,255,0.08);
+  --color-sidebar-text: rgba(255,255,255,0.75);
+  --color-sidebar-text-active: #FFFFFF;
+  --color-page-bg: #F0FDF4;
+  --color-table-header: #F9FAFB;
+  --color-table-border: #E5E7EB;
+  --color-table-row-hover: #F9FAFB;
+  --color-table-archived: #9CA3AF;
+  --color-trend-up: #16A34A;
+  --color-trend-down: #DC2626;
+  --color-danger: #DC2626;
+  --color-danger-light: #FEF2F2;
+
+  /* Font family */
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Inter', sans-serif;
+
+  /* Border radius */
+  --radius-input: 8px;
+  --radius-button: 8px;
+  --radius-card: 16px;
+  --radius-modal: 20px;
+  --radius-otp: 8px;
+  --radius-stat-card: 12px;
+  --radius-manager-card: 12px;
+  --radius-modal-lg: 16px;
+
+  /* Shadows */
+  --shadow-input: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-modal: 0 20px 60px rgba(0,0,0,0.15);
+  --shadow-button: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-dashboard-modal: 0 20px 40px rgba(0,0,0,0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * { box-sizing: border-box; }
+  html { font-family: 'Inter', sans-serif; }
+  body { background: #F9FAFB; color: #1A1A1A; }
+}
+
+@layer utilities {
+  .auth-panel-clip {
+    border-radius: 0 60% 60% 0 / 0 50% 50% 0;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #D1D5DB transparent;
+  }
 }
