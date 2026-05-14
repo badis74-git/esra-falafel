@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css)
-> Last updated: 2026-05-13 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅
+> Last updated: 2026-05-14 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅
 
 ---
 
@@ -11,39 +11,7 @@
 | Auth (Login, Forgot PW, OTP, Reset PW) | ✅ Done | `/login`, `/forgot-password`, `/verify-otp`, `/reset-password` |
 | Restaurant Managers | ✅ Done | `/managers` |
 | Delivery Drivers | ✅ Done | `/drivers` |
-
----
-
-## ⚠️ Refactor Instructions (run before building Delivery Drivers)
-
-The following components were built under `/managers/` but are fully generic and must be
-moved to `/ui/` before the Drivers module is built. After moving, update all import paths
-in files that reference them.
-
-### Step 1 — Move files
-
-| From | To |
-|---|---|
-| `src/components/managers/StatusToggle.tsx` | `src/components/ui/StatusToggle.tsx` |
-| `src/components/managers/StatCard.tsx` | `src/components/ui/StatCard.tsx` |
-| `src/components/managers/FilterTabs.tsx` | `src/components/ui/FilterTabs.tsx` |
-| `src/components/managers/ViewToggle.tsx` | `src/components/ui/ViewToggle.tsx` |
-| `src/components/managers/EmptyState.tsx` | `src/components/ui/EmptyState.tsx` |
-| `src/components/managers/MapPreview.tsx` | `src/components/ui/MapPreview.tsx` |
-
-### Step 2 — Update imports in managers files
-
-Update every import in the files below to point to the new `/ui/` paths:
-
-- `src/components/managers/CreateManagerModal.tsx`
-- `src/components/managers/UpdateManagerModal.tsx`
-- `src/app/(dashboard)/managers/page.tsx`
-- Any other file under `/managers/` that imports the moved components
-
-### Step 3 — Verify
-
-Run `pnpm dev` (or `npm run dev`) and confirm the Managers page still renders correctly
-before starting any Drivers work.
+| Zone Management | ✅ Done | `/zones` |
 
 ---
 
@@ -64,7 +32,7 @@ before starting any Drivers work.
 | Error | `#EF4444` | `error` | Error text, expired OTP |
 | Error Border | `#FCA5A5` | `error-border` | Input border in error state |
 | Error BG | `#FEF2F2` | `error-bg` | Input background tint in error state |
-| Stat Orange | `#F97316` | `stat-orange` | Total stat icon bg (managers + drivers) |
+| Stat Orange | `#F97316` | `stat-orange` | Total stat icon bg |
 | Stat Orange BG | `#FFF7ED` | `stat-orange-bg` | Total stat card tint |
 | Stat Green | `#16A34A` | `stat-green` | Active stat icon bg, trend up |
 | Stat Green BG | `#F0FDF4` | `stat-green-bg` | Active stat card tint |
@@ -144,10 +112,10 @@ Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 | Filter tab pill | 9999px | `rounded-full` |
 | Toggle track | 9999px | `rounded-full` |
 | Stat card | 12px | `rounded-[12px]` |
-| Grid card (manager + driver) | 12px | `rounded-[12px]` |
+| Grid card (all modules) | 12px | `rounded-[12px]` |
 | Content card | 12px | `rounded-[12px]` |
 | Auth left panel right edge | 80px CSS | `border-radius: 0 80px 80px 0` |
-| Map embed | 8px | `rounded-lg` |
+| Map embed / editor | 8px | `rounded-lg` |
 
 ---
 
@@ -169,7 +137,7 @@ Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 
 ```
 src/components/
-├── ui/                          ← shared across all modules
+├── ui/                              ← shared across all modules
 │   ├── Input.tsx
 │   ├── Button.tsx
 │   ├── Checkbox.tsx
@@ -180,12 +148,15 @@ src/components/
 │   ├── PhoneInput.tsx
 │   ├── SelectDropdown.tsx
 │   ├── SearchInput.tsx
-│   ├── StatusToggle.tsx         ← moved from /managers/
-│   ├── StatCard.tsx             ← moved from /managers/
-│   ├── FilterTabs.tsx           ← moved from /managers/
-│   ├── ViewToggle.tsx           ← moved from /managers/
-│   ├── EmptyState.tsx           ← moved from /managers/
-│   └── MapPreview.tsx           ← moved from /managers/
+│   ├── StatusToggle.tsx
+│   ├── StatCard.tsx
+│   ├── FilterTabs.tsx
+│   ├── ViewToggle.tsx
+│   ├── EmptyState.tsx
+│   ├── MapPreview.tsx
+│   ├── ProfilePictureUpload.tsx
+│   ├── MultiSelectDropdown.tsx      ← NEW
+│   └── ZoneMapEditor.tsx            ← NEW
 ├── auth/
 │   ├── AuthLayout.tsx
 │   ├── OtpInput.tsx
@@ -201,69 +172,21 @@ src/components/
 │   ├── InvitationModal.tsx
 │   ├── SuccessModal.tsx
 │   └── FailModal.tsx
-└── drivers/
-    ├── CreateDriverModal.tsx
-    ├── UpdateDriverModal.tsx
-    ├── DeleteDriverModal.tsx
-    ├── InvitationModal.tsx
-    ├── SuccessModal.tsx
-    └── FailModal.tsx
+├── drivers/
+│   ├── CreateDriverModal.tsx
+│   ├── UpdateDriverModal.tsx
+│   ├── DeleteDriverModal.tsx
+│   ├── InvitationModal.tsx
+│   ├── SuccessModal.tsx
+│   └── FailModal.tsx
+└── zones/
+    ├── ZoneGridCard.tsx              ← NEW
+    ├── CreateZoneModal.tsx           ← NEW
+    ├── UpdateZoneModal.tsx           ← NEW
+    ├── DeleteZoneModal.tsx           ← NEW
+    ├── SuccessModal.tsx              ← NEW
+    └── FailModal.tsx                 ← NEW
 ```
-
----
-
-### `Input` ← Auth
-**File:** `src/components/ui/Input.tsx`
-Props: `label`, `leftIcon`, `rightIcon`, `error`, `placeholder`, `type`, `value`, `onChange`
-States: default | focus (primary ring) | error (red border + bg + AlertCircle icon + helper text)
-
----
-
-### `Button` ← Auth + Managers + Drivers
-**File:** `src/components/ui/Button.tsx`
-Variants: `primary` | `secondary` | `ghost` | `google`
-- **primary** — green bg, white text, hover darkens
-- **secondary** — white bg, neutral border, dark text
-- **ghost** — transparent bg, primary text
-- **google** — white bg, neutral border, Google SVG
-- For **danger** actions: pass `className="bg-danger hover:bg-red-700"` override on primary variant
-
----
-
-### `Checkbox` ← Auth
-**File:** `src/components/ui/Checkbox.tsx`
-States: unchecked (white + neutral border) | checked (primary green fill + white checkmark)
-
----
-
-### `OtpInput` ← Auth
-**File:** `src/components/auth/OtpInput.tsx`
-6 boxes, dash separator between index 2–3, auto-focus, backspace-back, paste distribution.
-
----
-
-### `LanguageSelector` ← Auth + Dashboard
-**File:** `src/components/ui/LanguageSelector.tsx`
-Flag emoji + "English (UK)" + ChevronDown. Label hidden below `sm`.
-
----
-
-### `BrandHeader` ← Auth
-**File:** `src/components/ui/BrandHeader.tsx`
-Circular logo + "Esra Falafel" bold text. Used at top of every auth form.
-
----
-
-### `AuthLayout` ← Auth
-**File:** `src/components/auth/AuthLayout.tsx`
-Two-column split. Left panel: green gradient, 3 auto-cycling slides, curved right edge.
-Right panel: white, LanguageSelector top-right, children centered in `max-w-[420px]`.
-
----
-
-### `SuccessModal` (auth) ← Auth
-**File:** `src/components/auth/SuccessModal.tsx`
-Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 
 ---
 
@@ -271,7 +194,7 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 **File:** `src/components/ui/StatusToggle.tsx`
 ```tsx
 { checked, onChange, disabled?, size?: 'sm' | 'md' }
-// checked → bg-primary green | unchecked → bg-neutral-300
+// checked → bg-primary | unchecked → bg-neutral-300
 // sm: w-8 h-4 | md (default): w-11 h-6
 ```
 
@@ -282,8 +205,6 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 ```tsx
 { label, count, iconBgClass, icon, trend }
 // White card rounded-[12px] shadow-card p-4
-// Colored icon box top-left, large count, StatBadge trend bottom-right
-// Used by both Managers and Drivers pages with different label strings
 ```
 
 ---
@@ -301,9 +222,6 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 **File:** `src/components/ui/Avatar.tsx`
 ```tsx
 { src?, name, size?: 'sm'|'md'|'lg', grayscale? }
-// sm=32px md=48px lg=64px
-// Fallback: first 2 initials, bg color deterministically hashed from name
-// grayscale: CSS filter for archived state
 ```
 
 ---
@@ -311,10 +229,7 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 ### `FilterTabs` ← Shared UI
 **File:** `src/components/ui/FilterTabs.tsx`
 ```tsx
-{ active: TabValue, onChange, counts? }
-// TabValue: 'all' | 'inactive' | 'active' | 'archived'
-// Active: bg-primary text-white rounded-full | Inactive: white + neutral border
-// Used identically by Managers and Drivers
+{ active: 'all'|'inactive'|'active'|'archived', onChange, counts? }
 ```
 
 ---
@@ -323,18 +238,6 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 **File:** `src/components/ui/ViewToggle.tsx`
 ```tsx
 { view: 'grid' | 'list', onChange }
-// Active side: bg-primary text-white | Inactive: white + neutral border
-// Grid icon + List icon from lucide-react
-```
-
----
-
-### `PhoneInput` ← Shared UI
-**File:** `src/components/ui/PhoneInput.tsx`
-```tsx
-{ countryCode, dialCode, value, onChange, placeholder?, label? }
-// Flag emoji + dial code + ChevronDown | vertical divider | tel input
-// focus-within ring matches Input focus style
 ```
 
 ---
@@ -343,16 +246,25 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 **File:** `src/components/ui/SelectDropdown.tsx`
 ```tsx
 { options, value, onChange, placeholder?, label?, required? }
-// Native <select> styled same as Input, ChevronDown right (pointer-events-none)
 ```
 
 ---
 
-### `SearchInput` ← Shared UI
-**File:** `src/components/ui/SearchInput.tsx`
+### `MultiSelectDropdown` ← Shared UI ← NEW
+**File:** `src/components/ui/MultiSelectDropdown.tsx`
 ```tsx
-{ ...InputHTMLAttributes, className? }
-// Search icon left, neutral border, rounded-lg, focus ring primary
+{ options: { label: string; value: string; avatar?: string }[]
+  value: string[]
+  onChange: (values: string[]) => void
+  placeholder?: string
+  label?: string
+}
+// Closed: selected items joined by " - " or placeholder + ChevronDown
+// Open: dropdown list, each row has Checkbox + optional Avatar + label
+// Selected row: bg-primary-light + primary Checkbox + green checkmark right
+// Unselected row: white + empty Checkbox
+// Styled same as Input — rounded-lg border-neutral-300 focus ring primary
+// Used for Assigned Restaurants (no avatar) and Assigned Drivers (with avatar)
 ```
 
 ---
@@ -360,239 +272,209 @@ Rocket illustration + title + subtitle + "Let's Go" → `/login`.
 ### `EmptyState` ← Shared UI
 **File:** `src/components/ui/EmptyState.tsx`
 ```tsx
-{ title, subtitle, illustration? }
-// Centered gray circle bg + person+list icon + green + badge
-// title and subtitle are passed as props — component is not managers-specific
+{ title, subtitle, illustration?: 'person' | 'location' }
+// 'person' (default): person+list icon — used by managers + drivers
+// 'location': location-pin icon — used by zones
 ```
 
 ---
 
 ### `MapPreview` ← Shared UI
 **File:** `src/components/ui/MapPreview.tsx`
-OpenStreetMap iframe embed. No API key required.
+Static OpenStreetMap iframe. `h-40 rounded-lg`. Used in driver modals.
+
+---
+
+### `ZoneMapEditor` ← Shared UI ← NEW
+**File:** `src/components/ui/ZoneMapEditor.tsx`
 ```tsx
-{ lat?, lng?, zoom? }
-// h-40, rounded-lg, border border-neutral-300
-// Defaults to Bern area if no coords passed
-// Used in both CreateManagerModal and CreateDriverModal after Address Details section
+{ polygon?: LatLng[], onChange?: (polygon: LatLng[]) => void, readOnly?: boolean }
+// Interactive Leaflet map with leaflet-draw
+// Left toolbar (4 buttons): Select · Edit polygon · Delete · Layers
+// Zoom: + / − bottom-left
+// Draw mode: click to place polygon vertices, yellow stroke
+// Assigned restaurants shown as logo markers inside drawn polygon
+// h-72 rounded-lg full width
+// MUST use next/dynamic with ssr: false — Leaflet requires browser environment
+// Install: npm install leaflet leaflet-draw @types/leaflet @types/leaflet-draw
 ```
 
 ---
 
-### `ProfilePictureUpload` ← Shared UI  ← NEW
+### `ProfilePictureUpload` ← Shared UI
 **File:** `src/components/ui/ProfilePictureUpload.tsx`
 ```tsx
 { src?, onChange, onDelete }
-// Empty state: gray avatar circle + "Profile picture" label + "PNG, JPEG under 15MB"
-//   + "Upload Picture" button (secondary, upload icon)
-// Filled state: actual avatar circle + same label + "Delete" button (danger ghost, trash icon)
-// Used in all Create and Update modals (managers + drivers)
 ```
 
 ---
 
-### `Sidebar` ← Dashboard Layout
-**File:** `src/components/layout/Sidebar.tsx`
+### `ZoneGridCard` ← Zones ← NEW
+**File:** `src/components/zones/ZoneGridCard.tsx`
 ```tsx
-{ collapsed, onToggle }
-// collapsed: w-[72px] icons only | expanded: w-[220px] icons + labels
-// bg-primary green, active item bg-sidebar-active, hover bg-sidebar-hover
-// Collapse toggle: small circle button on right edge
-// Nav items (lucide-react icons):
-//   Dashboard, Delivery Zones, Restaurants, Restaurant Managers,
-//   Delivery Drivers (truck icon — active in this module),
-//   Customers, Orders, Menu, Offers, Promotions, Review, Audit Logs, Settings
+{ zone: Zone }
+// White card rounded-[12px] shadow-card
+// Header row: zone name (bold) + StatusToggle top-right
+// Body: MapPreview full width h-40
+// Stats row (4 cols, centered, pt-3 border-t mt-3):
+//   count bold / label small neutral-500
+//   Restaurants | Drivers | Customers | Orders
+// Footer (border-t mt-3 pt-3): Delete (secondary) + Edit Zone (primary, edit icon)
+// Archived: opacity-60, muted text, disabled buttons
 ```
 
 ---
 
-### `Topbar` ← Dashboard Layout
-**File:** `src/components/layout/Topbar.tsx`
+### `CreateZoneModal` ← Zones ← NEW
+**File:** `src/components/zones/CreateZoneModal.tsx`
 ```tsx
-{ breadcrumb?, title, sidebarWidth }
-// Fixed top, right-to-sidebarWidth, h-16, white bg, border-b
-// Left: breadcrumb (xs gray) + title (lg bold)
-// Center: SearchInput (hidden on mobile)
-// Right: LanguageSelector + Bell + Moon + Avatar
+{ isOpen, onClose, onCreated }
+// Header: "Add New Zone" + StatusToggle
+// Sections:
+//   Zone Details:
+//     Zone Name* — Input full width
+//     Zone Description — textarea full width (no Input component, native textarea styled same)
+//   Zone Map:
+//     ZoneMapEditor (dynamic import, h-72)
+//   2-column row below map:
+//     Assigned Restaurant — MultiSelectDropdown
+//     Assigned Drivers — MultiSelectDropdown (with avatars)
+// Footer: Cancel + "+ Create Zone" (disabled until zoneName filled)
+// On submit → onCreated() → triggers SuccessModal variant 'created'
 ```
 
 ---
 
-### `DashboardLayout` ← Dashboard Layout
-**File:** `src/components/layout/DashboardLayout.tsx`
+### `UpdateZoneModal` ← Zones ← NEW
+**File:** `src/components/zones/UpdateZoneModal.tsx`
 ```tsx
-{ children, title, breadcrumb? }
-// Combines Sidebar + Topbar + page content
-// Manages collapsed state, passes sidebarWidth to Topbar and main margin
-// bg-page-bg background
+{ isOpen, zone, onClose, onSaved }
+// Identical structure to CreateZoneModal
+// Header: zone.name + StatusToggle (pre-filled toggle state)
+// All fields pre-filled from zone prop
+// Footer: Cancel + "Save Changes"
+// On submit → onSaved() → triggers SuccessModal variant 'updated'
 ```
 
 ---
 
-### `CreateManagerModal` ← Managers
-**File:** `src/components/managers/CreateManagerModal.tsx`
-Sections: Profile (ProfilePictureUpload) | Personal Information (First Name, Last Name, Email, Phone) | Address Details (Street, N°, Zip, City, MapPreview) | Assigned Restaurant (SelectDropdown).
-Header: "Add New Manager" + StatusToggle.
-Footer: Cancel + "+ Create Manager" (disabled until firstName + lastName + email + restaurant filled).
-On submit → `onCreated(email)` → triggers InvitationModal.
-
----
-
-### `UpdateManagerModal` ← Managers
-**File:** `src/components/managers/UpdateManagerModal.tsx`
-Same structure as Create. Header shows manager name + StatusToggle. Pre-fills all fields.
-Footer: Cancel + "Save Changes" → `onSaved()` → triggers SuccessModal.
-
----
-
-### `InvitationModal` ← Managers
-**File:** `src/components/managers/InvitationModal.tsx`
-Post-create: person+list illustration, email, invite link + Copy button.
-CTAs: "Return To Managers List" (primary) + "Create New Manager" (secondary).
-
----
-
-### `SuccessModal` (managers) ← Managers
-**File:** `src/components/managers/SuccessModal.tsx`
-Green checkmark in circle. Title: "Changes Saved Successfully."
-CTA: "Return To Managers List" (primary, full width).
-
----
-
-### `FailModal` ← Managers
-**File:** `src/components/managers/FailModal.tsx`
-Orange broken doc + sad face. "Oops! Something went wrong."
-CTAs: "Try Again" (primary green) + "Back" (secondary outlined).
-
----
-
-### `DeleteManagerModal` ← Managers
-**File:** `src/components/managers/DeleteManagerModal.tsx`
-Red trash illustration. Title: "Are You Sure You Want To Delete Manager '{name}'?"
-Subtitle: manager-specific access copy.
-CTAs: "Delete Manager" (bg-danger override) + "Cancel" (secondary).
-
----
-
-### `CreateDriverModal` ← Drivers  ← NEW
-**File:** `src/components/drivers/CreateDriverModal.tsx`
-Sections: Profile (ProfilePictureUpload) | Personal Information (First Name, Last Name, Email, Phone) | Address Details (Street, N°, Zip, City, MapPreview) | Assigned Zone & Restaurants (Assigned Zone dropdown, Assigned Restaurants dropdown).
-Header: "Add New Driver" + StatusToggle.
-Footer: Cancel + "+ Create Driver" (disabled until firstName + lastName + email + zone filled).
-On submit → `onCreated(email)` → triggers InvitationModal.
-
----
-
-### `UpdateDriverModal` ← Drivers  ← NEW
-**File:** `src/components/drivers/UpdateDriverModal.tsx`
-Sections: Profile (ProfilePictureUpload) | Personal Information (First Name, Last Name, Email, Phone) | Address Details (Street, N°, Zip, City, MapPreview) | Assigned Zone (Assigned Zone dropdown, Status dropdown).
-Header: driver name + StatusToggle. Pre-fills all fields.
-Footer: Cancel + "Save Changes" → `onSaved()` → triggers SuccessModal.
-Note: Update has no Restaurants dropdown — only Zone + Status in the last section.
-
----
-
-### `DeleteDriverModal` ← Drivers  ← NEW
-**File:** `src/components/drivers/DeleteDriverModal.tsx`
-Red trash illustration. Title: "Are You Sure You Want To Delete Driver '{name}'?"
-Subtitle: "This delivery driver will no longer be able to access the system or track orders. All his activity and history will be saved."
-CTAs: "Delete Driver" (bg-danger override) + "Cancel" (secondary).
-
----
-
-### `InvitationModal` ← Drivers  ← NEW
-**File:** `src/components/drivers/InvitationModal.tsx`
-Post-create: person+list illustration, email, invite link + Copy button.
-CTAs: "Return To Drivers List" (primary) + "Create New Driver" (secondary).
-
----
-
-### `SuccessModal` (drivers) ← Drivers  ← NEW
-**File:** `src/components/drivers/SuccessModal.tsx`
-Green checkmark in circle.
-- After create: title "Driver Created Successfully", subtitle invite copy, CTA "Return To Drivers List".
-- After update: title "Changes Saved Successfully", subtitle "All edits have been saved and are now visible in the system.", CTA "Return To Drivers List".
-
----
-
-### `FailModal` ← Drivers  ← NEW
-**File:** `src/components/drivers/FailModal.tsx`
-Identical visually to `managers/FailModal`. Can share the same illustration and layout.
-CTAs: "Try Again" (primary green) + "Back" (secondary outlined).
-
----
-
-## 7. Page — Delivery Drivers  ← NEW
-
-**File:** `src/app/(dashboard)/drivers/page.tsx`
-
-### Stat cards row
-Four `StatCard` components using existing color tokens:
-- Total Delivery Drivers → `stat-orange` / `stat-orange-bg`
-- Active Delivery Drivers → `stat-green` / `stat-green-bg`
-- Inactive Delivery Drivers → `stat-yellow` / `stat-yellow-bg`
-- Archived Delivery Drivers → `stat-red` / `stat-red-bg`
-
-### Toolbar
-Left: `FilterTabs` (all / inactive / active / archived)
-Right: `ViewToggle` + `SearchInput` + Filters button + Export button + Import button + "+ Add New Driver" primary button
-
-### List view columns
-`Full Name` (Avatar + name + email below) | `Phone` | `Role` (always "Delivery Driver") | `Assigned Zone` (can be multi e.g. "Zone A, Zone B") | `Join Date` | `Status` (StatusToggle) | `Actions` (edit icon + delete icon + kebab menu)
-
-### Grid view card
-White card `rounded-[12px] shadow-card p-6`. Avatar (centered, md size) + StatusToggle top-right.
-Name (bold) + "Delivery Driver : {zones}" (neutral-500 small) + phone number (neutral-500 small).
-Footer: "Delete" button (secondary, trash icon) + "Edit profile" button (primary, edit icon).
-Archived card: grayscale avatar, muted text, disabled action buttons.
-
-### Empty state
-Uses `EmptyState` component with title "No Active Delivery Drivers" and subtitle "Send an invitation to add users to your system."
-
-### Page state pattern
-Same discriminated union modal state as managers page:
+### `DeleteZoneModal` ← Zones ← NEW
+**File:** `src/components/zones/DeleteZoneModal.tsx`
 ```tsx
-// drivers/page.tsx
+{ isOpen, zone, onClose, onConfirm }
+// Red trash illustration (same as managers + drivers)
+// Title: "Are You Sure You Want To Delete Zone '{zone.name}' ?"
+// Subtitle: "This action is permanent and cannot be undone. Deleting this zone
+//   will remove all associated configurations and assignments."
+// CTAs: "Delete Zone" (bg-danger) + "Cancel" (secondary)
+```
+
+---
+
+### `SuccessModal` (zones) ← Zones ← NEW
+**File:** `src/components/zones/SuccessModal.tsx`
+```tsx
+{ variant: 'created' | 'updated', onGoToList, onCreateAnother? }
+// variant 'created':
+//   Green checkmark illustration
+//   Title: "Zone Created Successfully!"
+//   Subtitle: "The zone has been created successfully. You can now assign
+//     restaurants, configure coverage, and manage operations within this zone."
+//   CTAs: "Go To Zones List" (primary full width) + "+ Create Another Zone" (secondary full width)
+// variant 'updated':
+//   Green checkmark illustration
+//   Title: "Changes Saved Successfully"
+//   Subtitle: "All edits have been saved and are now visible in the system."
+//   CTA: "Return To Zones List" (primary full width, single button)
+```
+
+---
+
+### `FailModal` ← Zones ← NEW
+**File:** `src/components/zones/FailModal.tsx`
+Identical to managers/FailModal. "Oops! Something went wrong." + "Try Again" + "Back".
+
+---
+
+## 7. Pages
+
+### Page — Zone Management ← NEW
+**File:** `src/app/(dashboard)/zones/page.tsx`
+
+**Stat cards:**
+- Total Zones → `stat-orange` / `stat-orange-bg` — MapPin icon
+- Active Zones → `stat-green` / `stat-green-bg` — MapPin icon
+- Inactive Zones → `stat-yellow` / `stat-yellow-bg` — MapPin icon
+- Archived Zones → `stat-red` / `stat-red-bg` — MapPin icon
+
+**Toolbar:**
+Left: `FilterTabs` (all / active / inactive / archived)
+Right: `ViewToggle` + `SearchInput` + Filters button + Export button + Import button + "+ Add New Zone" primary button
+
+**Grid view:** 3-column grid of `ZoneGridCard`
+
+**List view columns:**
+Zone Name | Restaurants | Delivery Drivers | Customers | Orders | Creation Date | Description | Status (StatusToggle) | Actions (edit + delete + kebab)
+
+**Empty state:** `EmptyState` with `illustration="location"`, title "No Zones Created Yet", subtitle "Start creating your first zone."
+
+**Page state:**
+```tsx
 type ModalState =
   | { type: 'create' }
-  | { type: 'update'; driver: Driver }
-  | { type: 'delete'; driver: Driver }
-  | { type: 'invite'; email: string; inviteLink: string }
+  | { type: 'update'; zone: Zone }
+  | { type: 'delete'; zone: Zone }
   | { type: 'success'; variant: 'created' | 'updated' }
   | { type: 'fail' }
   | null
+```
+
+**Mock data:**
+```ts
+// src/lib/mock/zones.ts
+export const mockZones = [
+  {
+    id: '1', name: 'Zone A',
+    description: 'Zone A contains two stores : Esra Falafel 1 and Esra Falafel 2.',
+    restaurants: 2, drivers: 4, customers: 235, orders: 270,
+    assignedRestaurants: ['Esra Falafel 1', 'Esra Falafel 2'],
+    assignedDrivers: ['Orlando Diggs'],
+    creationDate: '11/02/2026', status: 'active', polygon: null,
+  },
+  {
+    id: '2', name: 'Zone B',
+    description: 'Lorem Ipsum is simply dummy',
+    restaurants: 1, drivers: 2, customers: 130, orders: 210,
+    assignedRestaurants: ['Esra Falafel 1'],
+    assignedDrivers: ['Drew Cano', 'Natali Craig'],
+    creationDate: '11/02/2026', status: 'active', polygon: null,
+  },
+  {
+    id: '3', name: 'Zone C',
+    description: 'Lorem Ipsum is simply dummy',
+    restaurants: 1, drivers: 1, customers: 0, orders: 0,
+    assignedRestaurants: ['Esra Falafel 3'],
+    assignedDrivers: ['Luca Muller'],
+    creationDate: '10/02/2026', status: 'inactive', polygon: null,
+  },
+]
 ```
 
 ---
 
 ## 8. Patterns
 
-### Form error handling pattern
-Per-field `useState('')` errors. Validated on submit. Cleared on `onChange`. `<Input error={...}>` renders red border + bg + icon + helper text automatically.
-
-### Auth page layout pattern
-All auth pages under `src/app/(auth)/` use shared `(auth)/layout.tsx` → `<AuthLayout>`. Individual pages export only a form component — zero layout code.
-
-### OTP countdown pattern
-`secondsLeft` state (120s). `useEffect` with `setTimeout` decrements every second. Expired state shows red message and activates "Resend Code". Clicking Resend resets all state.
-
 ### Dashboard layout pattern
-Dashboard pages use `<DashboardLayout title="...">` which internally manages sidebar collapse state. Sidebar uses `position: fixed` and main content has `marginLeft: sidebarWidth` + `padding-top: 64px` for topbar. Both animate with `transition-all duration-300` as sidebar collapses.
-
-### Table row pattern
-Row component receives all callbacks as props (onEdit, onDelete, onToggleStatus). Archived rows apply `text-table-archived`, grayscale avatar, and disabled actions purely via CSS conditional classes — no separate component variant needed.
+`<DashboardLayout title="...">` manages sidebar collapse. Sidebar fixed, main `marginLeft: sidebarWidth` + `padding-top: 64px`. `transition-all duration-300`.
 
 ### Modal pattern
-All dashboard modals: `fixed inset-0 z-50`, `backdrop-blur-sm bg-black/40` overlay, centered white card `rounded-[16px] shadow-dashboard-modal`. Close button top-right (`×`). Scrollable body via `overflow-y-auto` + `max-h-[90vh]`. Footer pinned with `flex-shrink-0 border-t`.
+`fixed inset-0 z-50`, `backdrop-blur-sm bg-black/40`, centered white card `rounded-[16px] shadow-dashboard-modal`. Close button top-right. `overflow-y-auto max-h-[90vh]`. Footer `flex-shrink-0 border-t`.
 
 ### Modal form section pattern
 ```tsx
 <div className="space-y-4">
   <h3 className="text-primary font-semibold text-sm">Section Title</h3>
-  <div className="grid grid-cols-2 gap-4">
-    <Input ... />
-    <Input ... />
-  </div>
+  <div className="grid grid-cols-2 gap-4">...</div>
 </div>
 ```
 
@@ -600,35 +482,34 @@ All dashboard modals: `fixed inset-0 z-50`, `backdrop-blur-sm bg-black/40` overl
 ```tsx
 const isValid = requiredFields.every(Boolean)
 <Button disabled={!isValid} className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}>
-  + Create Driver
-</Button>
 ```
 
 ### Archived row pattern
 ```tsx
 <tr className={status === 'archived' ? 'opacity-60' : ''}>
   <Avatar grayscale={status === 'archived'} ... />
-  // cells get text-table-archived class when archived
-</tr>
 ```
 
-### Page state pattern (managers + drivers)
-`page.tsx` holds all state: `items[]`, `view`, `activeTab`, `search`, `modal`. Modal state is a discriminated union (see drivers pattern above). Filter is pure derived state (`.filter()` on render) — no separate filtered state array.
+### Page state pattern
+Discriminated union modal state. Filter as pure derived `.filter()` on render.
+
+### Leaflet SSR pattern ← NEW
+```tsx
+// ZoneMapEditor MUST use next/dynamic to avoid SSR window errors
+const ZoneMapEditor = dynamic(
+  () => import('@/components/ui/ZoneMapEditor'),
+  { ssr: false }
+)
+```
 
 ---
 
 ## Process — How to handle each new module
 
-1. Share the screens with Claude
-2. Claude analyzes: what is new vs already exists, any new tokens or components needed
-3. Claude produces this document updated with:
-   - Refactor instructions (if any components need to move to `/ui/`)
-   - New tokens added to Section 1
-   - New components added to Section 6 with file paths
-   - New page spec added to Section 7
-   - Module added to the coverage table
-4. Hand both the updated `design-system.md` to Claude Code
-5. Claude Code runs the refactor first, verifies, then builds the new module
+1. Share screens + latest `design-system.md` with Claude
+2. Claude analyzes what's new vs already exists
+3. Claude produces updated `design-system.md` + Claude Code prompt
+4. Update the file in the project, then hand Claude Code prompt
+5. Claude Code builds — no guessing, no duplication
 
-> **Rule:** Always request the latest `design-system.md` from the project before starting
-> a new module — Claude Code may have added or adjusted things since the last session.
+> **Rule:** Always share the latest `design-system.md` from the project at the start of each module session.

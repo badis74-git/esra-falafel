@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation'
 
 const navItems = [
   { label: 'Dashboard', icon: Home, href: '/dashboard' },
-  { label: 'Delivery Zones', icon: MapPin, href: '/delivery-zones' },
+  { label: 'Zone Management', icon: MapPin, href: '/zones' },
   { label: 'Restaurants', icon: Store, href: '/restaurants' },
   { label: 'Restaurant Managers', icon: UserCheck, href: '/managers' },
   { label: 'Delivery Drivers', icon: Truck, href: '/drivers' },
