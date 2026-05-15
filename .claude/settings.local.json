@@ -10,7 +10,9 @@
       "Bash(curl *)",
       "Bash(pnpm dev *)",
       "Bash(kill 15821)",
-      "Bash(chmod +x *)"
+      "Bash(chmod +x *)",
+      "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/components/menus)",
+      "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/app/\\\\\\(dashboard\\\\\\)/menus)"
     ]
   }
 }

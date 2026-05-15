@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css)
-> Last updated: 2026-05-14 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅
+> Last updated: 2026-05-14 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅
 
 ---
 
@@ -12,6 +12,8 @@
 | Restaurant Managers | ✅ Done | `/managers` |
 | Delivery Drivers | ✅ Done | `/drivers` |
 | Zone Management | ✅ Done | `/zones` |
+| Restaurants Management | ✅ Done | `/restaurants` |
+| Menus Management | ✅ Done | `/menus` |
 
 ---
 
@@ -53,6 +55,10 @@
 | Trend Down | `#DC2626` | `trend-down` | Negative trend text + arrow |
 | Danger | `#DC2626` | `danger` | Delete buttons, delete modal CTA |
 | Danger Light | `#FEF2F2` | `danger-light` | Delete button hover bg |
+| Vegan Badge BG | `#DCFCE7` | `vegan-badge-bg` | Vegan dietary badge background |
+| Vegan Badge Text | `#16A34A` | `vegan-badge-text` | Vegan dietary badge text + icon |
+| Meat Badge BG | `#F3F4F6` | `meat-badge-bg` | Meat dietary badge background |
+| Meat Badge Text | `#6B7280` | `meat-badge-text` | Meat dietary badge text + icon |
 
 ---
 
@@ -72,6 +78,9 @@
 | Stat Label | 12px | 400 | 18px | Stat card labels |
 | Trend | 12px | 500 | 16px | Trend % text |
 | Breadcrumb | 12px | 400 | 16px | "Admin" breadcrumb in topbar |
+| Step Label | 11px | 400 | 16px | Stepper step labels below circle |
+| Badge | 11px | 500 | 16px | Dietary badge text |
+| Branch Pill | 11px | 500 | 16px | Branch pill label on menu grid card |
 
 Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 
@@ -116,6 +125,12 @@ Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 | Content card | 12px | `rounded-[12px]` |
 | Auth left panel right edge | 80px CSS | `border-radius: 0 80px 80px 0` |
 | Map embed / editor | 8px | `rounded-lg` |
+| Stepper header | 12px | `rounded-[12px]` |
+| Inline picker dropdown | 8px | `rounded-lg` |
+| Tooltip | 6px | `rounded-md` |
+| Dietary badge | 9999px | `rounded-full` |
+| Branch pill | 9999px | `rounded-full` |
+| PDF upload zone | 8px | `rounded-lg` |
 
 ---
 
@@ -128,6 +143,7 @@ Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 | Stat / grid card | `0 1px 3px rgba(0,0,0,0.08)` | `shadow-card` |
 | Dashboard modal | `0 20px 40px rgba(0,0,0,0.12)` | `shadow-dashboard-modal` |
 | Topbar | bottom border only | `border-b border-table-border` |
+| Inline dropdown | `0 4px 16px rgba(0,0,0,0.12)` | `shadow-lg` |
 
 ---
 
@@ -137,7 +153,7 @@ Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 
 ```
 src/components/
-├── ui/                              ← shared across all modules
+├── ui/
 │   ├── Input.tsx
 │   ├── Button.tsx
 │   ├── Checkbox.tsx
@@ -155,116 +171,79 @@ src/components/
 │   ├── EmptyState.tsx
 │   ├── MapPreview.tsx
 │   ├── ProfilePictureUpload.tsx
-│   ├── MultiSelectDropdown.tsx      ← NEW
-│   └── ZoneMapEditor.tsx            ← NEW
+│   ├── MultiSelectDropdown.tsx
+│   ├── ZoneMapEditor.tsx
+│   ├── StepperHeader.tsx
+│   ├── TimeInput.tsx
+│   ├── PdfUploadZone.tsx            ← NEW
+│   └── DietaryBadge.tsx             ← NEW
 ├── auth/
 │   ├── AuthLayout.tsx
 │   ├── OtpInput.tsx
 │   └── SuccessModal.tsx
 ├── layout/
-│   ├── Sidebar.tsx
+│   ├── Sidebar.tsx                  ← UPDATE (collapsible nav group)
 │   ├── Topbar.tsx
 │   └── DashboardLayout.tsx
-├── managers/
-│   ├── CreateManagerModal.tsx
-│   ├── UpdateManagerModal.tsx
-│   ├── DeleteManagerModal.tsx
-│   ├── InvitationModal.tsx
-│   ├── SuccessModal.tsx
-│   └── FailModal.tsx
-├── drivers/
-│   ├── CreateDriverModal.tsx
-│   ├── UpdateDriverModal.tsx
-│   ├── DeleteDriverModal.tsx
-│   ├── InvitationModal.tsx
-│   ├── SuccessModal.tsx
-│   └── FailModal.tsx
-└── zones/
-    ├── ZoneGridCard.tsx              ← NEW
-    ├── CreateZoneModal.tsx           ← NEW
-    ├── UpdateZoneModal.tsx           ← NEW
-    ├── DeleteZoneModal.tsx           ← NEW
-    ├── SuccessModal.tsx              ← NEW
-    └── FailModal.tsx                 ← NEW
+├── managers/ [...]
+├── drivers/ [...]
+├── zones/ [...]
+├── restaurants/ [...]
+└── menus/
+    ├── MenuGridCard.tsx             ← NEW
+    ├── BranchPills.tsx              ← NEW
+    ├── CategorySelectionRow.tsx     ← NEW
+    ├── ProductSelectionRow.tsx      ← NEW
+    ├── MenuWizardModal.tsx          ← NEW
+    ├── UpdateMenuModal.tsx          ← NEW
+    ├── DeleteMenuModal.tsx          ← NEW
+    ├── SuccessModal.tsx             ← NEW
+    └── FailModal.tsx                ← NEW
 ```
 
 ---
 
-### `StatusToggle` ← Shared UI
-**File:** `src/components/ui/StatusToggle.tsx`
+### `PdfUploadZone` ← Shared UI ← NEW
+**File:** `src/components/ui/PdfUploadZone.tsx`
 ```tsx
-{ checked, onChange, disabled?, size?: 'sm' | 'md' }
-// checked → bg-primary | unchecked → bg-neutral-300
-// sm: w-8 h-4 | md (default): w-11 h-6
-```
-
----
-
-### `StatCard` ← Shared UI
-**File:** `src/components/ui/StatCard.tsx`
-```tsx
-{ label, count, iconBgClass, icon, trend }
-// White card rounded-[12px] shadow-card p-4
-```
-
----
-
-### `StatBadge` ← Shared UI
-**File:** `src/components/ui/StatBadge.tsx`
-```tsx
-{ value: number, label?: string }
-// positive → ArrowUp + text-trend-up | negative → ArrowDown + text-trend-down
-```
-
----
-
-### `Avatar` ← Shared UI
-**File:** `src/components/ui/Avatar.tsx`
-```tsx
-{ src?, name, size?: 'sm'|'md'|'lg', grayscale? }
-```
-
----
-
-### `FilterTabs` ← Shared UI
-**File:** `src/components/ui/FilterTabs.tsx`
-```tsx
-{ active: 'all'|'inactive'|'active'|'archived', onChange, counts? }
-```
-
----
-
-### `ViewToggle` ← Shared UI
-**File:** `src/components/ui/ViewToggle.tsx`
-```tsx
-{ view: 'grid' | 'list', onChange }
-```
-
----
-
-### `SelectDropdown` ← Shared UI
-**File:** `src/components/ui/SelectDropdown.tsx`
-```tsx
-{ options, value, onChange, placeholder?, label?, required? }
-```
-
----
-
-### `MultiSelectDropdown` ← Shared UI ← NEW
-**File:** `src/components/ui/MultiSelectDropdown.tsx`
-```tsx
-{ options: { label: string; value: string; avatar?: string }[]
-  value: string[]
-  onChange: (values: string[]) => void
-  placeholder?: string
-  label?: string
+{ file?: { name: string; date: string; size: string } | null
+  onUpload: (file: File) => void
+  onView?: () => void
+  onDownload?: () => void
+  onDelete: () => void
 }
-// Closed: selected items joined by " - " or placeholder + ChevronDown
-// Open: dropdown list, each row has Checkbox + optional Avatar + label
-// Selected row: bg-primary-light + primary Checkbox + green checkmark right
-// Unselected row: white + empty Checkbox
-// Styled same as Input — rounded-lg border-neutral-300 focus ring primary
-// Used for Assigned Restaurants (no avatar) and Assigned Drivers (with avatar)
+// Empty state:
+//   Dashed border box rounded-lg p-6, centered content
+//   Upload cloud icon (neutral-400)
+//   "Click to upload" (text-primary, underline) + " or drag and drop" (neutral-500)
+//   "PDF (max. 1MB)" small neutral-500 below
+//   Entire zone is a drag target + hidden file input
+// Filled state:
+//   White row with border rounded-lg p-4
+//   PDF icon (red) + file name (bold 14px) + date · size (neutral-500 small)
+//   Right side: Eye icon + Download icon + Trash icon (danger color)
+```
+
+---
+
+### `DietaryBadge` ← Shared UI ← NEW
+**File:** `src/components/ui/DietaryBadge.tsx`
+```tsx
+{ type: 'vegan' | 'meat' }
+// 'vegan': bg-vegan-badge-bg text-vegan-badge-text "🌱 Vegan"
+// 'meat':  bg-meat-badge-bg text-meat-badge-text "🥩 Meat"
+// rounded-full px-2 py-0.5 text-[11px] font-medium
+```
+
+---
+
+### `StepperHeader` ← Shared UI
+**File:** `src/components/ui/StepperHeader.tsx`
+```tsx
+{ steps: { number: number; label: string }[], currentStep: number }
+// Green bg panel rounded-[12px]
+// Menus steps: [{number:1,label:'Menu Information'},{number:2,label:'Categories'},
+//   {number:3,label:'Products'},{number:4,label:'Overview'}]
 ```
 
 ---
@@ -272,158 +251,223 @@ src/components/
 ### `EmptyState` ← Shared UI
 **File:** `src/components/ui/EmptyState.tsx`
 ```tsx
-{ title, subtitle, illustration?: 'person' | 'location' }
-// 'person' (default): person+list icon — used by managers + drivers
-// 'location': location-pin icon — used by zones
+{ title, subtitle, illustration?: 'person' | 'location' | 'box' | 'clipboard' }
+// 'clipboard': notepad/clipboard illustration — used by Menus empty state
 ```
 
 ---
 
-### `MapPreview` ← Shared UI
-**File:** `src/components/ui/MapPreview.tsx`
-Static OpenStreetMap iframe. `h-40 rounded-lg`. Used in driver modals.
+### `Sidebar` ← Dashboard Layout ← UPDATE
+**File:** `src/components/layout/Sidebar.tsx`
+Sidebar must support **collapsible nav groups**. Menu Management item expands to show sub-items:
+```
+Menu Management  ∧ (chevron toggles open/close)
+  ├─ Menus
+  ├─ Products
+  ├─ Categories
+  ├─ Sub-Categories
+  ├─ Add-ons Group
+  └─ Add-ons
+```
+- Group header: same style as nav item + ChevronUp/Down right
+- Sub-items: indented `pl-8`, smaller text (12px), no icon, same hover style
+- Expanded state persists while any sub-route is active
+- In collapsed sidebar: show only the group icon, no sub-items visible
 
 ---
 
-### `ZoneMapEditor` ← Shared UI ← NEW
-**File:** `src/components/ui/ZoneMapEditor.tsx`
+### `BranchPills` ← Menus ← NEW
+**File:** `src/components/menus/BranchPills.tsx`
 ```tsx
-{ polygon?: LatLng[], onChange?: (polygon: LatLng[]) => void, readOnly?: boolean }
-// Interactive Leaflet map with leaflet-draw
-// Left toolbar (4 buttons): Select · Edit polygon · Delete · Layers
-// Zoom: + / − bottom-left
-// Draw mode: click to place polygon vertices, yellow stroke
-// Assigned restaurants shown as logo markers inside drawn polygon
-// h-72 rounded-lg full width
-// MUST use next/dynamic with ssr: false — Leaflet requires browser environment
-// Install: npm install leaflet leaflet-draw @types/leaflet @types/leaflet-draw
+{ branches: string[], maxVisible?: number }
+// Each pill: bg-primary text-white rounded-full px-2 py-0.5 text-[11px]
+//   Store icon (10px) + branch name
+// maxVisible (default 2): if branches.length > maxVisible, show first N pills
+//   then "+{remaining}" pill (same style)
+// Laid out as flex-wrap gap-1
 ```
 
 ---
 
-### `ProfilePictureUpload` ← Shared UI
-**File:** `src/components/ui/ProfilePictureUpload.tsx`
+### `CategorySelectionRow` ← Menus ← NEW
+**File:** `src/components/menus/CategorySelectionRow.tsx`
 ```tsx
-{ src?, onChange, onDelete }
+{ category: { id, name, image, products: number, subCategories: string[] }
+  selected: boolean
+  onToggle: () => void
+  expanded: boolean
+  onExpandToggle: () => void
+}
+// Row layout: Checkbox | food image (40px rounded-lg) | name (bold) |
+//   Products count + label | Sub-categories count + label | ChevronDown/Up
+// Expanded panel below row:
+//   "Sub-categories :" label + sub-category checkboxes inline
+//   If no sub-categories: "There is no sub-categories." (neutral-500)
+// Selected row: Checkbox checked (primary green)
+// Border-b between rows, white bg
 ```
 
 ---
 
-### `ZoneGridCard` ← Zones ← NEW
-**File:** `src/components/zones/ZoneGridCard.tsx`
+### `ProductSelectionRow` ← Menus ← NEW
+**File:** `src/components/menus/ProductSelectionRow.tsx`
 ```tsx
-{ zone: Zone }
-// White card rounded-[12px] shadow-card
-// Header row: zone name (bold) + StatusToggle top-right
-// Body: MapPreview full width h-40
-// Stats row (4 cols, centered, pt-3 border-t mt-3):
-//   count bold / label small neutral-500
-//   Restaurants | Drivers | Customers | Orders
-// Footer (border-t mt-3 pt-3): Delete (secondary) + Edit Zone (primary, edit icon)
-// Archived: opacity-60, muted text, disabled buttons
+{ product: { id, name, image, category, dietaryType, price, prepTime }
+  selected: boolean
+  onToggle: () => void
+  view: 'grid' | 'list'
+}
+// Grid view row layout:
+//   Checkbox | food image (56px rounded-lg) | DietaryBadge (top of name area) |
+//   category (small neutral-500) | name (bold 14px) |
+//   price (text-primary bold, right) + prepTime (neutral-500 small, right)
+// List view columns:
+//   Checkbox | image (32px) | Product Name | Category | Dietary Type | Price | Discount
+// Selected: Checkbox checked (primary green)
 ```
 
 ---
 
-### `CreateZoneModal` ← Zones ← NEW
-**File:** `src/components/zones/CreateZoneModal.tsx`
+### `MenuGridCard` ← Menus ← NEW
+**File:** `src/components/menus/MenuGridCard.tsx`
+```tsx
+{ menu: Menu }
+// White card rounded-[12px] shadow-card overflow-hidden
+// Top section: menu image full width h-48 object-cover + StatusToggle (top-right, absolute)
+// Below image: BranchPills (overlapping image bottom or just below)
+// Body p-4:
+//   Name (bold 16px) + "Last Updated: {date}" (neutral-500 small) on same row
+//   Products count (bold) + "Products" label | Categories count + "Categories" label
+// Footer border-t pt-3:
+//   Delete (secondary, trash icon) + Edit Product (primary, edit icon)
+// Archived: opacity-60, disabled buttons
+```
+
+---
+
+### `MenuWizardModal` ← Menus ← NEW
+**File:** `src/components/menus/MenuWizardModal.tsx`
 ```tsx
 { isOpen, onClose, onCreated }
-// Header: "Add New Zone" + StatusToggle
-// Sections:
-//   Zone Details:
-//     Zone Name* — Input full width
-//     Zone Description — textarea full width (no Input component, native textarea styled same)
-//   Zone Map:
-//     ZoneMapEditor (dynamic import, h-72)
-//   2-column row below map:
-//     Assigned Restaurant — MultiSelectDropdown
-//     Assigned Drivers — MultiSelectDropdown (with avatars)
-// Footer: Cancel + "+ Create Zone" (disabled until zoneName filled)
-// On submit → onCreated() → triggers SuccessModal variant 'created'
+// 4-step wizard. max-w-2xl, scrollable body.
+// Header: "Add New Menu" + StatusToggle
+// StepperHeader: steps 01–04
+//
+// Step 1 — Menu Information:
+//   ProfilePictureUpload (menu picture)
+//   Section "1. Menu Information" (text-primary)
+//   Menu Name* (Input, 2-col, menu icon left) + Assigned Branches* (MultiSelectDropdown, 2-col)
+//   Menu Description (textarea, full width, optional)
+//   Menu PDF Format (PdfUploadZone, full width)
+//
+// Step 2 — Categories:
+//   Section header "2. Categories"
+//   Mini toolbar: ViewToggle (Grid/List) + SearchInput + Filters button
+//   "Select All" checkbox row
+//   Grid view: list of CategorySelectionRow (expandable)
+//   List view: table — Category Name (image+name) | Sub-categories (comma) | Products
+//   Both views: Checkbox per row, Select All works
+//   Next enabled when at least 1 category selected
+//
+// Step 3 — Products:
+//   Section header "3. Products"
+//   Mini toolbar: ViewToggle + SearchInput + Filters
+//   Category filter tabs: View all · [selected category names from step 2]
+//   "Select All" checkbox row
+//   ProductSelectionRow list (paginated — Previous/1/2/3/.../8/9/10/Next)
+//   Grid view: image + badge + category + name + price + prepTime per row
+//   List view: table — Product Name | Category | Dietary Type | Price | Discount
+//   Next enabled when at least 1 product selected
+//
+// Step 4 — Overview (read-only):
+//   Full summary: ProfilePictureUpload (read-only) + Step 1 fields + Step 2 categories list + Step 3 products list
+//   Same mini toolbar + category tabs visible in overview for categories and products sections
+//   CTA: "+ Create Menu" (primary, full width)
+//
+// Footer navigation:
+//   Step 1: Cancel | Next → (disabled until menuName + branches filled)
+//   Steps 2–3: ← Previous | Next →
+//   Step 4: ← Previous | + Create Menu
+// On submit → onCreated() → SuccessModal
 ```
 
 ---
 
-### `UpdateZoneModal` ← Zones ← NEW
-**File:** `src/components/zones/UpdateZoneModal.tsx`
+### `UpdateMenuModal` ← Menus ← NEW
+**File:** `src/components/menus/UpdateMenuModal.tsx`
 ```tsx
-{ isOpen, zone, onClose, onSaved }
-// Identical structure to CreateZoneModal
-// Header: zone.name + StatusToggle (pre-filled toggle state)
-// All fields pre-filled from zone prop
-// Footer: Cancel + "Save Changes"
-// On submit → onSaved() → triggers SuccessModal variant 'updated'
+{ isOpen, menu, onClose, onSaved }
+// Same 4-step wizard, pre-filled from menu prop
+// Header: menu name + StatusToggle
+// Final CTA: "Save Changes"
+// On submit → onSaved() → SuccessModal (variant: 'updated')
 ```
 
 ---
 
-### `DeleteZoneModal` ← Zones ← NEW
-**File:** `src/components/zones/DeleteZoneModal.tsx`
+### `DeleteMenuModal` ← Menus ← NEW
+**File:** `src/components/menus/DeleteMenuModal.tsx`
 ```tsx
-{ isOpen, zone, onClose, onConfirm }
-// Red trash illustration (same as managers + drivers)
-// Title: "Are You Sure You Want To Delete Zone '{zone.name}' ?"
-// Subtitle: "This action is permanent and cannot be undone. Deleting this zone
-//   will remove all associated configurations and assignments."
-// CTAs: "Delete Zone" (bg-danger) + "Cancel" (secondary)
+{ isOpen, menu, onClose, onConfirm }
+// Red trash illustration
+// Title: "Are You Sure You Want To Delete Menu '{menu.name}' ?"
+// Subtitle: "This action is permanent and cannot be undone."
+// CTAs: "Delete Menu" (bg-danger) + "Cancel" (secondary)
 ```
 
 ---
 
-### `SuccessModal` (zones) ← Zones ← NEW
-**File:** `src/components/zones/SuccessModal.tsx`
+### `SuccessModal` (menus) ← Menus ← NEW
+**File:** `src/components/menus/SuccessModal.tsx`
 ```tsx
 { variant: 'created' | 'updated', onGoToList, onCreateAnother? }
 // variant 'created':
-//   Green checkmark illustration
-//   Title: "Zone Created Successfully!"
-//   Subtitle: "The zone has been created successfully. You can now assign
-//     restaurants, configure coverage, and manage operations within this zone."
-//   CTAs: "Go To Zones List" (primary full width) + "+ Create Another Zone" (secondary full width)
+//   Title: "Menu Created Successfully!"
+//   Subtitle: "Your menu has been set up successfully."
+//   CTAs: "Go To Menus List" (primary) + "+ Create Another Menu" (secondary)
 // variant 'updated':
-//   Green checkmark illustration
 //   Title: "Changes Saved Successfully"
 //   Subtitle: "All edits have been saved and are now visible in the system."
-//   CTA: "Return To Zones List" (primary full width, single button)
+//   CTA: "Return To Menus List" (primary, single)
 ```
 
 ---
 
-### `FailModal` ← Zones ← NEW
-**File:** `src/components/zones/FailModal.tsx`
-Identical to managers/FailModal. "Oops! Something went wrong." + "Try Again" + "Back".
+### `FailModal` ← Menus ← NEW
+**File:** `src/components/menus/FailModal.tsx`
+Identical to other modules. "Oops! Something went wrong." + "Try Again" + "Back".
 
 ---
 
 ## 7. Pages
 
-### Page — Zone Management ← NEW
-**File:** `src/app/(dashboard)/zones/page.tsx`
+### Page — Menus Management ← NEW
+**File:** `src/app/(dashboard)/menus/page.tsx`
 
 **Stat cards:**
-- Total Zones → `stat-orange` / `stat-orange-bg` — MapPin icon
-- Active Zones → `stat-green` / `stat-green-bg` — MapPin icon
-- Inactive Zones → `stat-yellow` / `stat-yellow-bg` — MapPin icon
-- Archived Zones → `stat-red` / `stat-red-bg` — MapPin icon
+- Total Menus → `stat-orange` / `stat-orange-bg` — FileText/menu icon
+- Active Menus → `stat-green` / `stat-green-bg` — FileText icon
+- Inactive Menus → `stat-yellow` / `stat-yellow-bg` — FileText icon
+- Archived Menus → `stat-red` / `stat-red-bg` — FileText icon
 
 **Toolbar:**
 Left: `FilterTabs` (all / active / inactive / archived)
-Right: `ViewToggle` + `SearchInput` + Filters button + Export button + Import button + "+ Add New Zone" primary button
+Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Menu" primary button
 
-**Grid view:** 3-column grid of `ZoneGridCard`
+**Grid view:** 3-column grid of `MenuGridCard`
 
 **List view columns:**
-Zone Name | Restaurants | Delivery Drivers | Customers | Orders | Creation Date | Description | Status (StatusToggle) | Actions (edit + delete + kebab)
+Product Name (image + name) | Products | Categories | Branches | Last Updated | Creation Date | Status (StatusToggle) | Actions (edit + **duplicate** + delete + kebab)
 
-**Empty state:** `EmptyState` with `illustration="location"`, title "No Zones Created Yet", subtitle "Start creating your first zone."
+**Empty state:**
+`EmptyState` with `illustration="clipboard"`, title "No menus created yet", subtitle "Create your first menu to organize products for a specific restaurant branch."
 
 **Page state:**
 ```tsx
 type ModalState =
   | { type: 'create' }
-  | { type: 'update'; zone: Zone }
-  | { type: 'delete'; zone: Zone }
+  | { type: 'update'; menu: Menu }
+  | { type: 'delete'; menu: Menu }
   | { type: 'success'; variant: 'created' | 'updated' }
   | { type: 'fail' }
   | null
@@ -431,32 +475,67 @@ type ModalState =
 
 **Mock data:**
 ```ts
-// src/lib/mock/zones.ts
-export const mockZones = [
+// src/lib/mock/menus.ts
+export const mockMenus = [
   {
-    id: '1', name: 'Zone A',
-    description: 'Zone A contains two stores : Esra Falafel 1 and Esra Falafel 2.',
-    restaurants: 2, drivers: 4, customers: 235, orders: 270,
-    assignedRestaurants: ['Esra Falafel 1', 'Esra Falafel 2'],
-    assignedDrivers: ['Orlando Diggs'],
-    creationDate: '11/02/2026', status: 'active', polygon: null,
+    id: '1', name: 'Vegan Falafel Menu',
+    image: null,
+    branches: ['Esraa Falafel 1', 'Esraa Falafel 2'],
+    products: 37, categories: 8,
+    lastUpdated: '06/05/2026', creationDate: '11/02/2026',
+    status: 'active',
+    description: '',
+    assignedBranches: ['Esraa Falafel 1', 'Esraa Falafel 2'],
+    selectedCategories: ['Sandwiches','Plates','Combos','Drinks','Starters','Menu\'s'],
+    selectedProducts: [],
   },
   {
-    id: '2', name: 'Zone B',
-    description: 'Lorem Ipsum is simply dummy',
-    restaurants: 1, drivers: 2, customers: 130, orders: 210,
-    assignedRestaurants: ['Esra Falafel 1'],
-    assignedDrivers: ['Drew Cano', 'Natali Craig'],
-    creationDate: '11/02/2026', status: 'active', polygon: null,
+    id: '2', name: 'Our Menu',
+    image: null,
+    branches: ['Esraa Falafel 3'],
+    products: 25, categories: 7,
+    lastUpdated: '03/01/2026', creationDate: '11/02/2026',
+    status: 'active',
+    description: '',
+    assignedBranches: ['Esraa Falafel 3'],
+    selectedCategories: [],
+    selectedProducts: [],
   },
   {
-    id: '3', name: 'Zone C',
-    description: 'Lorem Ipsum is simply dummy',
-    restaurants: 1, drivers: 1, customers: 0, orders: 0,
-    assignedRestaurants: ['Esra Falafel 3'],
-    assignedDrivers: ['Luca Muller'],
-    creationDate: '10/02/2026', status: 'inactive', polygon: null,
+    id: '3', name: 'Ramadan Special Menu',
+    image: null,
+    branches: ['Esraa Falafel 1', 'Esraa Falafel 2', 'Esraa Falafel 3'],
+    products: 15, categories: 5,
+    lastUpdated: '25/03/2026', creationDate: '10/02/2026',
+    status: 'inactive',
+    description: '',
+    assignedBranches: ['Esraa Falafel 1', 'Esraa Falafel 2', 'Esraa Falafel 3'],
+    selectedCategories: [],
+    selectedProducts: [],
   },
+]
+
+export const mockCategories = [
+  { id: 'c1', name: 'Sandwiches', image: null, products: 22, subCategories: ['Bread(Laffa)', 'Baguettes'] },
+  { id: 'c2', name: 'Plates', image: null, products: 15, subCategories: ['Regular', 'Special'] },
+  { id: 'c3', name: 'Combos', image: null, products: 20, subCategories: ['Bread Combos', 'Baguette Combos', 'Plates Combos'] },
+  { id: 'c4', name: 'Drinks', image: null, products: 50, subCategories: ['Hot Drinks', 'Cold Drinks', 'Coffe To Go'] },
+  { id: 'c5', name: 'Starters', image: null, products: 3, subCategories: [] },
+  { id: 'c6', name: "Menu's Deals", image: null, products: 4, subCategories: [] },
+]
+
+export const mockProducts = [
+  { id: 'p1', name: 'Falafel Veggies in Bread (Laffa)', image: null, category: 'Bread', dietaryType: 'vegan', price: 6.00, prepTime: '10 - 15 min', discount: 0 },
+  { id: 'p2', name: 'Falafel Plate Veggies', image: null, category: 'Plates', dietaryType: 'vegan', price: 11.80, prepTime: '20 - 25 min', discount: 0 },
+  { id: 'p3', name: 'Hummus', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
+  { id: 'p4', name: 'Falafel Makali Plate', image: null, category: 'Combos', dietaryType: 'vegan', price: 12.00, prepTime: '20 - 25 min', discount: 0 },
+  { id: 'p5', name: 'Baba Ganoush', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
+  { id: 'p6', name: 'Grilled Merguez Plate', image: null, category: 'Plates', dietaryType: 'meat', price: 13.00, prepTime: '20 - 25 min', discount: 0 },
+  { id: 'p7', name: 'Halloumi Plate Veggies', image: null, category: 'Plate', dietaryType: 'vegan', price: 11.00, prepTime: '20 - 25 min', discount: 0 },
+  { id: 'p8', name: 'Sprite Drink', image: null, category: 'Drinks > Cold Drinks', dietaryType: null, price: 2.00, prepTime: '5 min', discount: 0 },
+  { id: 'p9', name: 'Coca Cola Drink', image: null, category: 'Drinks > Cold Drinks', dietaryType: null, price: 2.00, prepTime: '5 min', discount: 0 },
+  { id: 'p10', name: 'Althaus Tea', image: null, category: 'Drinks > Hot Drinks', dietaryType: null, price: 1.50, prepTime: '5 min', discount: 0 },
+  { id: 'p11', name: 'Tabboulah Salade', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
 ]
 ```
 
@@ -469,6 +548,47 @@ export const mockZones = [
 
 ### Modal pattern
 `fixed inset-0 z-50`, `backdrop-blur-sm bg-black/40`, centered white card `rounded-[16px] shadow-dashboard-modal`. Close button top-right. `overflow-y-auto max-h-[90vh]`. Footer `flex-shrink-0 border-t`.
+
+### Multi-step wizard pattern
+```tsx
+const [step, setStep] = useState(1)
+const [formData, setFormData] = useState<MenuFormData>({...})
+const updateForm = (patch: Partial<MenuFormData>) =>
+  setFormData(prev => ({ ...prev, ...patch }))
+// StepperHeader always rendered at top of scroll area
+// Form data never resets on step change
+```
+
+### Collapsible sidebar group pattern ← NEW
+```tsx
+// In Sidebar.tsx, add support for nav groups:
+const [menuGroupOpen, setMenuGroupOpen] = useState(false)
+// Auto-open when any /menus/* route is active
+// Render sub-items only when open AND sidebar is expanded
+// In collapsed mode: only show group icon, no sub-items
+```
+
+### Selection list with Select All pattern ← NEW
+```tsx
+// Used in Steps 2 and 3
+const [selected, setSelected] = useState<string[]>([])
+const allIds = items.map(i => i.id)
+const isAllSelected = allIds.every(id => selected.includes(id))
+
+const toggleAll = () =>
+  setSelected(isAllSelected ? [] : allIds)
+const toggleOne = (id: string) =>
+  setSelected(prev =>
+    prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+  )
+```
+
+### Duplicate action pattern ← NEW
+```tsx
+// In list view Actions column: edit icon + copy icon + delete icon + kebab
+// Copy icon triggers a duplicate of the menu (creates a copy with "Copy of" prefix)
+// No confirmation modal needed — immediate action
+```
 
 ### Modal form section pattern
 ```tsx
@@ -484,22 +604,17 @@ const isValid = requiredFields.every(Boolean)
 <Button disabled={!isValid} className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}>
 ```
 
-### Archived row pattern
+### Archived row/card pattern
 ```tsx
-<tr className={status === 'archived' ? 'opacity-60' : ''}>
-  <Avatar grayscale={status === 'archived'} ... />
+// opacity-60, text-table-archived, disabled actions
 ```
 
 ### Page state pattern
 Discriminated union modal state. Filter as pure derived `.filter()` on render.
 
-### Leaflet SSR pattern ← NEW
+### Leaflet SSR pattern
 ```tsx
-// ZoneMapEditor MUST use next/dynamic to avoid SSR window errors
-const ZoneMapEditor = dynamic(
-  () => import('@/components/ui/ZoneMapEditor'),
-  { ssr: false }
-)
+const ZoneMapEditor = dynamic(() => import('@/components/ui/ZoneMapEditor'), { ssr: false })
 ```
 
 ---

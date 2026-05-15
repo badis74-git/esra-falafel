@@ -1,9 +1,9 @@
-import { MapPin, Plus, User } from 'lucide-react'
+import { ClipboardList, MapPin, Package, Plus, Sparkles, User } from 'lucide-react'
 
 interface EmptyStateProps {
   title?: string
   subtitle?: string
-  illustration?: 'person' | 'location'
+  illustration?: 'person' | 'location' | 'box' | 'clipboard'
 }
 
 export function EmptyState({
@@ -11,6 +11,22 @@ export function EmptyState({
   subtitle = 'Send an invitation to add users to your system.',
   illustration = 'person',
 }: EmptyStateProps) {
+  if (illustration === 'clipboard') {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 gap-4">
+        <div className="relative w-28 h-28 flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-neutral-100 flex items-center justify-center">
+            <ClipboardList size={40} className="text-neutral-400" />
+          </div>
+        </div>
+        <div className="text-center">
+          <h3 className="font-bold text-neutral-900 text-base">{title}</h3>
+          <p className="text-sm text-neutral-500 mt-1">{subtitle}</p>
+        </div>
+      </div>
+    )
+  }
+
   if (illustration === 'location') {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
@@ -18,6 +34,24 @@ export function EmptyState({
           <div className="w-20 h-20 rounded-full bg-neutral-200 flex items-center justify-center">
             <MapPin size={36} className="text-neutral-400" />
           </div>
+        </div>
+        <div className="text-center">
+          <h3 className="font-bold text-neutral-900 text-base">{title}</h3>
+          <p className="text-sm text-neutral-500 mt-1">{subtitle}</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (illustration === 'box') {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 gap-4">
+        <div className="relative w-28 h-28 flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-neutral-100 flex items-center justify-center">
+            <Package size={40} className="text-neutral-400" />
+          </div>
+          <Sparkles size={16} className="text-primary absolute top-2 right-3" />
+          <Sparkles size={12} className="text-primary absolute bottom-4 left-2" />
         </div>
         <div className="text-center">
           <h3 className="font-bold text-neutral-900 text-base">{title}</h3>
