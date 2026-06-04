@@ -5,6 +5,7 @@ import { StatusToggle } from '@/components/ui/StatusToggle'
 import { BranchPills } from '@/components/menus/BranchPills'
 import { Menu } from '@/lib/mock/menus'
 import { Edit, Trash2, UtensilsCrossed } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface MenuGridCardProps {
   menu: Menu
@@ -14,6 +15,8 @@ interface MenuGridCardProps {
 }
 
 export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGridCardProps) {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
   const archived = menu.status === 'archived'
 
   return (
@@ -46,7 +49,7 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
         <div className="flex items-baseline justify-between gap-2 mb-2">
           <p className="font-bold text-base text-neutral-900 truncate flex-1">{menu.name}</p>
           <p className="text-xs text-neutral-500 flex-shrink-0 whitespace-nowrap">
-            Last Updated: {menu.lastUpdated}
+            {t('card.lastUpdated', { date: menu.lastUpdated })}
           </p>
         </div>
 
@@ -54,11 +57,11 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
         <div className="flex gap-4 text-sm mt-auto">
           <div>
             <span className="font-bold text-neutral-900">{menu.products}</span>
-            <span className="text-neutral-500 ml-1">Products</span>
+            <span className="text-neutral-500 ml-1">{t('card.products')}</span>
           </div>
           <div>
             <span className="font-bold text-neutral-900">{menu.categories}</span>
-            <span className="text-neutral-500 ml-1">Categories</span>
+            <span className="text-neutral-500 ml-1">{t('card.categories')}</span>
           </div>
         </div>
       </div>
@@ -73,7 +76,7 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
           disabled={archived}
           onClick={() => onDelete(menu)}
         >
-          <Trash2 size={14} /> Delete
+          <Trash2 size={14} /> {tCommon('delete')}
         </Button>
         <Button
           variant="primary"
@@ -83,7 +86,7 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
           disabled={archived}
           onClick={() => onEdit(menu)}
         >
-          <Edit size={14} /> Edit Product
+          <Edit size={14} /> {t('card.editProduct')}
         </Button>
       </div>
     </div>

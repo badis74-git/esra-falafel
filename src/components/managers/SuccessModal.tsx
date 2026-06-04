@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Check, X } from 'lucide-react'
 
 interface SuccessModalProps {
@@ -8,6 +9,7 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ onClose }: SuccessModalProps) {
+  const t = useTranslations('managers')
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
       <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-sm p-5 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto max-h-[90vh]">
@@ -19,11 +21,11 @@ export function SuccessModal({ onClose }: SuccessModalProps) {
             <Check size={22} className="text-primary stroke-[2.5]" />
           </div>
         </div>
-        <h2 className="text-lg font-bold text-neutral-900 mb-2">Changes Saved Successfully</h2>
+        <h2 className="text-lg font-bold text-neutral-900 mb-2">{t('successModal.title')}</h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          All edits have been saved and are now visible in the system.
+          {t('successModal.body')}
         </p>
-        <Button variant="primary" onClick={onClose}>Return To Managers List</Button>
+        <Button variant="primary" onClick={onClose}>{t('successModal.returnToList')}</Button>
       </div>
     </div>
   )

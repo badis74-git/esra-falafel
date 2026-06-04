@@ -23,6 +23,7 @@ import {
   Plus,
   X,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 export interface MenuFormData {
@@ -47,12 +48,6 @@ const DEFAULT_FORM: MenuFormData = {
   status: true,
 }
 
-const WIZARD_STEPS = [
-  { number: 1, label: 'Menu Information' },
-  { number: 2, label: 'Categories' },
-  { number: 3, label: 'Products' },
-  { number: 4, label: 'Overview' },
-]
 
 const BRANCH_OPTIONS = mockRestaurants.map((r) => ({ label: r.name, value: r.name }))
 
@@ -68,6 +63,7 @@ interface MiniToolbarProps {
 }
 
 function MiniToolbar({ view, onViewChange, search, onSearch }: MiniToolbarProps) {
+  const tCommon = useTranslations('common')
   return (
     <div className="flex items-center gap-2 mb-3">
       <ViewToggle view={view} onChange={onViewChange} />
@@ -81,7 +77,7 @@ function MiniToolbar({ view, onViewChange, search, onSearch }: MiniToolbarProps)
         type="button"
         className="flex items-center gap-1.5 px-3 py-2 text-sm border border-neutral-300 rounded-lg bg-white text-neutral-700 hover:bg-neutral-100 transition-colors"
       >
-        <Filter size={14} /> Filters
+        <Filter size={14} /> {tCommon('filters')}
       </button>
     </div>
   )
@@ -95,6 +91,7 @@ interface CategoryTabsProps {
 }
 
 function CategoryTabs({ categories, selectedCatIds, activeTab, onTabChange }: CategoryTabsProps) {
+  const tCommon = useTranslations('common')
   const selectedCats = categories.filter((c) => selectedCatIds.includes(c.id))
   return (
     <div className="flex flex-wrap gap-2 mb-3">
@@ -107,7 +104,7 @@ function CategoryTabs({ categories, selectedCatIds, activeTab, onTabChange }: Ca
             : 'bg-white border border-neutral-300 text-neutral-700 hover:bg-neutral-100'
         }`}
       >
-        View all
+        {tCommon('tabs.viewAll')}
       </button>
       {selectedCats.map((cat) => (
         <button
@@ -132,6 +129,7 @@ interface PaginationProps {
 }
 
 function Pagination({ className = '' }: PaginationProps) {
+  const tCommon = useTranslations('common')
   return (
     <div className={`flex items-center justify-center gap-1 mt-4 text-sm ${className}`}>
       <button
@@ -139,7 +137,7 @@ function Pagination({ className = '' }: PaginationProps) {
         className="flex items-center gap-1 px-2 py-1 text-neutral-500 hover:text-neutral-700 disabled:opacity-40"
         disabled
       >
-        <ChevronLeft size={14} /> Previous
+        <ChevronLeft size={14} /> {tCommon('previous')}
       </button>
       {[1, 2, 3].map((p) => (
         <button
@@ -166,7 +164,7 @@ function Pagination({ className = '' }: PaginationProps) {
         type="button"
         className="flex items-center gap-1 px-2 py-1 text-neutral-700 hover:text-neutral-900"
       >
-        Next <ChevronRight size={14} />
+        {tCommon('next')} <ChevronRight size={14} />
       </button>
     </div>
   )
@@ -180,6 +178,8 @@ interface Step1Props {
 }
 
 function Step1({ formData, updateForm }: Step1Props) {
+  const t = useTranslations('menus')
+
   function handlePdfUpload(file: File) {
     const sizeKB = Math.round(file.size / 1024)
     const sizeStr = sizeKB >= 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`
@@ -195,30 +195,30 @@ function Step1({ formData, updateForm }: Step1Props) {
         onDelete={() => updateForm({ image: null })}
       />
 
-      <SectionTitle>1. Menu Information</SectionTitle>
+      <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
 
       <div className="grid grid-cols-2 gap-4">
         <Input
-          label="Menu Name *"
+          label={t('wizard.step1.menuName')}
           leftIcon={<ClipboardList size={16} />}
-          placeholder="Enter menu name"
+          placeholder={t('wizard.step1.menuNamePlaceholder')}
           value={formData.name}
           onChange={(e) => updateForm({ name: e.target.value })}
         />
         <MultiSelectDropdown
-          label="Assigned Branches *"
+          label={t('wizard.step1.assignedBranches')}
           options={BRANCH_OPTIONS}
           value={formData.assignedBranches}
           onChange={(vals) => updateForm({ assignedBranches: vals })}
-          placeholder="Select branches"
+          placeholder={t('wizard.step1.branchesPlaceholder')}
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-neutral-700">Menu Description</label>
+        <label className="text-sm font-medium text-neutral-700">{t('wizard.step1.description')}</label>
         <textarea
           rows={3}
-          placeholder="Enter menu description (optional)"
+          placeholder={t('wizard.step1.descriptionPlaceholder')}
           value={formData.description}
           onChange={(e) => updateForm({ description: e.target.value })}
           className="w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 shadow-input focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors resize-none"
@@ -226,7 +226,7 @@ function Step1({ formData, updateForm }: Step1Props) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-neutral-700">Menu PDF Format</label>
+        <label className="text-sm font-medium text-neutral-700">{t('wizard.step1.pdfLabel')}</label>
         <PdfUploadZone
           file={formData.pdfFile}
           onUpload={handlePdfUpload}
@@ -246,6 +246,8 @@ interface Step2Props {
 }
 
 function Step2({ formData, updateForm, readOnly = false }: Step2Props) {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
@@ -280,7 +282,7 @@ function Step2({ formData, updateForm, readOnly = false }: Step2Props) {
 
   return (
     <div>
-      <SectionTitle>2. Categories</SectionTitle>
+      <SectionTitle>{t('wizard.step2.title')}</SectionTitle>
       <MiniToolbar view={view} onViewChange={setView} search={search} onSearch={setSearch} />
 
       {/* Select All */}
@@ -289,7 +291,7 @@ function Step2({ formData, updateForm, readOnly = false }: Step2Props) {
           id="cat-select-all"
           checked={isAllSelected}
           onChange={readOnly ? undefined : toggleAll}
-          label="Select All"
+          label={tCommon('selectAll')}
           readOnly={readOnly}
         />
       </div>
@@ -313,9 +315,9 @@ function Step2({ formData, updateForm, readOnly = false }: Step2Props) {
           <thead>
             <tr className="bg-neutral-50 border-b border-neutral-200">
               <th className="text-left py-2.5 px-3 w-8" />
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Category Name</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Sub-categories</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Products</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableCategoryName')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableSubCategories')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableProducts')}</th>
             </tr>
           </thead>
           <tbody>
@@ -356,6 +358,8 @@ interface Step3Props {
 }
 
 function Step3({ formData, updateForm, readOnly = false }: Step3Props) {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [search, setSearch] = useState('')
   const [activeTab, setActiveTab] = useState('all')
@@ -393,7 +397,7 @@ function Step3({ formData, updateForm, readOnly = false }: Step3Props) {
 
   return (
     <div>
-      <SectionTitle>3. Products</SectionTitle>
+      <SectionTitle>{t('wizard.step3.title')}</SectionTitle>
       <MiniToolbar view={view} onViewChange={setView} search={search} onSearch={setSearch} />
 
       <CategoryTabs
@@ -409,7 +413,7 @@ function Step3({ formData, updateForm, readOnly = false }: Step3Props) {
           id="prod-select-all"
           checked={isAllSelected}
           onChange={readOnly ? undefined : toggleAll}
-          label="Select All"
+          label={tCommon('selectAll')}
           readOnly={readOnly}
         />
       </div>
@@ -432,11 +436,11 @@ function Step3({ formData, updateForm, readOnly = false }: Step3Props) {
           <thead>
             <tr className="bg-neutral-50 border-b border-neutral-200">
               <th className="text-left py-2.5 px-3 w-8" />
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Product Name</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Category</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Dietary Type</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Price</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">Discount</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableProductName')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableCategory')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDietaryType')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tablePrice')}</th>
+              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDiscount')}</th>
             </tr>
           </thead>
           <tbody>
@@ -476,8 +480,17 @@ export function MenuWizardModal({
   initialData,
   mode = 'create',
 }: MenuWizardModalProps) {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState<MenuFormData>({ ...DEFAULT_FORM, ...initialData })
+
+  const wizardSteps = [
+    { number: 1, label: t('wizard.steps.menuInfo') },
+    { number: 2, label: t('wizard.steps.categories') },
+    { number: 3, label: t('wizard.steps.products') },
+    { number: 4, label: t('wizard.steps.overview') },
+  ]
 
   function updateForm(patch: Partial<MenuFormData>) {
     setFormData((prev) => ({ ...prev, ...patch }))
@@ -508,7 +521,7 @@ export function MenuWizardModal({
 
   if (!isOpen) return null
 
-  const title = mode === 'create' ? 'Add New Menu' : formData.name
+  const title = mode === 'create' ? t('addNew') : formData.name
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
@@ -533,7 +546,7 @@ export function MenuWizardModal({
 
         {/* Stepper */}
         <div className="px-6 pt-4 flex-shrink-0">
-          <StepperHeader steps={WIZARD_STEPS} currentStep={step} />
+          <StepperHeader steps={wizardSteps} currentStep={step} />
         </div>
 
         {/* Content */}
@@ -550,7 +563,7 @@ export function MenuWizardModal({
                   onChange={() => {}}
                   onDelete={() => {}}
                 />
-                <SectionTitle>1. Menu Information</SectionTitle>
+                <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex flex-col gap-1">
                     <label className="text-xs font-medium text-neutral-500">Menu Name</label>
@@ -599,11 +612,11 @@ export function MenuWizardModal({
         <div className="flex-shrink-0 border-t border-table-border px-6 py-4 flex items-center justify-between gap-3">
           {step === 1 ? (
             <Button variant="secondary" fullWidth={false} onClick={onClose}>
-              Cancel
+              {tCommon('cancel')}
             </Button>
           ) : (
             <Button variant="secondary" fullWidth={false} onClick={handleBack}>
-              <ChevronLeft size={14} /> Previous
+              <ChevronLeft size={14} /> {tCommon('previous')}
             </Button>
           )}
 
@@ -614,14 +627,14 @@ export function MenuWizardModal({
               onClick={handleNext}
               disabled={!canNext()}
             >
-              Next <ChevronRight size={14} />
+              {tCommon('next')} <ChevronRight size={14} />
             </Button>
           ) : (
             <Button variant="primary" fullWidth={false} onClick={handleSubmit}>
               {mode === 'create' ? (
-                <><Plus size={14} /> Create Menu</>
+                <><Plus size={14} /> {t('wizard.createMenu')}</>
               ) : (
-                'Save Changes'
+                t('wizard.saveChanges')
               )}
             </Button>
           )}

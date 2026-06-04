@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Trash2, Upload, User } from 'lucide-react'
 import { useRef } from 'react'
 
@@ -12,6 +13,7 @@ interface ProfilePictureUploadProps {
 
 export function ProfilePictureUpload({ src, onChange, onDelete }: ProfilePictureUploadProps) {
   const fileRef = useRef<HTMLInputElement>(null)
+  const t = useTranslations('common.profileUpload')
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -36,11 +38,11 @@ export function ProfilePictureUpload({ src, onChange, onDelete }: ProfilePicture
           onClick={onDelete}
           className="flex items-center gap-1.5 text-sm text-danger hover:text-red-700 transition-colors flex-shrink-0"
         >
-          <Trash2 size={14} /> Delete
+          <Trash2 size={14} /> {t('deletePhoto')}
         </button>
       ) : (
         <Button type="button" variant="secondary" fullWidth={false} size="md" onClick={() => fileRef.current?.click()}>
-          <Upload size={14} /> Upload Picture
+          <Upload size={14} /> {t('uploadPhoto')}
         </Button>
       )}
     </div>

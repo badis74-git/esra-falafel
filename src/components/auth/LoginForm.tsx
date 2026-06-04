@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Input } from '@/components/ui/Input'
 import { BrandHeader } from '@/components/ui/BrandHeader'
+import { useTranslations } from 'next-intl'
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -34,6 +35,8 @@ function GoogleIcon() {
 
 export function LoginForm() {
   const router = useRouter()
+  const t = useTranslations('auth.login')
+  const tCommon = useTranslations('common')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -44,13 +47,13 @@ export function LoginForm() {
   function validate() {
     let valid = true
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('Please enter a valid email address.')
+      setEmailError(t('errors.email'))
       valid = false
     } else {
       setEmailError('')
     }
     if (!password || password.length < 6) {
-      setPasswordError('Incorrect password. Please try again.')
+      setPasswordError(t('errors.password'))
       valid = false
     } else {
       setPasswordError('')
@@ -68,15 +71,15 @@ export function LoginForm() {
       <BrandHeader />
 
       <h1 className="text-[28px] font-bold leading-[36px] text-neutral-900 mb-1">
-        Sign In to your Account
+        {t('title')}
       </h1>
-      <p className="text-sm text-neutral-500 mb-7">Welcome ! please enter your detail.</p>
+      <p className="text-sm text-neutral-500 mb-7">{t('subtitle')}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           id="email"
           type="email"
-          placeholder="email@domain.com"
+          placeholder={t('emailPlaceholder')}
           value={email}
           onChange={(e) => { setEmail(e.target.value); setEmailError('') }}
           leftIcon={<Mail size={16} />}
@@ -108,7 +111,7 @@ export function LoginForm() {
         <div className="flex items-center justify-between">
           <Checkbox
             id="remember"
-            label="Remember me"
+            label={t('rememberMe')}
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
           />
@@ -116,31 +119,31 @@ export function LoginForm() {
             href="/forgot-password"
             className="text-sm font-medium text-accent-orange hover:underline"
           >
-            Forgot Password?
+            {t('forgotPassword')}
           </Link>
         </div>
 
         <Button type="submit" variant="primary">
-          Sign in
+          {t('signIn')}
         </Button>
 
         {/* Divider */}
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 h-px bg-neutral-300" />
-          <span className="text-xs text-neutral-500 whitespace-nowrap">Or sign in with</span>
+          <span className="text-xs text-neutral-500 whitespace-nowrap">{t('orSignInWith')}</span>
           <div className="flex-1 h-px bg-neutral-300" />
         </div>
 
         <Button type="button" variant="google">
           <GoogleIcon />
-          Google
+          {t('google')}
         </Button>
       </form>
 
       <p className="text-sm text-neutral-500 text-center mt-6">
-        Need Support?{' '}
+        {tCommon('needSupport')}{' '}
         <a href="#" className="text-accent-orange font-medium hover:underline">
-          Contact Administrator
+          {tCommon('contactAdmin')}
         </a>
       </p>
     </div>

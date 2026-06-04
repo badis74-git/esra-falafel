@@ -12,7 +12,10 @@
       "Bash(kill 15821)",
       "Bash(chmod +x *)",
       "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/components/menus)",
-      "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/app/\\\\\\(dashboard\\\\\\)/menus)"
+      "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/app/\\\\\\(dashboard\\\\\\)/menus)",
+      "Bash(npm list *)",
+      "Bash(node *)",
+      "Bash(pkill -f \"next dev\")"
     ]
   }
 }

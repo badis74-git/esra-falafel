@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Trash2, X } from 'lucide-react'
 
 interface DeleteManagerModalProps {
@@ -10,6 +11,8 @@ interface DeleteManagerModalProps {
 }
 
 export function DeleteManagerModal({ managerName, onConfirm, onCancel }: DeleteManagerModalProps) {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
       <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-sm p-5 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto max-h-[90vh]">
@@ -25,19 +28,19 @@ export function DeleteManagerModal({ managerName, onConfirm, onCancel }: DeleteM
           </div>
         </div>
         <h2 className="text-base font-bold text-neutral-900 mb-3 leading-snug">
-          Are You Sure You Want To Delete Manager &apos;{managerName}&apos; ?
+          {t('deleteModal.title', { name: managerName })}
         </h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          This manager will no longer be able to access the system or manage the assigned store branch. All his activity and history will be saved.
+          {t('deleteModal.body')}
         </p>
         <Button
           variant="primary"
           onClick={onConfirm}
           className="mb-3 bg-danger hover:bg-red-700 focus-visible:ring-danger"
         >
-          <Trash2 size={14} /> Delete Manager
+          <Trash2 size={14} /> {t('deleteModal.confirm')}
         </Button>
-        <Button variant="secondary" onClick={onCancel}>Cancel</Button>
+        <Button variant="secondary" onClick={onCancel}>{tCommon('cancel')}</Button>
       </div>
     </div>
   )

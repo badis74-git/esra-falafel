@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/Button'
 import { BrandHeader } from '@/components/ui/BrandHeader'
 import { OtpInput } from './OtpInput'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -16,6 +17,8 @@ function formatTime(s: number) {
 
 export function OtpVerifyForm() {
   const router = useRouter()
+  const t = useTranslations('auth.otp')
+  const tCommon = useTranslations('common')
   const [otp, setOtp] = useState(Array(6).fill(''))
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS)
   const [expired, setExpired] = useState(false)
@@ -25,8 +28,8 @@ export function OtpVerifyForm() {
       setExpired(true)
       return
     }
-    const t = setTimeout(() => setSecondsLeft((s) => s - 1), 1000)
-    return () => clearTimeout(t)
+    const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000)
+    return () => clearTimeout(timer)
   }, [secondsLeft])
 
   function handleResend() {
@@ -47,10 +50,10 @@ export function OtpVerifyForm() {
       <BrandHeader />
 
       <h1 className="text-[28px] font-bold leading-[36px] text-neutral-900 mb-1">
-        Enter Verification Code
+        {t('title')}
       </h1>
       <p className="text-sm text-neutral-500 mb-7">
-        We&apos;ve sent a 6-digit code to your email.
+        {t('subtitle')}
       </p>
 
       <form onSubmit={handleVerify} className="flex flex-col gap-5">
@@ -58,17 +61,17 @@ export function OtpVerifyForm() {
 
         {expired ? (
           <p className="text-sm text-error">
-            This code has expired. Please request a new one.
+            {t('expired')}
           </p>
         ) : (
           <p className="text-sm text-neutral-500">
-            Code expires in{' '}
+            {t('expiresIn')}{' '}
             <span className="font-semibold text-neutral-700">{formatTime(secondsLeft)}</span>
           </p>
         )}
 
         <Button type="submit" variant="primary" disabled={otp.some((d) => !d)}>
-          Verify Code
+          {t('verify')}
         </Button>
 
         <Button
@@ -77,14 +80,14 @@ export function OtpVerifyForm() {
           disabled={!expired}
           onClick={handleResend}
         >
-          Resend Code
+          {t('resend')}
         </Button>
       </form>
 
       <p className="text-sm text-neutral-500 text-center mt-6">
-        Need Support?{' '}
+        {tCommon('needSupport')}{' '}
         <a href="#" className="text-accent-orange font-medium hover:underline">
-          Contact Administrator
+          {tCommon('contactAdmin')}
         </a>
       </p>
     </div>

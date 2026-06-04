@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/Input'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Zone, restaurantOptions, driverOptions } from '@/lib/mock/zones'
+import { useTranslations } from 'next-intl'
 import { Save, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -25,6 +26,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps) {
+  const t = useTranslations('zones')
+  const tCommon = useTranslations('common')
   const [active, setActive] = useState(zone.status === 'active')
   const [zoneName, setZoneName] = useState(zone.name)
   const [description, setDescription] = useState(zone.description)
@@ -56,19 +59,19 @@ export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps
         <div className="overflow-y-auto flex-1 px-6 py-5">
           <form onSubmit={handleSubmit} id="update-zone-form">
             <div className="mb-5">
-              <SectionTitle>Zone Details</SectionTitle>
+              <SectionTitle>{t('createModal.zoneDetails')}</SectionTitle>
               <div className="flex flex-col gap-4">
                 <Input
                   id="zoneName"
-                  label="Zone Name *"
-                  placeholder="Enter zone name"
+                  label={t('createModal.zoneName')}
+                  placeholder={t('createModal.zoneNamePlaceholder')}
                   value={zoneName}
                   onChange={(e) => setZoneName(e.target.value)}
                 />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-neutral-700">Zone Description</label>
+                  <label className="text-sm font-medium text-neutral-700">{t('createModal.zoneDescription')}</label>
                   <textarea
-                    placeholder="Enter description"
+                    placeholder={t('createModal.descriptionPlaceholder')}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
@@ -79,7 +82,7 @@ export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps
             </div>
 
             <div className="mb-5">
-              <SectionTitle>Zone Map</SectionTitle>
+              <SectionTitle>{t('createModal.zoneMap')}</SectionTitle>
               <ZoneMapEditor onChange={() => {}} />
             </div>
 
@@ -88,15 +91,15 @@ export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps
                 options={restaurantOptions}
                 value={assignedRestaurants}
                 onChange={setAssignedRestaurants}
-                placeholder="Select Restaurant"
-                label="Assigned Restaurant"
+                placeholder={t('createModal.selectRestaurant')}
+                label={t('createModal.assignedRestaurant')}
               />
               <MultiSelectDropdown
                 options={driverOptions}
                 value={assignedDrivers}
                 onChange={setAssignedDrivers}
-                placeholder="Select drivers"
-                label="Assigned Drivers"
+                placeholder={t('createModal.selectDrivers')}
+                label={t('createModal.assignedDrivers')}
               />
             </div>
           </form>
@@ -105,7 +108,7 @@ export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps
         {/* Footer */}
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-table-border flex-shrink-0">
           <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>
-            Cancel
+            {tCommon('cancel')}
           </Button>
           <Button
             type="submit"
@@ -115,7 +118,7 @@ export function UpdateZoneModal({ zone, onClose, onSaved }: UpdateZoneModalProps
             disabled={!isValid}
             className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}
           >
-            <Save size={14} /> Save Changes
+            <Save size={14} /> {tCommon('saveChanges')}
           </Button>
         </div>
       </div>

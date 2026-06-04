@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 
 interface FailModalProps {
@@ -9,6 +10,8 @@ interface FailModalProps {
 }
 
 export function FailModal({ onRetry, onBack }: FailModalProps) {
+  const t = useTranslations('common.failModal')
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
       <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-sm p-5 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto max-h-[90vh]">
@@ -31,15 +34,15 @@ export function FailModal({ onRetry, onBack }: FailModalProps) {
             </div>
           </div>
         </div>
-        <h2 className="text-lg font-bold text-neutral-900 mb-2">Oops! Something went wrong.</h2>
+        <h2 className="text-lg font-bold text-neutral-900 mb-2">{t('title')}</h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          We couldn&apos;t save the changes! Please try again.
+          {t('body')}
         </p>
         <Button variant="primary" onClick={onRetry} className="mb-3">
-          Try Again
+          {t('retry')}
         </Button>
         <Button variant="secondary" onClick={onBack}>
-          Back
+          {t('back')}
         </Button>
       </div>
     </div>

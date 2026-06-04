@@ -2,6 +2,7 @@
 
 import { WizardModal, RestaurantFormData } from '@/components/restaurants/RestaurantWizardModal'
 import { Restaurant } from '@/lib/mock/restaurants'
+import { useTranslations } from 'next-intl'
 
 interface UpdateRestaurantModalProps {
   isOpen: boolean
@@ -42,12 +43,13 @@ export function UpdateRestaurantModal({
   onClose,
   onSaved,
 }: UpdateRestaurantModalProps) {
+  const t = useTranslations('restaurants')
   return (
     <WizardModal
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onSaved}
-      submitLabel="Save Changes"
+      submitLabel={t('wizard.submitUpdate')}
       headerTitle={restaurant.name}
       initialData={restaurantToFormData(restaurant)}
     />

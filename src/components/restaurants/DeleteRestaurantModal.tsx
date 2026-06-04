@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Trash2, X } from 'lucide-react'
 
 interface DeleteRestaurantModalProps {
@@ -10,6 +11,8 @@ interface DeleteRestaurantModalProps {
 }
 
 export function DeleteRestaurantModal({ restaurant, onConfirm, onClose }: DeleteRestaurantModalProps) {
+  const t = useTranslations('restaurants')
+  const tCommon = useTranslations('common')
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
       <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-sm p-5 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto max-h-[90vh]">
@@ -25,10 +28,10 @@ export function DeleteRestaurantModal({ restaurant, onConfirm, onClose }: Delete
         </div>
 
         <h2 className="text-lg font-bold text-neutral-900 mb-2 leading-snug">
-          Are You Sure You Want To Delete Restaurant &lsquo;{restaurant.name}&rsquo; ?
+          {t('deleteModal.title', { name: restaurant.name })}
         </h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          This action is permanent and cannot be undone. Deleting this restaurant will remove all related data, including menu items, orders, and team assignments.
+          {t('deleteModal.body')}
         </p>
 
         <Button
@@ -36,9 +39,9 @@ export function DeleteRestaurantModal({ restaurant, onConfirm, onClose }: Delete
           onClick={onConfirm}
           className="mb-3 bg-danger hover:bg-red-700 active:bg-red-700"
         >
-          <Trash2 size={14} /> Delete Restaurant
+          <Trash2 size={14} /> {t('deleteModal.confirm')}
         </Button>
-        <Button variant="secondary" onClick={onClose}>Cancel</Button>
+        <Button variant="secondary" onClick={onClose}>{tCommon('cancel')}</Button>
       </div>
     </div>
   )

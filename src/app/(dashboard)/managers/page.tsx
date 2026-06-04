@@ -16,6 +16,7 @@ import { FailModal } from '@/components/managers/FailModal'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { Button } from '@/components/ui/Button'
 import { Manager, mockManagers } from '@/lib/mock/managers'
+import { useTranslations } from 'next-intl'
 import { Download, Filter, Plus, Upload, Users } from 'lucide-react'
 import { useState } from 'react'
 
@@ -33,6 +34,8 @@ function PersonIcon() {
 }
 
 export default function ManagersPage() {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   const [managers, setManagers] = useState<Manager[]>(mockManagers)
   const [view, setView] = useState<'grid' | 'list'>('list')
   const [activeTab, setActiveTab] = useState<TabValue>('all')
@@ -66,13 +69,13 @@ export default function ManagersPage() {
   }
 
   return (
-    <DashboardLayout title="Restaurant Managers" breadcrumb="Admin">
+    <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
-        <StatCard label="Total Restaurant Manager" count={counts.total} iconBgClass="bg-stat-orange" icon={<PersonIcon />} trend={-2.1} />
-        <StatCard label="Active Restaurant Manager" count={counts.active} iconBgClass="bg-stat-green" icon={<PersonIcon />} trend={1.5} />
-        <StatCard label="Inactive Restaurant Manager" count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<PersonIcon />} trend={2.4} />
-        <StatCard label="Archived Restaurant Manager" count={counts.archived} iconBgClass="bg-stat-red" icon={<PersonIcon />} trend={2.4} />
+        <StatCard label={t('stats.total')} count={counts.total} iconBgClass="bg-stat-orange" icon={<PersonIcon />} trend={-2.1} />
+        <StatCard label={t('stats.active')} count={counts.active} iconBgClass="bg-stat-green" icon={<PersonIcon />} trend={1.5} />
+        <StatCard label={t('stats.inactive')} count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<PersonIcon />} trend={2.4} />
+        <StatCard label={t('stats.archived')} count={counts.archived} iconBgClass="bg-stat-red" icon={<PersonIcon />} trend={2.4} />
       </div>
 
       {/* White content card */}
@@ -80,17 +83,17 @@ export default function ManagersPage() {
         {/* Header row */}
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <h2 className="text-sm md:text-base font-bold text-neutral-900 whitespace-nowrap">
-            Restaurant Managers List ({filtered.length})
+            {t('listTitle', { count: filtered.length })}
           </h2>
           <div className="flex items-center gap-2 flex-wrap">
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Download size={14} /> Export
+              <Download size={14} /> {tCommon('export')}
             </Button>
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Upload size={14} /> Import
+              <Upload size={14} /> {tCommon('import')}
             </Button>
             <Button variant="primary" fullWidth={false} size="md" onClick={() => setModal({ type: 'create' })} className="min-h-[44px]">
-              <Plus size={14} /> <span className="hidden sm:inline">Add New Manager</span><span className="sm:hidden">Add</span>
+              <Plus size={14} /> <span className="hidden sm:inline">{t('addNew')}</span><span className="sm:hidden">{t('addNewShort')}</span>
             </Button>
           </div>
         </div>
@@ -100,16 +103,16 @@ export default function ManagersPage() {
           <FilterTabs active={activeTab} onChange={setActiveTab} />
           <div className="flex items-center gap-2 flex-wrap">
             <ViewToggle view={view} onChange={setView} />
-            <SearchInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} className="w-32 md:w-40" />
+            <SearchInput placeholder={tCommon('search')} value={search} onChange={(e) => setSearch(e.target.value)} className="w-32 md:w-40" />
             <Button variant="secondary" fullWidth={false} size="md" className="min-h-[44px]">
-              <Filter size={13} /> Filters
+              <Filter size={13} /> {tCommon('filters')}
             </Button>
           </div>
         </div>
 
         {/* Content */}
         {filtered.length === 0 ? (
-          <EmptyState />
+          <EmptyState title={t('emptyTitle')} subtitle={t('emptySubtitle')} />
         ) : view === 'list' ? (
           <ManagersListView
             managers={filtered}

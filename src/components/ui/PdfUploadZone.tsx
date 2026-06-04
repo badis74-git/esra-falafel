@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Download, Eye, FileText, Trash2, Upload } from 'lucide-react'
 import { useRef } from 'react'
 
@@ -19,6 +20,7 @@ interface PdfUploadZoneProps {
 
 export function PdfUploadZone({ file, onUpload, onView, onDownload, onDelete }: PdfUploadZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const t = useTranslations('common.pdfUpload')
 
   function handleDrop(e: React.DragEvent) {
     e.preventDefault()
@@ -86,10 +88,10 @@ export function PdfUploadZone({ file, onUpload, onView, onDownload, onDelete }: 
       />
       <Upload size={24} className="text-neutral-400" />
       <p className="text-sm text-center">
-        <span className="text-primary font-medium cursor-pointer">Click to upload</span>
-        <span className="text-neutral-500"> or drag and drop</span>
+        <span className="text-primary font-medium cursor-pointer">{t('clickToUpload')}</span>
+        <span className="text-neutral-500"> {t('dragAndDrop')}</span>
       </p>
-      <p className="text-xs text-neutral-500">PDF (max. 1MB)</p>
+      <p className="text-xs text-neutral-500">{t('maxSize')}</p>
     </div>
   )
 }

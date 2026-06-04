@@ -16,6 +16,7 @@ import { InvitationModal } from '@/components/drivers/InvitationModal'
 import { SuccessModal } from '@/components/drivers/SuccessModal'
 import { FailModal } from '@/components/drivers/FailModal'
 import { Driver, mockDrivers } from '@/lib/mock/drivers'
+import { useTranslations } from 'next-intl'
 import { Download, Filter, Plus, Truck, Upload } from 'lucide-react'
 import { useState } from 'react'
 
@@ -33,6 +34,8 @@ function TruckIcon() {
 }
 
 export default function DriversPage() {
+  const t = useTranslations('drivers')
+  const tCommon = useTranslations('common')
   const [drivers, setDrivers] = useState<Driver[]>(mockDrivers)
   const [view, setView] = useState<'grid' | 'list'>('list')
   const [activeTab, setActiveTab] = useState<TabValue>('all')
@@ -66,13 +69,13 @@ export default function DriversPage() {
   }
 
   return (
-    <DashboardLayout title="Delivery Drivers" breadcrumb="Admin">
+    <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
-        <StatCard label="Total Delivery Drivers" count={counts.total} iconBgClass="bg-stat-orange" icon={<TruckIcon />} trend={-2.1} />
-        <StatCard label="Active Delivery Drivers" count={counts.active} iconBgClass="bg-stat-green" icon={<TruckIcon />} trend={1.5} />
-        <StatCard label="Inactive Delivery Drivers" count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<TruckIcon />} trend={2.4} />
-        <StatCard label="Archived Delivery Drivers" count={counts.archived} iconBgClass="bg-stat-red" icon={<TruckIcon />} trend={2.4} />
+        <StatCard label={t('stats.total')} count={counts.total} iconBgClass="bg-stat-orange" icon={<TruckIcon />} trend={-2.1} />
+        <StatCard label={t('stats.active')} count={counts.active} iconBgClass="bg-stat-green" icon={<TruckIcon />} trend={1.5} />
+        <StatCard label={t('stats.inactive')} count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<TruckIcon />} trend={2.4} />
+        <StatCard label={t('stats.archived')} count={counts.archived} iconBgClass="bg-stat-red" icon={<TruckIcon />} trend={2.4} />
       </div>
 
       {/* White content card */}
@@ -80,14 +83,14 @@ export default function DriversPage() {
         {/* Header row */}
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <h2 className="text-sm md:text-base font-bold text-neutral-900 whitespace-nowrap">
-            Delivery Drivers List ({filtered.length})
+            {t('listTitle', { count: filtered.length })}
           </h2>
           <div className="flex items-center gap-2 flex-wrap">
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Download size={14} /> Export
+              <Download size={14} /> {tCommon('export')}
             </Button>
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Upload size={14} /> Import
+              <Upload size={14} /> {tCommon('import')}
             </Button>
             <Button
               variant="primary"
@@ -97,8 +100,8 @@ export default function DriversPage() {
               className="min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">Add New Delivery Driver</span>
-              <span className="sm:hidden">Add</span>
+              <span className="hidden sm:inline">{t('addNew')}</span>
+              <span className="sm:hidden">{t('addNewShort')}</span>
             </Button>
           </div>
         </div>
@@ -109,13 +112,13 @@ export default function DriversPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <ViewToggle view={view} onChange={setView} />
             <SearchInput
-              placeholder="Search"
+              placeholder={tCommon('search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-32 md:w-40"
             />
             <Button variant="secondary" fullWidth={false} size="md" className="min-h-[44px]">
-              <Filter size={13} /> Filters
+              <Filter size={13} /> {tCommon('filters')}
             </Button>
           </div>
         </div>
@@ -123,8 +126,8 @@ export default function DriversPage() {
         {/* Content */}
         {filtered.length === 0 ? (
           <EmptyState
-            title="No Active Delivery Drivers"
-            subtitle="Send an invitation to add users to your system."
+            title={t('emptyTitle')}
+            subtitle={t('emptySubtitle')}
           />
         ) : view === 'list' ? (
           <DriversListView

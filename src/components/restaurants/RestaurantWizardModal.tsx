@@ -17,6 +17,7 @@ import {
   mockManagerOptions,
   OpeningHoursEntry,
 } from '@/lib/mock/restaurants'
+import { useTranslations } from 'next-intl'
 import { Globe, Mail, Plus, Store, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -51,14 +52,6 @@ const DEFAULT_FORM: RestaurantFormData = {
   website: '', facebook: '', instagram: '', tiktok: '',
   status: true,
 }
-
-const RESTAURANT_STEPS = [
-  { number: 1, label: 'Restaurant Information' },
-  { number: 2, label: 'Location' },
-  { number: 3, label: 'Operations' },
-  { number: 4, label: 'Online Presence' },
-  { number: 5, label: 'Overview' },
-]
 
 const MANAGER_SELECT_OPTIONS = mockManagerOptions.map((m) => ({
   label: m.name,
@@ -106,6 +99,15 @@ export function WizardModal({
   headerTitle,
   initialData = {},
 }: WizardModalProps) {
+  const t = useTranslations('restaurants')
+  const tCommon = useTranslations('common')
+  const restaurantSteps = [
+    { number: 1, label: t('wizard.steps.restaurantInfo') },
+    { number: 2, label: t('wizard.steps.location') },
+    { number: 3, label: t('wizard.steps.operations') },
+    { number: 4, label: t('wizard.steps.onlinePresence') },
+    { number: 5, label: t('wizard.steps.overview') },
+  ]
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState<RestaurantFormData>({ ...DEFAULT_FORM, ...initialData })
 
@@ -152,12 +154,12 @@ export function WizardModal({
 
         {/* Scrollable body */}
         <div className="overflow-y-auto flex-1 px-6 py-5 scrollbar-thin">
-          <StepperHeader steps={RESTAURANT_STEPS} currentStep={step} />
+          <StepperHeader steps={restaurantSteps} currentStep={step} />
 
           {/* Step 1 — Restaurant Information */}
           {step === 1 && (
             <div>
-              <h3 className="text-sm font-semibold text-primary mb-4">1. Restaurant Information</h3>
+              <h3 className="text-sm font-semibold text-primary mb-4">{t('wizard.step1.title')}</h3>
               <ProfilePictureUpload
                 src={formData.logo}
                 onChange={(src) => updateForm({ logo: src })}
@@ -166,8 +168,8 @@ export function WizardModal({
               <div className="space-y-4">
                 <Input
                   id="rest-name"
-                  label="Restaurant Name *"
-                  placeholder="Restaurant Name"
+                  label={t('wizard.step1.restaurantName')}
+                  placeholder={t('wizard.step1.namePlaceholder')}
                   value={formData.name}
                   onChange={(e) => updateForm({ name: e.target.value })}
                   leftIcon={<Store size={15} />}
@@ -175,7 +177,7 @@ export function WizardModal({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
                     id="rest-email"
-                    label="Email *"
+                    label={t('wizard.step1.email')}
                     type="email"
                     placeholder="email@domain.com"
                     value={formData.email}
@@ -183,7 +185,7 @@ export function WizardModal({
                     leftIcon={<Mail size={15} />}
                   />
                   <PhoneInput
-                    label="Phone Number *"
+                    label={t('wizard.step1.phone')}
                     value={formData.phone}
                     onChange={(val) => updateForm({ phone: val })}
                     placeholder="+41 -- --- -- --"
@@ -193,14 +195,14 @@ export function WizardModal({
                   options={MANAGER_SELECT_OPTIONS}
                   value={formData.managerId}
                   onChange={(val) => updateForm({ managerId: val })}
-                  placeholder="Select Manager"
-                  label="Assigned Manager"
+                  placeholder={t('wizard.step1.selectManager')}
+                  label={t('wizard.step1.assignedManager')}
                 />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-neutral-700">Restaurant Description</label>
+                  <label className="text-sm font-medium text-neutral-700">{t('wizard.step1.description')}</label>
                   <textarea
                     rows={4}
-                    placeholder="Enter description"
+                    placeholder={t('wizard.step1.descriptionPlaceholder')}
                     value={formData.description}
                     onChange={(e) => updateForm({ description: e.target.value })}
                     className="w-full rounded-[8px] border border-neutral-300 bg-white text-sm text-neutral-900 placeholder:text-neutral-500 shadow-input transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary py-3 px-3.5 resize-none"
@@ -213,34 +215,34 @@ export function WizardModal({
           {/* Step 2 — Location */}
           {step === 2 && (
             <div>
-              <h3 className="text-sm font-semibold text-primary mb-4">2. Location</h3>
+              <h3 className="text-sm font-semibold text-primary mb-4">{t('wizard.step2.title')}</h3>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Input
                     id="street"
-                    label="Street"
-                    placeholder="Street"
+                    label={t('wizard.step2.street')}
+                    placeholder={t('wizard.step2.street')}
                     value={formData.street}
                     onChange={(e) => updateForm({ street: e.target.value })}
                   />
                   <Input
                     id="number"
-                    label="N°"
-                    placeholder="N°"
+                    label={t('wizard.step2.number')}
+                    placeholder={t('wizard.step2.number')}
                     value={formData.houseNumber}
                     onChange={(e) => updateForm({ houseNumber: e.target.value })}
                   />
                   <Input
                     id="zip"
-                    label="Zip"
-                    placeholder="Zip"
+                    label={t('wizard.step2.zip')}
+                    placeholder={t('wizard.step2.zip')}
                     value={formData.zip}
                     onChange={(e) => updateForm({ zip: e.target.value })}
                   />
                   <Input
                     id="city"
-                    label="City"
-                    placeholder="City"
+                    label={t('wizard.step2.city')}
+                    placeholder={t('wizard.step2.city')}
                     value={formData.city}
                     onChange={(e) => updateForm({ city: e.target.value })}
                   />
@@ -253,14 +255,14 @@ export function WizardModal({
           {/* Step 3 — Operations */}
           {step === 3 && (
             <div>
-              <SectionTitle>Operations</SectionTitle>
+              <SectionTitle>{t('wizard.step3.operations')}</SectionTitle>
               <div className="space-y-4 mb-6">
                 <SelectDropdown
                   options={MENU_OPTIONS}
                   value={formData.activeMenu}
                   onChange={(val) => updateForm({ activeMenu: val })}
-                  placeholder="Select Menu"
-                  label="Active Menu"
+                  placeholder={t('wizard.step3.selectMenu')}
+                  label={t('wizard.step3.activeMenu')}
                 />
                 <div className="flex items-center gap-6">
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -268,19 +270,19 @@ export function WizardModal({
                       checked={formData.enableDelivery}
                       onChange={(val) => updateForm({ enableDelivery: val })}
                     />
-                    <span className="text-sm text-neutral-700">Enable Delivery</span>
+                    <span className="text-sm text-neutral-700">{t('wizard.step3.enableDelivery')}</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <StatusToggle
                       checked={formData.enableCashOnDelivery}
                       onChange={(val) => updateForm({ enableCashOnDelivery: val })}
                     />
-                    <span className="text-sm text-neutral-700">Enable Cash On Delivery</span>
+                    <span className="text-sm text-neutral-700">{t('wizard.step3.enableCashOnDelivery')}</span>
                   </label>
                 </div>
               </div>
 
-              <SectionTitle>Opening Days &amp; Hours</SectionTitle>
+              <SectionTitle>{t('wizard.step3.openingHours')}</SectionTitle>
               <div className="space-y-3">
                 {formData.openingHours.map((row, i) => (
                   <OpeningHoursRow
@@ -301,7 +303,7 @@ export function WizardModal({
                   onClick={handleAddOpeningHours}
                   className="gap-1.5"
                 >
-                  <Plus size={14} /> Add More
+                  <Plus size={14} /> {t('wizard.step3.addMore')}
                 </Button>
               </div>
             </div>
@@ -310,34 +312,34 @@ export function WizardModal({
           {/* Step 4 — Online Presence */}
           {step === 4 && (
             <div>
-              <h3 className="text-sm font-semibold text-primary mb-4">4. Online Presence</h3>
+              <h3 className="text-sm font-semibold text-primary mb-4">{t('wizard.step4.title')}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input
                   id="website"
-                  label="Website Link"
-                  placeholder="www.yoursite.com"
+                  label={t('wizard.step4.website')}
+                  placeholder={t('wizard.step4.websitePlaceholder')}
                   value={formData.website}
                   onChange={(e) => updateForm({ website: e.target.value })}
                   leftIcon={<Globe size={15} />}
                 />
                 <Input
                   id="facebook"
-                  label="Facebook Link"
-                  placeholder="https://facebook.com/..."
+                  label={t('wizard.step4.facebook')}
+                  placeholder={t('wizard.step4.facebookPlaceholder')}
                   value={formData.facebook}
                   onChange={(e) => updateForm({ facebook: e.target.value })}
                 />
                 <Input
                   id="instagram"
-                  label="Instagram Link"
-                  placeholder="https://instagram.com/..."
+                  label={t('wizard.step4.instagram')}
+                  placeholder={t('wizard.step4.instagramPlaceholder')}
                   value={formData.instagram}
                   onChange={(e) => updateForm({ instagram: e.target.value })}
                 />
                 <Input
                   id="tiktok"
-                  label="TikTok Link"
-                  placeholder="https://tiktok.com/..."
+                  label={t('wizard.step4.tiktok')}
+                  placeholder={t('wizard.step4.tiktokPlaceholder')}
                   value={formData.tiktok}
                   onChange={(e) => updateForm({ tiktok: e.target.value })}
                 />
@@ -350,42 +352,42 @@ export function WizardModal({
             <div className="space-y-6">
               {/* Restaurant Information */}
               <div>
-                <SectionTitle>Restaurant Information</SectionTitle>
+                <SectionTitle>{t('wizard.step5.restaurantInfo')}</SectionTitle>
                 <div className="flex items-center gap-3 mb-4">
                   {formData.logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={formData.logo} alt="logo" className="w-12 h-12 rounded-full object-cover" />
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-neutral-200 flex items-center justify-center text-xs text-neutral-500">
-                      No logo
+                      {t('wizard.step5.noLogo')}
                     </div>
                   )}
-                  <span className="text-xs text-neutral-500">Restaurant picture</span>
+                  <span className="text-xs text-neutral-500">{t('wizard.step5.restaurantPicture')}</span>
                 </div>
                 <div className="space-y-3">
-                  <ReadOnlyRow fields={[{ label: 'Restaurant Name', value: formData.name }]} />
+                  <ReadOnlyRow fields={[{ label: t('wizard.step5.readOnly.restaurantName'), value: formData.name }]} />
                   <ReadOnlyRow fields={[
-                    { label: 'Email', value: formData.email },
-                    { label: 'Phone Number', value: formData.phone },
+                    { label: t('wizard.step5.readOnly.email'), value: formData.email },
+                    { label: t('wizard.step5.readOnly.phone'), value: formData.phone },
                   ]} />
                   <ReadOnlyRow fields={[
-                    { label: 'Assigned Manager', value: selectedManager?.name || '' },
-                    { label: 'Restaurant Description', value: formData.description },
+                    { label: t('wizard.step5.readOnly.assignedManager'), value: selectedManager?.name || '' },
+                    { label: t('wizard.step5.readOnly.description'), value: formData.description },
                   ]} />
                 </div>
               </div>
 
               {/* Location */}
               <div>
-                <SectionTitle>Location</SectionTitle>
+                <SectionTitle>{t('wizard.step5.location')}</SectionTitle>
                 <div className="space-y-3">
                   <ReadOnlyRow fields={[
-                    { label: 'Street', value: formData.street },
-                    { label: 'N°', value: formData.houseNumber },
+                    { label: t('wizard.step5.readOnly.street'), value: formData.street },
+                    { label: t('wizard.step5.readOnly.number'), value: formData.houseNumber },
                   ]} />
                   <ReadOnlyRow fields={[
-                    { label: 'Zip', value: formData.zip },
-                    { label: 'City', value: formData.city },
+                    { label: t('wizard.step5.readOnly.zip'), value: formData.zip },
+                    { label: t('wizard.step5.readOnly.city'), value: formData.city },
                   ]} />
                   {showMap && <MapPreview />}
                 </div>
@@ -393,17 +395,17 @@ export function WizardModal({
 
               {/* Operations */}
               <div>
-                <SectionTitle>Operations</SectionTitle>
+                <SectionTitle>{t('wizard.step5.operations')}</SectionTitle>
                 <div className="space-y-3">
-                  <ReadOnlyRow fields={[{ label: 'Active Menu', value: formData.activeMenu }]} />
+                  <ReadOnlyRow fields={[{ label: t('wizard.step5.readOnly.activeMenu'), value: formData.activeMenu }]} />
                   <div className="flex gap-6">
                     <div className="flex items-center gap-2">
                       <StatusToggle checked={formData.enableDelivery} onChange={() => {}} disabled />
-                      <span className="text-sm text-neutral-700">Enable Delivery</span>
+                      <span className="text-sm text-neutral-700">{t('wizard.step3.enableDelivery')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <StatusToggle checked={formData.enableCashOnDelivery} onChange={() => {}} disabled />
-                      <span className="text-sm text-neutral-700">Enable Cash On Delivery</span>
+                      <span className="text-sm text-neutral-700">{t('wizard.step3.enableCashOnDelivery')}</span>
                     </div>
                   </div>
                 </div>
@@ -412,20 +414,20 @@ export function WizardModal({
               {/* Opening Hours */}
               {formData.openingHours.length > 0 && (
                 <div>
-                  <SectionTitle>Opening Hours</SectionTitle>
+                  <SectionTitle>{t('wizard.step5.openingHours')}</SectionTitle>
                   <div className="space-y-2">
                     {formData.openingHours.map((row, i) => (
                       <div key={i} className="grid grid-cols-3 gap-4 text-sm text-neutral-700">
                         <div>
-                          <span className="text-xs text-neutral-500 block mb-0.5">Working Days</span>
+                          <span className="text-xs text-neutral-500 block mb-0.5">{t('wizard.step5.workingDays')}</span>
                           {row.workingDays.join(', ') || '—'}
                         </div>
                         <div>
-                          <span className="text-xs text-neutral-500 block mb-0.5">From</span>
+                          <span className="text-xs text-neutral-500 block mb-0.5">{t('wizard.step5.from')}</span>
                           {row.from || '—'}
                         </div>
                         <div>
-                          <span className="text-xs text-neutral-500 block mb-0.5">To</span>
+                          <span className="text-xs text-neutral-500 block mb-0.5">{t('wizard.step5.to')}</span>
                           {row.to || '—'}
                         </div>
                       </div>
@@ -436,15 +438,15 @@ export function WizardModal({
 
               {/* Online Presence */}
               <div>
-                <SectionTitle>Online Presence</SectionTitle>
+                <SectionTitle>{t('wizard.step5.onlinePresence')}</SectionTitle>
                 <div className="space-y-3">
                   <ReadOnlyRow fields={[
-                    { label: 'Website Link', value: formData.website },
-                    { label: 'Facebook Link', value: formData.facebook },
+                    { label: t('wizard.step5.readOnly.website'), value: formData.website },
+                    { label: t('wizard.step5.readOnly.facebook'), value: formData.facebook },
                   ]} />
                   <ReadOnlyRow fields={[
-                    { label: 'Instagram Link', value: formData.instagram },
-                    { label: 'TikTok Link', value: formData.tiktok },
+                    { label: t('wizard.step5.readOnly.instagram'), value: formData.instagram },
+                    { label: t('wizard.step5.readOnly.tiktok'), value: formData.tiktok },
                   ]} />
                 </div>
               </div>
@@ -457,7 +459,7 @@ export function WizardModal({
           {step === 1 ? (
             <>
               <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>
-                Cancel
+                {tCommon('cancel')}
               </Button>
               <Button
                 type="button"
@@ -466,22 +468,22 @@ export function WizardModal({
                 disabled={!step1Valid}
                 onClick={() => setStep(2)}
               >
-                Next →
+                {tCommon('next')} →
               </Button>
             </>
           ) : step < 5 ? (
             <>
               <Button type="button" variant="secondary" fullWidth={false} onClick={() => setStep((s) => s - 1)}>
-                ← Previous
+                ← {tCommon('previous')}
               </Button>
               <Button type="button" variant="primary" fullWidth={false} onClick={() => setStep((s) => s + 1)}>
-                Next →
+                {tCommon('next')} →
               </Button>
             </>
           ) : (
             <>
               <Button type="button" variant="secondary" fullWidth={false} onClick={() => setStep(4)}>
-                ← Previous
+                ← {tCommon('previous')}
               </Button>
               <Button type="button" variant="primary" fullWidth={false} onClick={onSubmit}>
                 {submitLabel}
@@ -501,13 +503,14 @@ interface RestaurantWizardModalProps {
 }
 
 export function RestaurantWizardModal({ isOpen, onClose, onCreated }: RestaurantWizardModalProps) {
+  const t = useTranslations('restaurants')
   return (
     <WizardModal
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onCreated}
-      submitLabel="+ Create Restaurant"
-      headerTitle="Add New Restaurant"
+      submitLabel={t('wizard.submitCreate')}
+      headerTitle={t('wizard.headerCreate')}
     />
   )
 }

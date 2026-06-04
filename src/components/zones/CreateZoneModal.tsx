@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/Input'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { restaurantOptions, driverOptions } from '@/lib/mock/zones'
+import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -24,6 +25,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
+  const t = useTranslations('zones')
+  const tCommon = useTranslations('common')
   const [active, setActive] = useState(true)
   const [zoneName, setZoneName] = useState('')
   const [description, setDescription] = useState('')
@@ -43,7 +46,7 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <div className="flex items-center gap-3">
-            <h2 className="text-base font-bold text-neutral-900">Add New Zone</h2>
+            <h2 className="text-base font-bold text-neutral-900">{t('createModal.title')}</h2>
             <StatusToggle checked={active} onChange={setActive} />
           </div>
           <button onClick={onClose} className="text-neutral-500 hover:text-neutral-700 transition-colors">
@@ -55,19 +58,19 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
         <div className="overflow-y-auto flex-1 px-6 py-5">
           <form onSubmit={handleSubmit} id="create-zone-form">
             <div className="mb-5">
-              <SectionTitle>Zone Details</SectionTitle>
+              <SectionTitle>{t('createModal.zoneDetails')}</SectionTitle>
               <div className="flex flex-col gap-4">
                 <Input
                   id="zoneName"
-                  label="Zone Name *"
-                  placeholder="Enter zone name"
+                  label={t('createModal.zoneName')}
+                  placeholder={t('createModal.zoneNamePlaceholder')}
                   value={zoneName}
                   onChange={(e) => setZoneName(e.target.value)}
                 />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium text-neutral-700">Zone Description</label>
+                  <label className="text-sm font-medium text-neutral-700">{t('createModal.zoneDescription')}</label>
                   <textarea
-                    placeholder="Enter description"
+                    placeholder={t('createModal.descriptionPlaceholder')}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
@@ -78,7 +81,7 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
             </div>
 
             <div className="mb-5">
-              <SectionTitle>Zone Map</SectionTitle>
+              <SectionTitle>{t('createModal.zoneMap')}</SectionTitle>
               <ZoneMapEditor onChange={() => {}} />
             </div>
 
@@ -87,15 +90,15 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
                 options={restaurantOptions}
                 value={assignedRestaurants}
                 onChange={setAssignedRestaurants}
-                placeholder="Select Restaurant"
-                label="Assigned Restaurant"
+                placeholder={t('createModal.selectRestaurant')}
+                label={t('createModal.assignedRestaurant')}
               />
               <MultiSelectDropdown
                 options={driverOptions}
                 value={assignedDrivers}
                 onChange={setAssignedDrivers}
-                placeholder="Select drivers"
-                label="Assigned Drivers"
+                placeholder={t('createModal.selectDrivers')}
+                label={t('createModal.assignedDrivers')}
               />
             </div>
           </form>
@@ -104,7 +107,7 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
         {/* Footer */}
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-table-border flex-shrink-0">
           <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>
-            Cancel
+            {tCommon('cancel')}
           </Button>
           <Button
             type="submit"
@@ -114,7 +117,7 @@ export function CreateZoneModal({ onClose, onCreated }: CreateZoneModalProps) {
             disabled={!isValid}
             className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}
           >
-            + Create Zone
+            {t('createModal.create')}
           </Button>
         </div>
       </div>

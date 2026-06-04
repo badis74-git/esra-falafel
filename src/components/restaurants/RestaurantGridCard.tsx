@@ -4,6 +4,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Restaurant } from '@/lib/mock/restaurants'
+import { useTranslations } from 'next-intl'
 import { Edit, Trash2 } from 'lucide-react'
 
 interface RestaurantGridCardProps {
@@ -14,6 +15,8 @@ interface RestaurantGridCardProps {
 }
 
 export function RestaurantGridCard({ restaurant, onEdit, onDelete, onToggleStatus }: RestaurantGridCardProps) {
+  const t = useTranslations('restaurants')
+  const tCommon = useTranslations('common')
   const archived = restaurant.status === 'archived'
 
   return (
@@ -47,9 +50,9 @@ export function RestaurantGridCard({ restaurant, onEdit, onDelete, onToggleStatu
       {/* Stats */}
       <div className="grid grid-cols-3 border-t border-table-border mt-3 pt-3 text-center gap-1">
         {[
-          { label: 'Drivers', value: restaurant.drivers },
-          { label: 'Customers', value: restaurant.customers },
-          { label: 'Orders', value: restaurant.orders },
+          { label: t('card.drivers'), value: restaurant.drivers },
+          { label: t('card.customers'), value: restaurant.customers },
+          { label: t('card.orders'), value: restaurant.orders },
         ].map(({ label, value }) => (
           <div key={label} className="flex flex-col items-center">
             <span className={`font-bold text-sm ${archived ? 'text-table-archived' : 'text-neutral-900'}`}>
@@ -70,7 +73,7 @@ export function RestaurantGridCard({ restaurant, onEdit, onDelete, onToggleStatu
           disabled={archived}
           onClick={() => onDelete(restaurant)}
         >
-          <Trash2 size={14} /> Delete
+          <Trash2 size={14} /> {tCommon('delete')}
         </Button>
         <Button
           variant="primary"
@@ -80,7 +83,7 @@ export function RestaurantGridCard({ restaurant, onEdit, onDelete, onToggleStatu
           disabled={archived}
           onClick={() => onEdit(restaurant)}
         >
-          <Edit size={14} /> Edit Restaurant
+          <Edit size={14} /> {t('card.editRestaurant')}
         </Button>
       </div>
     </div>

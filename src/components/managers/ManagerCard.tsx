@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Manager } from '@/lib/mock/managers'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import { Pencil, Trash2 } from 'lucide-react'
 
 interface ManagerCardProps {
@@ -15,6 +16,8 @@ interface ManagerCardProps {
 }
 
 export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: ManagerCardProps) {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   const isArchived = manager.status === 'archived'
   const textMuted = isArchived ? 'text-table-archived' : 'text-neutral-500'
 
@@ -39,7 +42,7 @@ export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: Manag
         {manager.firstName} {manager.lastName}
       </p>
       <p className={cn('text-xs mb-1', textMuted)}>
-        Restaurant Manager : {manager.restaurant}
+        {t('card.role', { name: manager.restaurant })}
       </p>
       <p className={cn('text-xs mb-5', textMuted)}>{manager.phone}</p>
 
@@ -51,7 +54,7 @@ export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: Manag
           disabled={isArchived}
           className="flex-1"
         >
-          <Trash2 size={13} /> Delete
+          <Trash2 size={13} /> {tCommon('delete')}
         </Button>
         <Button
           variant="primary"
@@ -60,7 +63,7 @@ export function ManagerCard({ manager, onEdit, onDelete, onToggleStatus }: Manag
           disabled={isArchived}
           className={cn('flex-1', isArchived && 'bg-primary/40 hover:bg-primary/40')}
         >
-          <Pencil size={13} /> Edit profile
+          <Pencil size={13} /> {t('editProfile')}
         </Button>
       </div>
     </div>

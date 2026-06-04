@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Rocket, Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -10,6 +11,7 @@ interface SuccessModalProps {
 
 export function SuccessModal({ open }: SuccessModalProps) {
   const router = useRouter()
+  const t = useTranslations('auth.successModal')
 
   if (!open) return null
 
@@ -19,7 +21,6 @@ export function SuccessModal({ open }: SuccessModalProps) {
         {/* Rocket illustration */}
         <div className="relative flex items-center justify-center w-24 h-24 bg-neutral-100 rounded-full mb-6">
           <Rocket size={40} className="text-primary -rotate-45" />
-          {/* Sparkle dots */}
           <span className="absolute top-2 right-3 text-primary-light">
             <Sparkles size={14} className="text-primary" />
           </span>
@@ -29,17 +30,17 @@ export function SuccessModal({ open }: SuccessModalProps) {
         </div>
 
         <h2 className="text-[22px] font-bold leading-[30px] text-neutral-900 mb-2">
-          Password Updated Successfully
+          {t('title')}
         </h2>
         <p className="text-sm text-neutral-500 mb-8 leading-[22px]">
-          Your password has been changed. You can now log in with your new credentials.
+          {t('body')}
         </p>
 
         <Button
           variant="primary"
           onClick={() => router.push('/login')}
         >
-          Let&apos;s Go
+          {t('cta')}
         </Button>
       </div>
     </div>

@@ -4,10 +4,13 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { BrandHeader } from '@/components/ui/BrandHeader'
 import { SuccessModal } from './SuccessModal'
+import { useTranslations } from 'next-intl'
 import { Eye, EyeOff, Lock } from 'lucide-react'
 import { useState } from 'react'
 
 export function ResetPasswordForm() {
+  const t = useTranslations('auth.resetPassword')
+  const tCommon = useTranslations('common')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showNew, setShowNew] = useState(false)
@@ -21,14 +24,14 @@ export function ResetPasswordForm() {
     let valid = true
 
     if (!newPassword || newPassword.length < 8 || !/[0-9]/.test(newPassword) || !/[^a-zA-Z0-9]/.test(newPassword)) {
-      setNewError('Must be at least 8 characters with letters, numbers, and a special character.')
+      setNewError(t('errors.weak'))
       valid = false
     } else {
       setNewError('')
     }
 
     if (newPassword !== confirmPassword) {
-      setConfirmError('Passwords do not match.')
+      setConfirmError(t('errors.mismatch'))
       valid = false
     } else {
       setConfirmError('')
@@ -45,17 +48,17 @@ export function ResetPasswordForm() {
         <BrandHeader />
 
         <h1 className="text-[28px] font-bold leading-[36px] text-neutral-900 mb-1">
-          Create New Password
+          {t('title')}
         </h1>
         <p className="text-sm text-neutral-500 mb-7">
-          Please enter a new secure password for your account.
+          {t('subtitle')}
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Input
               id="new-password"
-              label="New Password"
+              label={t('newPassword')}
               type={showNew ? 'text' : 'password'}
               placeholder="••••••••••••"
               value={newPassword}
@@ -77,14 +80,14 @@ export function ResetPasswordForm() {
             />
             {!newError && (
               <p className="text-xs text-neutral-500">
-                Must be at least 8 characters with letters, numbers, and a special character.
+                {t('hint')}
               </p>
             )}
           </div>
 
           <Input
             id="confirm-password"
-            label="Confirm Password"
+            label={t('confirmPassword')}
             type={showConfirm ? 'text' : 'password'}
             placeholder="••••••••••••"
             value={confirmPassword}
@@ -106,14 +109,14 @@ export function ResetPasswordForm() {
           />
 
           <Button type="submit" variant="primary" className="mt-2">
-            Confirm Password
+            {t('confirm')}
           </Button>
         </form>
 
         <p className="text-sm text-neutral-500 text-center mt-6">
-          Need Support?{' '}
+          {tCommon('needSupport')}{' '}
           <a href="#" className="text-accent-orange font-medium hover:underline">
-            Contact Administrator
+            {tCommon('contactAdmin')}
           </a>
         </p>
       </div>

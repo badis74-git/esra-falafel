@@ -3,6 +3,7 @@
 import { Manager } from '@/lib/mock/managers'
 import { ManagerTableRow } from './ManagerTableRow'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 
@@ -14,6 +15,8 @@ interface ManagersListViewProps {
 }
 
 export function ManagersListView({ managers, onEdit, onDelete, onToggleStatus }: ManagersListViewProps) {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [allChecked, setAllChecked] = useState(false)
 
@@ -27,7 +30,7 @@ export function ManagersListView({ managers, onEdit, onDelete, onToggleStatus }:
   }
 
   const mobileHideCols = new Set([1, 2, 3, 4])
-  const columns = ['Full Name', 'Phone', 'Role', 'Restaurant Name', 'Join Date', 'Status', 'Actions']
+  const columns = [t('table.fullName'), t('table.phone'), t('table.role'), t('table.restaurantName'), t('table.joinDate'), t('table.status'), t('table.actions')]
 
   return (
     <div>
@@ -70,13 +73,13 @@ export function ManagersListView({ managers, onEdit, onDelete, onToggleStatus }:
       {/* Pagination */}
       <div className="flex justify-end items-center gap-2 mt-4">
         <button className="flex items-center gap-1 px-3 text-sm border border-neutral-300 rounded-lg bg-white hover:bg-neutral-100 transition-colors text-neutral-700 min-h-[44px]">
-          <ChevronLeft size={14} /> Previous
+          <ChevronLeft size={14} /> {tCommon('previous')}
         </button>
         <button className="min-w-[44px] min-h-[44px] text-sm border border-neutral-300 rounded-lg bg-white font-medium text-neutral-900 hover:bg-neutral-100 transition-colors">
           1
         </button>
         <button className="flex items-center gap-1 px-3 text-sm border border-neutral-300 rounded-lg bg-white hover:bg-neutral-100 transition-colors text-neutral-700 min-h-[44px]">
-          Next <ChevronRight size={14} />
+          {tCommon('next')} <ChevronRight size={14} />
         </button>
       </div>
     </div>

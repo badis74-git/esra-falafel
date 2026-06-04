@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Check, Plus, X } from 'lucide-react'
 
 interface SuccessModalProps {
@@ -10,6 +11,7 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ variant, onGoToList, onCreateAnother }: SuccessModalProps) {
+  const t = useTranslations('restaurants')
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
       <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-sm p-5 sm:p-8 flex flex-col items-center text-center relative overflow-y-auto max-h-[90vh]">
@@ -29,25 +31,25 @@ export function SuccessModal({ variant, onGoToList, onCreateAnother }: SuccessMo
 
         {variant === 'created' ? (
           <>
-            <h2 className="text-lg font-bold text-neutral-900 mb-2">Restaurant Created Successfully!</h2>
+            <h2 className="text-lg font-bold text-neutral-900 mb-2">{t('successModal.titleCreated')}</h2>
             <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-              Your restaurant has been set up successfully. You can now configure the menu, assign your team, and start managing orders.
+              {t('successModal.bodyCreated')}
             </p>
             <Button variant="primary" onClick={onGoToList} className="mb-3">
-              Go To Restaurants List
+              {t('successModal.goToList')}
             </Button>
             <Button variant="secondary" onClick={onCreateAnother}>
-              <Plus size={14} /> Create Another Restaurant
+              <Plus size={14} /> {t('successModal.createAnother')}
             </Button>
           </>
         ) : (
           <>
-            <h2 className="text-lg font-bold text-neutral-900 mb-2">Changes Saved Successfully</h2>
+            <h2 className="text-lg font-bold text-neutral-900 mb-2">{t('successModal.titleUpdated')}</h2>
             <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-              All edits have been saved and are now visible in the system.
+              {t('successModal.bodyUpdated')}
             </p>
             <Button variant="primary" onClick={onGoToList}>
-              Return To Restaurants List
+              {t('successModal.returnToList')}
             </Button>
           </>
         )}

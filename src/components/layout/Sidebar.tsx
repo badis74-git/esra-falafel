@@ -8,36 +8,10 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useState, useEffect } from 'react'
 
-const MENU_SUB_ITEMS = [
-  { label: 'Menus', href: '/menus' },
-  { label: 'Products', href: '/products' },
-  { label: 'Categories', href: '/categories' },
-  { label: 'Sub-Categories', href: '/sub-categories' },
-  { label: 'Add-ons Group', href: '/addons-group' },
-  { label: 'Add-ons', href: '/addons' },
-]
-
-const MENU_GROUP_ROOTS = MENU_SUB_ITEMS.map((i) => i.href)
-
-const navItems = [
-  { label: 'Dashboard', icon: Home, href: '/dashboard' },
-  { label: 'Zone Management', icon: MapPin, href: '/zones' },
-  { label: 'Restaurants', icon: Store, href: '/restaurants' },
-  { label: 'Restaurant Managers', icon: UserCheck, href: '/managers' },
-  { label: 'Delivery Drivers', icon: Truck, href: '/drivers' },
-  { label: 'Customers', icon: Users, href: '/customers' },
-  { label: 'Orders', icon: Package, href: '/orders' },
-]
-
-const navItemsBottom = [
-  { label: 'Offers', icon: Gift, href: '/offers' },
-  { label: 'Promotions', icon: Ticket, href: '/promotions' },
-  { label: 'Review', icon: Star, href: '/review' },
-  { label: 'Audit Logs', icon: Clock, href: '/audit-logs' },
-  { label: 'Settings', icon: Settings, href: '/settings' },
-]
+const MENU_GROUP_ROOTS = ['/menus', '/products', '/categories', '/sub-categories', '/addons-group', '/addons']
 
 interface SidebarProps {
   collapsed: boolean
@@ -48,6 +22,35 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: SidebarProps) {
   const pathname = usePathname()
+  const t = useTranslations('sidebar')
+
+  const navItems = [
+    { label: t('dashboard'), icon: Home, href: '/dashboard' },
+    { label: t('zoneManagement'), icon: MapPin, href: '/zones' },
+    { label: t('restaurants'), icon: Store, href: '/restaurants' },
+    { label: t('managers'), icon: UserCheck, href: '/managers' },
+    { label: t('drivers'), icon: Truck, href: '/drivers' },
+    { label: t('customers'), icon: Users, href: '/customers' },
+    { label: t('orders'), icon: Package, href: '/orders' },
+  ]
+
+  const menuSubItems = [
+    { label: t('menus'), href: '/menus' },
+    { label: t('products'), href: '/products' },
+    { label: t('categories'), href: '/categories' },
+    { label: t('subCategories'), href: '/sub-categories' },
+    { label: t('addonsGroup'), href: '/addons-group' },
+    { label: t('addons'), href: '/addons' },
+  ]
+
+  const navItemsBottom = [
+    { label: t('offers'), icon: Gift, href: '/offers' },
+    { label: t('promotions'), icon: Ticket, href: '/promotions' },
+    { label: t('review'), icon: Star, href: '/review' },
+    { label: t('auditLogs'), icon: Clock, href: '/audit-logs' },
+    { label: t('settings'), icon: Settings, href: '/settings' },
+  ]
+
   const isMenuGroupActive = MENU_GROUP_ROOTS.some(
     (root) => pathname === root || pathname.startsWith(root + '/')
   )
@@ -147,7 +150,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
               'md:hidden',
               !collapsed && 'lg:block'
             )}>
-              Menu Management
+              {t('menuManagement')}
             </span>
             <span className={cn(
               'ml-auto flex-shrink-0',
@@ -163,7 +166,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
           {/* Sub-items — only when group is open AND sidebar is expanded */}
           {menuGroupOpen && (
             <div className={cn('md:hidden', !collapsed && 'lg:block')}>
-              {MENU_SUB_ITEMS.map((sub) => {
+              {menuSubItems.map((sub) => {
                 const isActive = pathname === sub.href || pathname.startsWith(sub.href + '/')
                 return (
                   <Link

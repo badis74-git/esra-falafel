@@ -1,39 +1,29 @@
 'use client'
 
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
+import { useTranslations } from 'next-intl'
 import { ReactNode, useEffect, useState } from 'react'
-
-const slides = [
-  {
-    title: "Taste Berlin's\nBest Falafel",
-    subtitle:
-      'Freshly made falafel, shawarma, and vegan favorites crafted daily and delivered from your nearest Esra Falafel branch.',
-  },
-  {
-    title: 'Quick Pickup\nor Delivery',
-    subtitle:
-      'Order in seconds, track your delivery in real time, or pick up your meal fresh from the store.',
-  },
-  {
-    title: 'Vegan or Meat,\nYour Choice',
-    subtitle:
-      'Choose your bread, fillings, sauces, and extras. Build your perfect meal vegan or meat, just how you like it.',
-  },
-]
 
 interface AuthLayoutProps {
   children: ReactNode
 }
 
 export function AuthLayout({ children }: AuthLayoutProps) {
+  const t = useTranslations('auth.slides')
   const [activeSlide, setActiveSlide] = useState(0)
+
+  const slides = [
+    { title: t('slide1.title'), subtitle: t('slide1.subtitle') },
+    { title: t('slide2.title'), subtitle: t('slide2.subtitle') },
+    { title: t('slide3.title'), subtitle: t('slide3.subtitle') },
+  ]
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length)
     }, 4000)
     return () => clearInterval(timer)
-  }, [])
+  }, [slides.length])
 
   const slide = slides[activeSlide]
 

@@ -3,6 +3,7 @@
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { Avatar } from '@/components/ui/Avatar'
+import { useTranslations } from 'next-intl'
 import { Bell, Menu, Moon, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -13,7 +14,10 @@ interface TopbarProps {
   onMobileMenuToggle: () => void
 }
 
-export function Topbar({ breadcrumb = 'Admin', title, collapsed, onMobileMenuToggle }: TopbarProps) {
+export function Topbar({ breadcrumb, title, collapsed, onMobileMenuToggle }: TopbarProps) {
+  const t = useTranslations('topbar')
+  const displayBreadcrumb = breadcrumb ?? t('breadcrumb')
+
   return (
     <header
       className={cn(
@@ -32,13 +36,13 @@ export function Topbar({ breadcrumb = 'Admin', title, collapsed, onMobileMenuTog
 
       {/* Left: breadcrumb + title */}
       <div className="flex flex-col justify-center flex-shrink-0">
-        <span className="text-xs text-neutral-500 hidden sm:block">{breadcrumb}</span>
+        <span className="text-xs text-neutral-500 hidden sm:block">{displayBreadcrumb}</span>
         <h1 className="text-base md:text-lg font-bold text-neutral-900 leading-tight">{title}</h1>
       </div>
 
       {/* Center: search — hidden on mobile */}
       <div className="flex-1 max-w-sm mx-auto hidden sm:block">
-        <SearchInput placeholder="Search" className="w-full" />
+        <SearchInput placeholder={t('searchPlaceholder')} className="w-full" />
       </div>
 
       {/* Right: actions */}

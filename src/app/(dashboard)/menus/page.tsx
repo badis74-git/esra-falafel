@@ -31,6 +31,7 @@ import {
   Trash2,
   Upload,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 type ModalState =
@@ -42,6 +43,8 @@ type ModalState =
   | null
 
 export default function MenusPage() {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
   const [menus, setMenus] = useState<Menu[]>(mockMenus)
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [activeTab, setActiveTab] = useState<TabValue>('all')
@@ -92,32 +95,32 @@ export default function MenusPage() {
   const MenuIcon = () => <FileText size={20} className="text-white" />
 
   return (
-    <DashboardLayout title="Menus Management">
+    <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
       <div className="flex gap-4 mb-6 flex-wrap">
         <StatCard
-          label="Total Menus"
+          label={t('stats.total')}
           count={counts.total}
           iconBgClass="bg-stat-orange-bg"
           icon={<FileText size={20} className="text-stat-orange" />}
           trend={-2.1}
         />
         <StatCard
-          label="Active Menus"
+          label={t('stats.active')}
           count={counts.active}
           iconBgClass="bg-stat-green-bg"
           icon={<FileText size={20} className="text-stat-green" />}
           trend={1.5}
         />
         <StatCard
-          label="Inactive Menus"
+          label={t('stats.inactive')}
           count={counts.inactive}
           iconBgClass="bg-stat-yellow-bg"
           icon={<FileText size={20} className="text-stat-yellow" />}
           trend={2.4}
         />
         <StatCard
-          label="Archived Menus"
+          label={t('stats.archived')}
           count={counts.archived}
           iconBgClass="bg-stat-red-bg"
           icon={<FileText size={20} className="text-stat-red" />}
@@ -130,20 +133,20 @@ export default function MenusPage() {
         {/* Table header row */}
         <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
           <h2 className="font-bold text-neutral-900 text-base whitespace-nowrap">
-            Menus List ({filtered.length})
+            {t('listTitle', { count: filtered.length })}
           </h2>
           <div className="flex items-center gap-2 flex-wrap">
             <button
               type="button"
               className="flex items-center gap-1.5 px-3 py-2 text-sm border border-neutral-300 rounded-lg bg-white text-neutral-700 hover:bg-neutral-100 transition-colors"
             >
-              <Download size={14} /> Export
+              <Download size={14} /> {tCommon('export')}
             </button>
             <button
               type="button"
               className="flex items-center gap-1.5 px-3 py-2 text-sm border border-neutral-300 rounded-lg bg-white text-neutral-700 hover:bg-neutral-100 transition-colors"
             >
-              <Upload size={14} /> Import
+              <Upload size={14} /> {tCommon('import')}
             </button>
             <Button
               variant="primary"
@@ -151,7 +154,7 @@ export default function MenusPage() {
               fullWidth={false}
               onClick={() => setModal({ type: 'create' })}
             >
-              <Plus size={14} /> Add New Menu
+              <Plus size={14} /> {t('addNew')}
             </Button>
           </div>
         </div>
@@ -162,7 +165,7 @@ export default function MenusPage() {
           <div className="flex items-center gap-2">
             <ViewToggle view={view} onChange={setView} />
             <SearchInput
-              placeholder="Search..."
+              placeholder={tCommon('search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-48"
@@ -171,7 +174,7 @@ export default function MenusPage() {
               type="button"
               className="flex items-center gap-1.5 px-3 py-2 text-sm border border-neutral-300 rounded-lg bg-white text-neutral-700 hover:bg-neutral-100 transition-colors"
             >
-              <Filter size={14} /> Filters
+              <Filter size={14} /> {tCommon('filters')}
             </button>
           </div>
         </div>
@@ -180,8 +183,8 @@ export default function MenusPage() {
         {filtered.length === 0 ? (
           <EmptyState
             illustration="clipboard"
-            title="No menus created yet"
-            subtitle="Create your first menu to organize products for a specific restaurant branch."
+            title={t('emptyTitle')}
+            subtitle={t('emptySubtitle')}
           />
         ) : view === 'grid' ? (
           <>
@@ -202,14 +205,14 @@ export default function MenusPage() {
                 className="flex items-center gap-1 px-2 py-1 text-neutral-500 hover:text-neutral-700 disabled:opacity-40"
                 disabled
               >
-                <ChevronLeft size={14} /> Previous
+                <ChevronLeft size={14} /> {tCommon('previous')}
               </button>
               <button type="button" className="w-7 h-7 rounded bg-primary text-white text-sm font-medium">1</button>
               <button
                 type="button"
                 className="flex items-center gap-1 px-2 py-1 text-neutral-700 hover:text-neutral-900"
               >
-                Next <ChevronRight size={14} />
+                {tCommon('next')} <ChevronRight size={14} />
               </button>
             </div>
           </>
@@ -222,14 +225,14 @@ export default function MenusPage() {
                     <th className="text-left py-3 px-4 w-10">
                       <Checkbox id="select-all-menus" checked={false} onChange={() => {}} />
                     </th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Product Name</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Products</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Categories</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Branches</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Last Updated</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Creation Date</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Status</th>
-                    <th className="text-left py-3 px-4 font-medium text-neutral-600">Actions</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.productName')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.products')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.categories')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.branches')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.lastUpdated')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.creationDate')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.status')}</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-600">{t('table.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -318,7 +321,7 @@ export default function MenusPage() {
             {/* Pagination */}
             <div className="flex items-center justify-between mt-4 text-sm">
               <span className="text-neutral-500">
-                Showing {filtered.length} of {menus.length} menus
+                {t('showing', { count: filtered.length, total: menus.length })}
               </span>
               <div className="flex items-center gap-1">
                 <button
@@ -326,14 +329,14 @@ export default function MenusPage() {
                   className="flex items-center gap-1 px-2 py-1 text-neutral-500 hover:text-neutral-700 disabled:opacity-40"
                   disabled
                 >
-                  <ChevronLeft size={14} /> Previous
+                  <ChevronLeft size={14} /> {tCommon('previous')}
                 </button>
                 <button type="button" className="w-7 h-7 rounded bg-primary text-white text-sm font-medium">1</button>
                 <button
                   type="button"
                   className="flex items-center gap-1 px-2 py-1 text-neutral-700 hover:text-neutral-900"
                 >
-                  Next <ChevronRight size={14} />
+                  {tCommon('next')} <ChevronRight size={14} />
                 </button>
               </div>
             </div>

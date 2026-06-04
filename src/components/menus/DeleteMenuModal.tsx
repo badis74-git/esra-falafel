@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/Button'
 import { Menu } from '@/lib/mock/menus'
+import { useTranslations } from 'next-intl'
 import { Trash2, X } from 'lucide-react'
 
 interface DeleteMenuModalProps {
@@ -12,6 +13,9 @@ interface DeleteMenuModalProps {
 }
 
 export function DeleteMenuModal({ isOpen, menu, onClose, onConfirm }: DeleteMenuModalProps) {
+  const t = useTranslations('menus')
+  const tCommon = useTranslations('common')
+
   if (!isOpen || !menu) return null
 
   return (
@@ -29,10 +33,10 @@ export function DeleteMenuModal({ isOpen, menu, onClose, onConfirm }: DeleteMenu
         </div>
 
         <h2 className="text-lg font-bold text-neutral-900 mb-2 leading-snug">
-          Are You Sure You Want To Delete Menu &apos;{menu.name}&apos; ?
+          {t('deleteModal.title', { name: menu.name })}
         </h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          This action is permanent and cannot be undone.
+          {t('deleteModal.body')}
         </p>
 
         <Button
@@ -40,10 +44,10 @@ export function DeleteMenuModal({ isOpen, menu, onClose, onConfirm }: DeleteMenu
           className="mb-3 bg-danger hover:bg-red-700"
           onClick={onConfirm}
         >
-          Delete Menu
+          {t('deleteModal.confirm')}
         </Button>
         <Button variant="secondary" onClick={onClose}>
-          Cancel
+          {tCommon('cancel')}
         </Button>
       </div>
     </div>

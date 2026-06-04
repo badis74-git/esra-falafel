@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Driver } from '@/lib/mock/drivers'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import { Pencil, Trash2 } from 'lucide-react'
 
 interface DriverCardProps {
@@ -15,6 +16,7 @@ interface DriverCardProps {
 }
 
 export function DriverCard({ driver, onEdit, onDelete, onToggleStatus }: DriverCardProps) {
+  const tCommon = useTranslations('common')
   const isArchived = driver.status === 'archived'
   const textMuted = isArchived ? 'text-table-archived' : 'text-neutral-500'
 
@@ -50,7 +52,7 @@ export function DriverCard({ driver, onEdit, onDelete, onToggleStatus }: DriverC
           disabled={isArchived}
           className="flex-1"
         >
-          <Trash2 size={13} /> Delete
+          <Trash2 size={13} /> {tCommon('delete')}
         </Button>
         <Button
           variant="primary"

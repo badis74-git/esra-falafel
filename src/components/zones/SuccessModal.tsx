@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Check, Plus, X } from 'lucide-react'
 
 interface SuccessModalProps {
@@ -10,6 +11,7 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ variant, onGoToList, onCreateAnother }: SuccessModalProps) {
+  const t = useTranslations('zones')
   const isCreated = variant === 'created'
 
   return (
@@ -27,22 +29,19 @@ export function SuccessModal({ variant, onGoToList, onCreateAnother }: SuccessMo
         </div>
 
         <h2 className="text-lg font-bold text-neutral-900 mb-2">
-          {isCreated ? 'Zone Created Successfully!' : 'Changes Saved Successfully'}
+          {isCreated ? t('successModal.titleCreated') : t('successModal.titleUpdated')}
         </h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">
-          {isCreated
-            ? 'The zone has been created successfully. You can now assign restaurants, configure coverage, and manage operations within this zone.'
-            : 'All edits have been saved and are now visible in the system.'
-          }
+          {isCreated ? t('successModal.bodyCreated') : t('successModal.bodyUpdated')}
         </p>
 
         <Button variant="primary" onClick={onGoToList} className="mb-3">
-          {isCreated ? 'Go To Zones List' : 'Return To Zones List'}
+          {isCreated ? t('successModal.goToList') : t('successModal.returnToList')}
         </Button>
 
         {isCreated && onCreateAnother && (
           <Button variant="secondary" onClick={onCreateAnother}>
-            <Plus size={14} /> Create Another Zone
+            <Plus size={14} /> {t('successModal.createAnother')}
           </Button>
         )}
       </div>

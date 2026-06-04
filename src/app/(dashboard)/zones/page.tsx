@@ -15,6 +15,7 @@ import { DeleteZoneModal } from '@/components/zones/DeleteZoneModal'
 import { SuccessModal } from '@/components/zones/SuccessModal'
 import { FailModal } from '@/components/zones/FailModal'
 import { Zone, mockZones } from '@/lib/mock/zones'
+import { useTranslations } from 'next-intl'
 import { Download, Edit, Filter, MapPin, MoreVertical, Plus, Trash2, Upload } from 'lucide-react'
 import { useState } from 'react'
 
@@ -31,6 +32,8 @@ function MapPinIcon() {
 }
 
 export default function ZonesPage() {
+  const t = useTranslations('zones')
+  const tCommon = useTranslations('common')
   const [zones, setZones] = useState<Zone[]>(mockZones)
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [activeTab, setActiveTab] = useState<TabValue>('all')
@@ -62,13 +65,13 @@ export default function ZonesPage() {
   }
 
   return (
-    <DashboardLayout title="Zone Management" breadcrumb="Admin">
+    <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
-        <StatCard label="Total Zones" count={counts.total} iconBgClass="bg-stat-orange" icon={<MapPinIcon />} trend={-2.1} />
-        <StatCard label="Active Zones" count={counts.active} iconBgClass="bg-stat-green" icon={<MapPinIcon />} trend={1.5} />
-        <StatCard label="Inactive Zones" count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<MapPinIcon />} trend={2.4} />
-        <StatCard label="Archived Zones" count={counts.archived} iconBgClass="bg-stat-red" icon={<MapPinIcon />} trend={2.4} />
+        <StatCard label={t('stats.total')} count={counts.total} iconBgClass="bg-stat-orange" icon={<MapPinIcon />} trend={-2.1} />
+        <StatCard label={t('stats.active')} count={counts.active} iconBgClass="bg-stat-green" icon={<MapPinIcon />} trend={1.5} />
+        <StatCard label={t('stats.inactive')} count={counts.inactive} iconBgClass="bg-stat-yellow" icon={<MapPinIcon />} trend={2.4} />
+        <StatCard label={t('stats.archived')} count={counts.archived} iconBgClass="bg-stat-red" icon={<MapPinIcon />} trend={2.4} />
       </div>
 
       {/* White content card */}
@@ -76,14 +79,14 @@ export default function ZonesPage() {
         {/* Header row */}
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <h2 className="text-sm md:text-base font-bold text-neutral-900 whitespace-nowrap">
-            Zones List ({filtered.length})
+            {t('listTitle', { count: filtered.length })}
           </h2>
           <div className="flex items-center gap-2 flex-wrap">
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Download size={14} /> Export
+              <Download size={14} /> {tCommon('export')}
             </Button>
             <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5 hidden sm:inline-flex min-h-[44px]">
-              <Upload size={14} /> Import
+              <Upload size={14} /> {tCommon('import')}
             </Button>
             <Button
               variant="primary"
@@ -93,8 +96,8 @@ export default function ZonesPage() {
               className="min-h-[44px]"
             >
               <Plus size={14} />
-              <span className="hidden sm:inline">Add New Zone</span>
-              <span className="sm:hidden">Add</span>
+              <span className="hidden sm:inline">{t('addNew')}</span>
+              <span className="sm:hidden">{t('addNewShort')}</span>
             </Button>
           </div>
         </div>
@@ -105,13 +108,13 @@ export default function ZonesPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <ViewToggle view={view} onChange={setView} />
             <SearchInput
-              placeholder="Search"
+              placeholder={tCommon('search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-32 md:w-40"
             />
             <Button variant="secondary" fullWidth={false} size="md" className="min-h-[44px]">
-              <Filter size={13} /> Filters
+              <Filter size={13} /> {tCommon('filters')}
             </Button>
           </div>
         </div>
@@ -120,8 +123,8 @@ export default function ZonesPage() {
         {filtered.length === 0 ? (
           <EmptyState
             illustration="location"
-            title="No Zones Created Yet"
-            subtitle="Start creating your first zone."
+            title={t('emptyTitle')}
+            subtitle={t('emptySubtitle')}
           />
         ) : view === 'grid' ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -189,6 +192,9 @@ interface ListViewProps {
 }
 
 function ZonesListView({ zones, onEdit, onDelete, onToggleStatus }: ListViewProps) {
+  const t = useTranslations('zones')
+  const tCommon = useTranslations('common')
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -197,15 +203,15 @@ function ZonesListView({ zones, onEdit, onDelete, onToggleStatus }: ListViewProp
             <th className="text-left py-3 px-4 font-medium text-neutral-500 w-8">
               <input type="checkbox" className="rounded" />
             </th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Zone Name</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Restaurants</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Delivery Drivers</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Customers</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Orders</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Creation Date</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Description</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Status</th>
-            <th className="text-left py-3 px-4 font-medium text-neutral-500">Actions</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.zoneName')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.restaurants')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.drivers')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.customers')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.orders')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.creationDate')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.description')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.status')}</th>
+            <th className="text-left py-3 px-4 font-medium text-neutral-500">{t('table.actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -264,11 +270,11 @@ function ZonesListView({ zones, onEdit, onDelete, onToggleStatus }: ListViewProp
       {/* Pagination */}
       <div className="flex items-center justify-end gap-2 pt-4">
         <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5">
-          ← Previous
+          ← {tCommon('previous')}
         </Button>
         <span className="text-sm text-neutral-700 px-2">1</span>
         <Button variant="secondary" fullWidth={false} size="md" className="gap-1.5">
-          Next →
+          {tCommon('next')} →
         </Button>
       </div>
     </div>

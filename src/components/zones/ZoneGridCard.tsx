@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { MapPreview } from '@/components/ui/MapPreview'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { Zone } from '@/lib/mock/zones'
+import { useTranslations } from 'next-intl'
 import { Edit, Trash2 } from 'lucide-react'
 
 interface ZoneGridCardProps {
@@ -14,6 +15,8 @@ interface ZoneGridCardProps {
 }
 
 export function ZoneGridCard({ zone, onEdit, onDelete, onToggleStatus }: ZoneGridCardProps) {
+  const t = useTranslations('zones')
+  const tCommon = useTranslations('common')
   const archived = zone.status === 'archived'
 
   return (
@@ -35,10 +38,10 @@ export function ZoneGridCard({ zone, onEdit, onDelete, onToggleStatus }: ZoneGri
       {/* Stats */}
       <div className="grid grid-cols-4 border-t border-table-border pt-3 text-center gap-1">
         {[
-          { label: 'Restaurants', value: zone.restaurants },
-          { label: 'Drivers', value: zone.drivers },
-          { label: 'Customers', value: zone.customers },
-          { label: 'Orders', value: zone.orders },
+          { label: t('card.restaurants'), value: zone.restaurants },
+          { label: t('card.drivers'), value: zone.drivers },
+          { label: t('card.customers'), value: zone.customers },
+          { label: t('card.orders'), value: zone.orders },
         ].map(({ label, value }) => (
           <div key={label} className="flex flex-col items-center">
             <span className={`font-bold text-sm ${archived ? 'text-table-archived' : 'text-neutral-900'}`}>
@@ -59,7 +62,7 @@ export function ZoneGridCard({ zone, onEdit, onDelete, onToggleStatus }: ZoneGri
           disabled={archived}
           onClick={() => onDelete(zone)}
         >
-          <Trash2 size={14} /> Delete
+          <Trash2 size={14} /> {tCommon('delete')}
         </Button>
         <Button
           variant="primary"
@@ -69,7 +72,7 @@ export function ZoneGridCard({ zone, onEdit, onDelete, onToggleStatus }: ZoneGri
           disabled={archived}
           onClick={() => onEdit(zone)}
         >
-          <Edit size={14} /> Edit Zone
+          <Edit size={14} /> {t('card.editZone')}
         </Button>
       </div>
     </div>

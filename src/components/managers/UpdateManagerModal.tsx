@@ -8,6 +8,7 @@ import { StatusToggle } from '@/components/ui/StatusToggle'
 import { MapPreview } from '@/components/ui/MapPreview'
 import { ProfilePictureUpload } from '@/components/ui/ProfilePictureUpload'
 import { Manager, mockRestaurants } from '@/lib/mock/managers'
+import { useTranslations } from 'next-intl'
 import { Mail, Save, User, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -22,6 +23,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerModalProps) {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   const [active, setActive] = useState(manager.status === 'active')
   const [photo, setPhoto] = useState<string | null>(manager.avatar)
   const [firstName, setFirstName] = useState(manager.firstName)
@@ -65,32 +68,32 @@ export function UpdateManagerModal({ manager, onClose, onSaved }: UpdateManagerM
               onDelete={() => setPhoto(null)}
             />
 
-            <SectionTitle>Personal Information</SectionTitle>
+            <SectionTitle>{t('createModal.personalInfo')}</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-              <Input id="firstName" label="First Name *" value={firstName} onChange={(e) => setFirstName(e.target.value)} leftIcon={<User size={15} />} />
-              <Input id="lastName" label="Last Name *" value={lastName} onChange={(e) => setLastName(e.target.value)} leftIcon={<User size={15} />} />
-              <Input id="email" label="Email *" type="email" value={email} onChange={(e) => setEmail(e.target.value)} leftIcon={<Mail size={15} />} />
-              <PhoneInput label="Phone number" countryCode="DE" dialCode="+41" value={phone} onChange={setPhone} />
+              <Input id="firstName" label={t('createModal.firstName')} value={firstName} onChange={(e) => setFirstName(e.target.value)} leftIcon={<User size={15} />} />
+              <Input id="lastName" label={t('createModal.lastName')} value={lastName} onChange={(e) => setLastName(e.target.value)} leftIcon={<User size={15} />} />
+              <Input id="email" label={t('createModal.email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} leftIcon={<Mail size={15} />} />
+              <PhoneInput label={t('createModal.phone')} countryCode="DE" dialCode="+41" value={phone} onChange={setPhone} />
             </div>
 
-            <SectionTitle>Address Details</SectionTitle>
+            <SectionTitle>{t('createModal.addressDetails')}</SectionTitle>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
-              <Input id="street" label="Street" value={street} onChange={(e) => setStreet(e.target.value)} />
-              <Input id="number" label="N°" value={number} onChange={(e) => setNumber(e.target.value)} />
-              <Input id="zip" label="Zip" value={zip} onChange={(e) => setZip(e.target.value)} />
-              <Input id="city" label="City" value={city} onChange={(e) => setCity(e.target.value)} />
+              <Input id="street" label={t('createModal.street')} value={street} onChange={(e) => setStreet(e.target.value)} />
+              <Input id="number" label={t('createModal.number')} value={number} onChange={(e) => setNumber(e.target.value)} />
+              <Input id="zip" label={t('createModal.zip')} value={zip} onChange={(e) => setZip(e.target.value)} />
+              <Input id="city" label={t('createModal.city')} value={city} onChange={(e) => setCity(e.target.value)} />
             </div>
             <div className="mb-5"><MapPreview /></div>
 
-            <SectionTitle>Assigned Restaurant</SectionTitle>
-            <SelectDropdown options={mockRestaurants} value={restaurant} onChange={setRestaurant} label="Restaurant *" required placeholder="Select Restaurant" />
+            <SectionTitle>{t('createModal.assignedRestaurant')}</SectionTitle>
+            <SelectDropdown options={mockRestaurants} value={restaurant} onChange={setRestaurant} label={t('createModal.restaurantLabel')} required placeholder={t('createModal.selectRestaurant')} />
           </form>
         </div>
 
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-table-border flex-shrink-0">
-          <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>Cancel</Button>
+          <Button type="button" variant="secondary" fullWidth={false} onClick={onClose}>{tCommon('cancel')}</Button>
           <Button type="submit" form="update-form" variant="primary" fullWidth={false}>
-            <Save size={14} /> Save Changes
+            <Save size={14} /> {tCommon('saveChanges')}
           </Button>
         </div>
       </div>

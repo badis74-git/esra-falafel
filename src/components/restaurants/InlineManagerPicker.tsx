@@ -3,6 +3,7 @@
 import { Avatar } from '@/components/ui/Avatar'
 import { mockManagerOptions, RestaurantManager } from '@/lib/mock/restaurants'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import { Check, Plus, Trash2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
@@ -13,6 +14,7 @@ interface InlineManagerPickerProps {
 }
 
 export function InlineManagerPicker({ currentManager, onAssign, onUnassign }: InlineManagerPickerProps) {
+  const t = useTranslations('restaurants')
   const [open, setOpen] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -51,7 +53,7 @@ export function InlineManagerPicker({ currentManager, onAssign, onUnassign }: In
               className="flex items-center gap-1.5 bg-danger text-white text-xs font-medium rounded-md px-3 py-1.5 whitespace-nowrap shadow-lg"
             >
               <Trash2 size={12} />
-              Unassign Manager
+              {t('inlineManager.unassignManager')}
             </button>
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-danger rotate-45" />
           </div>
@@ -78,7 +80,7 @@ export function InlineManagerPicker({ currentManager, onAssign, onUnassign }: In
         {showTooltip && !open && (
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50">
             <div className="bg-neutral-900 text-white text-xs rounded-md px-2.5 py-1.5 whitespace-nowrap shadow-lg">
-              Assign Manager
+              {t('inlineManager.assignManager')}
             </div>
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 rotate-45" />
           </div>

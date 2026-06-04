@@ -3,19 +3,23 @@
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { BrandHeader } from '@/components/ui/BrandHeader'
+import { useTranslations } from 'next-intl'
 import { Mail } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export function ForgotPasswordForm() {
   const router = useRouter()
+  const t = useTranslations('auth.forgotPassword')
+  const tLogin = useTranslations('auth.login')
+  const tCommon = useTranslations('common')
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('Please enter a valid email address.')
+      setEmailError(tLogin('errors.email'))
       return
     }
     setEmailError('')
@@ -27,17 +31,17 @@ export function ForgotPasswordForm() {
       <BrandHeader />
 
       <h1 className="text-[28px] font-bold leading-[36px] text-neutral-900 mb-1">
-        Reset Your Password
+        {t('title')}
       </h1>
       <p className="text-sm text-neutral-500 mb-7">
-        Enter your email address to receive a verification code.
+        {t('subtitle')}
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           id="email"
           type="email"
-          placeholder="email@domain.com"
+          placeholder={tLogin('emailPlaceholder')}
           value={email}
           onChange={(e) => { setEmail(e.target.value); setEmailError('') }}
           leftIcon={<Mail size={16} />}
@@ -45,7 +49,7 @@ export function ForgotPasswordForm() {
         />
 
         <Button type="submit" variant="primary">
-          Send Code
+          {t('sendCode')}
         </Button>
 
         <Button
@@ -53,14 +57,14 @@ export function ForgotPasswordForm() {
           variant="secondary"
           onClick={() => router.push('/login')}
         >
-          Back To Login
+          {t('backToLogin')}
         </Button>
       </form>
 
       <p className="text-sm text-neutral-500 text-center mt-6">
-        Need Support?{' '}
+        {tCommon('needSupport')}{' '}
         <a href="#" className="text-accent-orange font-medium hover:underline">
-          Contact Administrator
+          {tCommon('contactAdmin')}
         </a>
       </p>
     </div>

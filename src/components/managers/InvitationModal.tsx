@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Copy, Plus, User } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,6 +14,8 @@ interface InvitationModalProps {
 const INVITE_URL = 'https://webapp.com/invite/drewcanro'
 
 export function InvitationModal({ email, onClose, onCreateNew }: InvitationModalProps) {
+  const t = useTranslations('managers')
+  const tCommon = useTranslations('common')
   const [copied, setCopied] = useState(false)
 
   function handleCopy() {
@@ -36,10 +39,9 @@ export function InvitationModal({ email, onClose, onCreateNew }: InvitationModal
           </div>
         </div>
 
-        <h2 className="text-lg font-bold text-neutral-900 mb-2">Manager Created Successfully</h2>
+        <h2 className="text-lg font-bold text-neutral-900 mb-2">{t('inviteModal.title')}</h2>
         <p className="text-sm text-neutral-500 mb-5 leading-relaxed">
-          An invitation link has been sent to <span className="font-medium text-neutral-700">{email}</span>.{' '}
-          You can also copy the link below and share it manually.
+          {t('inviteModal.body', { email })}
         </p>
 
         {/* Invite link row */}
@@ -54,15 +56,15 @@ export function InvitationModal({ email, onClose, onCreateNew }: InvitationModal
             className="flex items-center gap-1.5 px-3 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors flex-shrink-0"
           >
             <Copy size={13} />
-            {copied ? 'Copied!' : 'Copy'}
+            {copied ? tCommon('copied') : tCommon('copy')}
           </button>
         </div>
 
         <Button variant="primary" onClick={onClose} className="mb-3">
-          Return To Managers List
+          {t('inviteModal.returnToList')}
         </Button>
         <Button variant="secondary" onClick={onCreateNew}>
-          <Plus size={14} /> Create New Manager
+          <Plus size={14} /> {t('inviteModal.createNew')}
         </Button>
       </div>
     </div>

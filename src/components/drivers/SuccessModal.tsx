@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 import { Check, X } from 'lucide-react'
 
 interface SuccessModalProps {
@@ -9,10 +10,9 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ variant, onClose }: SuccessModalProps) {
-  const title = variant === 'created' ? 'Driver Created Successfully' : 'Changes Saved Successfully'
-  const subtitle = variant === 'created'
-    ? 'The driver has been created and an invitation has been sent.'
-    : 'All edits have been saved and are now visible in the system.'
+  const t = useTranslations('drivers')
+  const title = variant === 'created' ? t('successModal.titleCreated') : t('successModal.titleUpdated')
+  const subtitle = variant === 'created' ? t('successModal.bodyCreated') : t('successModal.bodyUpdated')
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
@@ -27,7 +27,7 @@ export function SuccessModal({ variant, onClose }: SuccessModalProps) {
         </div>
         <h2 className="text-lg font-bold text-neutral-900 mb-2">{title}</h2>
         <p className="text-sm text-neutral-500 mb-6 leading-relaxed">{subtitle}</p>
-        <Button variant="primary" onClick={onClose}>Return To Drivers List</Button>
+        <Button variant="primary" onClick={onClose}>{t('successModal.returnToList')}</Button>
       </div>
     </div>
   )
