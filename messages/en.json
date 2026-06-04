@@ -1,0 +1,550 @@
+{
+  "common": {
+    "search": "Search",
+    "export": "Export",
+    "import": "Import",
+    "filters": "Filters",
+    "add": "Add",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes",
+    "delete": "Delete",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "selectAll": "Select All",
+    "addMore": "+ Add More",
+    "needSupport": "Need Support?",
+    "contactAdmin": "Contact Administrator",
+    "previous": "Previous",
+    "next": "Next",
+    "tabs": {
+      "viewAll": "View all",
+      "active": "Active",
+      "inactive": "Inactive",
+      "archived": "Archived"
+    },
+    "dietary": {
+      "vegan": "Vegan",
+      "meat": "Meat"
+    },
+    "failModal": {
+      "title": "Oops! Something went wrong.",
+      "body": "We couldn't save the changes! Please try again.",
+      "retry": "Try Again",
+      "back": "Back"
+    },
+    "pdfUpload": {
+      "clickToUpload": "Click to upload",
+      "dragAndDrop": "or drag and drop",
+      "maxSize": "PDF (max. 1MB)"
+    },
+    "profileUpload": {
+      "uploadPhoto": "Upload Photo",
+      "changePhoto": "Change Photo",
+      "deletePhoto": "Delete Photo"
+    }
+  },
+  "auth": {
+    "slides": {
+      "slide1": {
+        "title": "Taste Berlin's\nBest Falafel",
+        "subtitle": "Freshly made falafel, shawarma, and vegan favorites crafted daily and delivered from your nearest Esra Falafel branch."
+      },
+      "slide2": {
+        "title": "Quick Pickup\nor Delivery",
+        "subtitle": "Order in seconds, track your delivery in real time, or pick up your meal fresh from the store."
+      },
+      "slide3": {
+        "title": "Vegan or Meat,\nYour Choice",
+        "subtitle": "Choose your bread, fillings, sauces, and extras. Build your perfect meal vegan or meat, just how you like it."
+      }
+    },
+    "login": {
+      "title": "Sign In to your Account",
+      "subtitle": "Welcome! Please enter your details.",
+      "emailPlaceholder": "email@domain.com",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot Password?",
+      "signIn": "Sign in",
+      "orSignInWith": "Or sign in with",
+      "google": "Google",
+      "errors": {
+        "email": "Please enter a valid email address.",
+        "password": "Incorrect password. Please try again."
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset Your Password",
+      "subtitle": "Enter your email address to receive a verification code.",
+      "sendCode": "Send Code",
+      "backToLogin": "Back To Login"
+    },
+    "otp": {
+      "title": "Enter Verification Code",
+      "subtitle": "We've sent a 6-digit code to your email.",
+      "expired": "This code has expired. Please request a new one.",
+      "expiresIn": "Code expires in",
+      "verify": "Verify Code",
+      "resend": "Resend Code"
+    },
+    "resetPassword": {
+      "title": "Create New Password",
+      "subtitle": "Please enter a new secure password for your account.",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "hint": "Must be at least 8 characters with letters, numbers, and a special character.",
+      "confirm": "Confirm Password",
+      "errors": {
+        "weak": "Must be at least 8 characters with letters, numbers, and a special character.",
+        "mismatch": "Passwords do not match."
+      }
+    },
+    "successModal": {
+      "title": "Password Updated Successfully",
+      "body": "Your password has been changed. You can now log in with your new credentials.",
+      "cta": "Let's Go"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "zoneManagement": "Zone Management",
+    "restaurants": "Restaurants",
+    "managers": "Restaurant Managers",
+    "drivers": "Delivery Drivers",
+    "customers": "Customers",
+    "orders": "Orders",
+    "menuManagement": "Menu Management",
+    "menus": "Menus",
+    "products": "Products",
+    "categories": "Categories",
+    "subCategories": "Sub-Categories",
+    "addonsGroup": "Add-ons Group",
+    "addons": "Add-ons",
+    "offers": "Offers",
+    "promotions": "Promotions",
+    "review": "Review",
+    "auditLogs": "Audit Logs",
+    "settings": "Settings"
+  },
+  "topbar": {
+    "breadcrumb": "Admin",
+    "searchPlaceholder": "Search"
+  },
+  "managers": {
+    "pageTitle": "Restaurant Managers",
+    "listTitle": "Restaurant Managers List ({count})",
+    "addNew": "Add New Manager",
+    "addNewShort": "Add",
+    "stats": {
+      "total": "Total Restaurant Manager",
+      "active": "Active Restaurant Manager",
+      "inactive": "Inactive Restaurant Manager",
+      "archived": "Archived Restaurant Manager"
+    },
+    "emptyTitle": "No Active Restaurant Managers",
+    "emptySubtitle": "Send an invitation to add users to your system.",
+    "table": {
+      "fullName": "Full Name",
+      "phone": "Phone",
+      "role": "Role",
+      "restaurantName": "Restaurant Name",
+      "joinDate": "Join Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "role": "Restaurant Manager: {name}"
+    },
+    "createModal": {
+      "title": "Add New Manager",
+      "personalInfo": "Personal Information",
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "email": "Email *",
+      "phone": "Phone Number",
+      "addressDetails": "Address Details",
+      "street": "Street",
+      "number": "N°",
+      "zip": "Zip",
+      "city": "City",
+      "assignedRestaurant": "Assigned Restaurant",
+      "restaurantLabel": "Restaurant *",
+      "selectRestaurant": "Select Restaurant",
+      "firstNamePlaceholder": "First Name",
+      "lastNamePlaceholder": "Last Name",
+      "streetPlaceholder": "Street",
+      "numberPlaceholder": "N°",
+      "zipPlaceholder": "Zip",
+      "cityPlaceholder": "City",
+      "create": "+ Create Manager"
+    },
+    "updateModal": {
+      "title": "Edit Manager"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Manager '{name}'?",
+      "body": "This manager will no longer be able to access the system or manage the assigned store branch. All his activity and history will be saved.",
+      "confirm": "Delete Manager"
+    },
+    "inviteModal": {
+      "title": "Manager Created Successfully",
+      "body": "An invitation link has been sent to {email}. You can also copy the link below and share it manually.",
+      "returnToList": "Return To Managers List",
+      "createNew": "Create New Manager"
+    },
+    "successModal": {
+      "title": "Changes Saved Successfully",
+      "body": "All edits have been saved and are now visible in the system.",
+      "returnToList": "Return To Managers List"
+    },
+    "editProfile": "Edit profile"
+  },
+  "drivers": {
+    "pageTitle": "Delivery Drivers",
+    "listTitle": "Delivery Drivers List ({count})",
+    "addNew": "Add New Delivery Driver",
+    "addNewShort": "Add",
+    "stats": {
+      "total": "Total Delivery Drivers",
+      "active": "Active Delivery Drivers",
+      "inactive": "Inactive Delivery Drivers",
+      "archived": "Archived Delivery Drivers"
+    },
+    "emptyTitle": "No Active Delivery Drivers",
+    "emptySubtitle": "Send an invitation to add users to your system.",
+    "table": {
+      "fullName": "Full Name",
+      "phone": "Phone",
+      "zone": "Zone",
+      "restaurant": "Restaurant",
+      "joinDate": "Join Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "createModal": {
+      "title": "Add New Driver",
+      "personalInfo": "Personal Information",
+      "firstName": "First Name *",
+      "lastName": "Last Name *",
+      "email": "Email *",
+      "phone": "Phone Number",
+      "addressDetails": "Address Details",
+      "street": "Street",
+      "number": "N°",
+      "zip": "Zip",
+      "city": "City",
+      "firstNamePlaceholder": "First Name",
+      "lastNamePlaceholder": "Last Name",
+      "streetPlaceholder": "Street",
+      "numberPlaceholder": "N°",
+      "zipPlaceholder": "Zip",
+      "cityPlaceholder": "City",
+      "assignedZoneRestaurants": "Assigned Zone & Restaurants",
+      "assignedZone": "Assigned Zone *",
+      "selectZone": "Select Zone",
+      "assignedRestaurants": "Assigned Restaurants *",
+      "selectRestaurants": "Select Restaurants",
+      "create": "+ Create Driver"
+    },
+    "updateModal": {
+      "title": "Edit Driver"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Driver '{name}'?",
+      "body": "This delivery driver will no longer be able to access the system or track orders. All his activity and history will be saved.",
+      "confirm": "Delete Driver"
+    },
+    "inviteModal": {
+      "title": "Driver Created Successfully",
+      "body": "An invitation link has been sent to {email}. You can also copy the link below and share it manually.",
+      "returnToList": "Return To Drivers List",
+      "createNew": "Create New Driver"
+    },
+    "successModal": {
+      "titleCreated": "Driver Created Successfully",
+      "bodyCreated": "The driver has been created and an invitation has been sent.",
+      "titleUpdated": "Changes Saved Successfully",
+      "bodyUpdated": "All edits have been saved and are now visible in the system.",
+      "returnToList": "Return To Drivers List"
+    }
+  },
+  "zones": {
+    "pageTitle": "Zone Management",
+    "listTitle": "Zones List ({count})",
+    "addNew": "Add New Zone",
+    "addNewShort": "Add",
+    "stats": {
+      "total": "Total Zones",
+      "active": "Active Zones",
+      "inactive": "Inactive Zones",
+      "archived": "Archived Zones"
+    },
+    "emptyTitle": "No Zones Created Yet",
+    "emptySubtitle": "Start creating your first zone.",
+    "table": {
+      "zoneName": "Zone Name",
+      "restaurants": "Restaurants",
+      "drivers": "Delivery Drivers",
+      "customers": "Customers",
+      "orders": "Orders",
+      "creationDate": "Creation Date",
+      "description": "Description",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "restaurants": "Restaurants",
+      "drivers": "Drivers",
+      "customers": "Customers",
+      "orders": "Orders",
+      "editZone": "Edit Zone"
+    },
+    "createModal": {
+      "title": "Add New Zone",
+      "zoneDetails": "Zone Details",
+      "zoneName": "Zone Name *",
+      "zoneNamePlaceholder": "Enter zone name",
+      "zoneDescription": "Zone Description",
+      "descriptionPlaceholder": "Enter description",
+      "zoneMap": "Zone Map",
+      "assignedRestaurant": "Assigned Restaurant",
+      "selectRestaurant": "Select Restaurant",
+      "assignedDrivers": "Assigned Drivers",
+      "selectDrivers": "Select drivers",
+      "create": "+ Create Zone"
+    },
+    "updateModal": {
+      "title": "Edit Zone"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Zone '{name}'?",
+      "body": "This action is permanent and cannot be undone. Deleting this zone will remove all associated configurations and assignments.",
+      "confirm": "Delete Zone"
+    },
+    "successModal": {
+      "titleCreated": "Zone Created Successfully!",
+      "bodyCreated": "The zone has been created successfully. You can now assign restaurants, configure coverage, and manage operations within this zone.",
+      "titleUpdated": "Changes Saved Successfully",
+      "bodyUpdated": "All edits have been saved and are now visible in the system.",
+      "goToList": "Go To Zones List",
+      "returnToList": "Return To Zones List",
+      "createAnother": "Create Another Zone"
+    }
+  },
+  "restaurants": {
+    "pageTitle": "Restaurants Management",
+    "listTitle": "Restaurants List ({count})",
+    "addNew": "Add New Restaurant",
+    "addNewShort": "Add",
+    "stats": {
+      "total": "Total Restaurants",
+      "active": "Active Restaurants",
+      "inactive": "Inactive Restaurants",
+      "archived": "Archived Restaurants"
+    },
+    "emptyTitle": "No Restaurants Created Yet",
+    "emptySubtitle": "Start creating your first restaurant.",
+    "table": {
+      "restaurantName": "Restaurant Name",
+      "manager": "Restaurant Manager",
+      "phone": "Phone",
+      "creationDate": "Creation Date",
+      "drivers": "Drivers",
+      "customers": "Customers",
+      "orders": "Orders",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "drivers": "Drivers",
+      "customers": "Customers",
+      "orders": "Orders",
+      "editRestaurant": "Edit Restaurant"
+    },
+    "wizard": {
+      "headerCreate": "Add New Restaurant",
+      "submitCreate": "+ Create Restaurant",
+      "submitUpdate": "Save Changes",
+      "steps": {
+        "restaurantInfo": "Restaurant Information",
+        "location": "Location",
+        "operations": "Operations",
+        "onlinePresence": "Online Presence",
+        "overview": "Overview"
+      },
+      "step1": {
+        "title": "1. Restaurant Information",
+        "restaurantName": "Restaurant Name *",
+        "namePlaceholder": "Restaurant Name",
+        "email": "Email *",
+        "phone": "Phone Number *",
+        "assignedManager": "Assigned Manager",
+        "selectManager": "Select Manager",
+        "description": "Restaurant Description",
+        "descriptionPlaceholder": "Enter description"
+      },
+      "step2": {
+        "title": "2. Location",
+        "street": "Street",
+        "number": "N°",
+        "zip": "Zip",
+        "city": "City"
+      },
+      "step3": {
+        "operations": "Operations",
+        "activeMenu": "Active Menu",
+        "selectMenu": "Select Menu",
+        "enableDelivery": "Enable Delivery",
+        "enableCashOnDelivery": "Enable Cash On Delivery",
+        "openingHours": "Opening Days & Hours",
+        "addMore": "+ Add More"
+      },
+      "step4": {
+        "title": "4. Online Presence",
+        "website": "Website Link",
+        "websitePlaceholder": "www.yoursite.com",
+        "facebook": "Facebook Link",
+        "facebookPlaceholder": "https://facebook.com/...",
+        "instagram": "Instagram Link",
+        "instagramPlaceholder": "https://instagram.com/...",
+        "tiktok": "TikTok Link",
+        "tiktokPlaceholder": "https://tiktok.com/..."
+      },
+      "step5": {
+        "restaurantInfo": "Restaurant Information",
+        "restaurantPicture": "Restaurant picture",
+        "noLogo": "No logo",
+        "location": "Location",
+        "operations": "Operations",
+        "openingHours": "Opening Hours",
+        "workingDays": "Working Days",
+        "from": "From",
+        "to": "To",
+        "onlinePresence": "Online Presence",
+        "readOnly": {
+          "restaurantName": "Restaurant Name",
+          "email": "Email",
+          "phone": "Phone Number",
+          "assignedManager": "Assigned Manager",
+          "description": "Restaurant Description",
+          "street": "Street",
+          "number": "N°",
+          "zip": "Zip",
+          "city": "City",
+          "activeMenu": "Active Menu",
+          "website": "Website Link",
+          "facebook": "Facebook Link",
+          "instagram": "Instagram Link",
+          "tiktok": "TikTok Link"
+        }
+      }
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Restaurant '{name}'?",
+      "body": "This action is permanent and cannot be undone.",
+      "confirm": "Delete Restaurant"
+    },
+    "unassignModal": {
+      "title": "Remove Manager Assignment",
+      "body": "Are you sure you want to remove {name} from this restaurant?",
+      "confirm": "Remove Manager",
+      "cancel": "Keep Manager"
+    },
+    "successModal": {
+      "titleCreated": "Restaurant Created Successfully!",
+      "bodyCreated": "Your restaurant has been set up and is ready to go.",
+      "titleUpdated": "Changes Saved Successfully",
+      "bodyUpdated": "All edits have been saved and are now visible in the system.",
+      "goToList": "Go To Restaurants List",
+      "returnToList": "Return To Restaurants List",
+      "createAnother": "Create Another Restaurant"
+    },
+    "inlineManager": {
+      "assignManager": "Assign Manager",
+      "unassign": "Unassign",
+      "unassignManager": "Unassign Manager"
+    }
+  },
+  "menus": {
+    "pageTitle": "Menus Management",
+    "listTitle": "Menus List ({count})",
+    "addNew": "Add New Menu",
+    "showing": "Showing {count} of {total} menus",
+    "stats": {
+      "total": "Total Menus",
+      "active": "Active Menus",
+      "inactive": "Inactive Menus",
+      "archived": "Archived Menus"
+    },
+    "emptyTitle": "No menus created yet",
+    "emptySubtitle": "Create your first menu to organize products for a specific restaurant branch.",
+    "table": {
+      "productName": "Product Name",
+      "products": "Products",
+      "categories": "Categories",
+      "branches": "Branches",
+      "lastUpdated": "Last Updated",
+      "creationDate": "Creation Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "lastUpdated": "Last Updated: {date}",
+      "products": "Products",
+      "categories": "Categories",
+      "editProduct": "Edit Product"
+    },
+    "wizard": {
+      "steps": {
+        "menuInfo": "Menu Information",
+        "categories": "Categories",
+        "products": "Products",
+        "overview": "Overview"
+      },
+      "step1": {
+        "title": "1. Menu Information",
+        "menuName": "Menu Name *",
+        "menuNamePlaceholder": "Enter menu name",
+        "assignedBranches": "Assigned Branches *",
+        "branchesPlaceholder": "Select branches",
+        "description": "Menu Description",
+        "descriptionPlaceholder": "Enter menu description (optional)",
+        "pdfLabel": "Menu PDF Format"
+      },
+      "step2": {
+        "title": "2. Categories",
+        "tableCategoryName": "Category Name",
+        "tableSubCategories": "Sub-categories",
+        "tableProducts": "Products"
+      },
+      "step3": {
+        "title": "3. Products",
+        "tableProductName": "Product Name",
+        "tableCategory": "Category",
+        "tableDietaryType": "Dietary Type",
+        "tablePrice": "Price",
+        "tableDiscount": "Discount"
+      },
+      "miniToolbar": {
+        "filterBtn": "Filters"
+      },
+      "createMenu": "+ Create Menu",
+      "saveChanges": "Save Changes"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Menu '{name}'?",
+      "body": "This action is permanent and cannot be undone.",
+      "confirm": "Delete Menu"
+    },
+    "successModal": {
+      "titleCreated": "Menu Created Successfully!",
+      "bodyCreated": "Your menu has been set up successfully.",
+      "titleUpdated": "Changes Saved Successfully",
+      "bodyUpdated": "All edits have been saved and are now visible in the system.",
+      "goToList": "Go To Menus List",
+      "returnToList": "Return To Menus List",
+      "createAnother": "Create Another Menu"
+    }
+  }
+}

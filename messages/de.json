@@ -1,0 +1,550 @@
+{
+  "common": {
+    "search": "Suchen",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "filters": "Filter",
+    "add": "Hinzufügen",
+    "cancel": "Abbrechen",
+    "saveChanges": "Änderungen speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "duplicate": "Duplizieren",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "selectAll": "Alle auswählen",
+    "addMore": "+ Weitere hinzufügen",
+    "needSupport": "Hilfe benötigt?",
+    "contactAdmin": "Administrator kontaktieren",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "tabs": {
+      "viewAll": "Alle anzeigen",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "archived": "Archiviert"
+    },
+    "dietary": {
+      "vegan": "Vegan",
+      "meat": "Fleisch"
+    },
+    "failModal": {
+      "title": "Hoppla! Etwas ist schiefgelaufen.",
+      "body": "Die Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "retry": "Erneut versuchen",
+      "back": "Zurück"
+    },
+    "pdfUpload": {
+      "clickToUpload": "Zum Hochladen klicken",
+      "dragAndDrop": "oder per Drag & Drop",
+      "maxSize": "PDF (max. 1 MB)"
+    },
+    "profileUpload": {
+      "uploadPhoto": "Foto hochladen",
+      "changePhoto": "Foto ändern",
+      "deletePhoto": "Foto löschen"
+    }
+  },
+  "auth": {
+    "slides": {
+      "slide1": {
+        "title": "Berlins bestes\nFalafel genießen",
+        "subtitle": "Täglich frisch zubereitetes Falafel, Shawarma und vegane Favoriten – direkt von Ihrer nächsten Esra-Falafel-Filiale geliefert."
+      },
+      "slide2": {
+        "title": "Schnelle Abholung\noder Lieferung",
+        "subtitle": "In Sekunden bestellen, die Lieferung in Echtzeit verfolgen oder Ihre frische Mahlzeit direkt im Laden abholen."
+      },
+      "slide3": {
+        "title": "Vegan oder Fleisch –\nIhre Wahl",
+        "subtitle": "Wählen Sie Ihr Brot, Ihre Füllungen, Saucen und Extras. Gestalten Sie Ihre perfekte Mahlzeit – vegan oder mit Fleisch, ganz nach Ihrem Geschmack."
+      }
+    },
+    "login": {
+      "title": "Bei Ihrem Konto anmelden",
+      "subtitle": "Willkommen! Bitte geben Sie Ihre Zugangsdaten ein.",
+      "emailPlaceholder": "email@domain.com",
+      "rememberMe": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen?",
+      "signIn": "Anmelden",
+      "orSignInWith": "Oder anmelden mit",
+      "google": "Google",
+      "errors": {
+        "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "password": "Falsches Passwort. Bitte versuchen Sie es erneut."
+      }
+    },
+    "forgotPassword": {
+      "title": "Passwort zurücksetzen",
+      "subtitle": "Geben Sie Ihre E-Mail-Adresse ein, um einen Bestätigungscode zu erhalten.",
+      "sendCode": "Code senden",
+      "backToLogin": "Zurück zur Anmeldung"
+    },
+    "otp": {
+      "title": "Bestätigungscode eingeben",
+      "subtitle": "Wir haben einen 6-stelligen Code an Ihre E-Mail-Adresse gesendet.",
+      "expired": "Dieser Code ist abgelaufen. Bitte fordern Sie einen neuen an.",
+      "expiresIn": "Code läuft ab in",
+      "verify": "Code bestätigen",
+      "resend": "Code erneut senden"
+    },
+    "resetPassword": {
+      "title": "Neues Passwort erstellen",
+      "subtitle": "Bitte geben Sie ein neues sicheres Passwort für Ihr Konto ein.",
+      "newPassword": "Neues Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "hint": "Mindestens 8 Zeichen mit Buchstaben, Zahlen und einem Sonderzeichen.",
+      "confirm": "Passwort bestätigen",
+      "errors": {
+        "weak": "Mindestens 8 Zeichen mit Buchstaben, Zahlen und einem Sonderzeichen.",
+        "mismatch": "Passwörter stimmen nicht überein."
+      }
+    },
+    "successModal": {
+      "title": "Passwort erfolgreich aktualisiert",
+      "body": "Ihr Passwort wurde geändert. Sie können sich jetzt mit Ihren neuen Anmeldedaten einloggen.",
+      "cta": "Los geht's"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "zoneManagement": "Zonenverwaltung",
+    "restaurants": "Restaurants",
+    "managers": "Restaurantmanager",
+    "drivers": "Lieferfahrer",
+    "customers": "Kunden",
+    "orders": "Bestellungen",
+    "menuManagement": "Menüverwaltung",
+    "menus": "Menüs",
+    "products": "Produkte",
+    "categories": "Kategorien",
+    "subCategories": "Unterkategorien",
+    "addonsGroup": "Zusatzgruppen",
+    "addons": "Zusätze",
+    "offers": "Angebote",
+    "promotions": "Aktionen",
+    "review": "Bewertungen",
+    "auditLogs": "Protokoll",
+    "settings": "Einstellungen"
+  },
+  "topbar": {
+    "breadcrumb": "Admin",
+    "searchPlaceholder": "Suchen"
+  },
+  "managers": {
+    "pageTitle": "Restaurantmanager",
+    "listTitle": "Restaurantmanager-Liste ({count})",
+    "addNew": "Neuen Manager hinzufügen",
+    "addNewShort": "Hinzufügen",
+    "stats": {
+      "total": "Restaurantmanager gesamt",
+      "active": "Aktive Restaurantmanager",
+      "inactive": "Inaktive Restaurantmanager",
+      "archived": "Archivierte Restaurantmanager"
+    },
+    "emptyTitle": "Keine aktiven Restaurantmanager",
+    "emptySubtitle": "Senden Sie eine Einladung, um Benutzer zum System hinzuzufügen.",
+    "table": {
+      "fullName": "Vollständiger Name",
+      "phone": "Telefon",
+      "role": "Rolle",
+      "restaurantName": "Restaurantname",
+      "joinDate": "Eintrittsdatum",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "role": "Restaurantmanager: {name}"
+    },
+    "createModal": {
+      "title": "Neuen Manager hinzufügen",
+      "personalInfo": "Persönliche Informationen",
+      "firstName": "Vorname *",
+      "lastName": "Nachname *",
+      "email": "E-Mail *",
+      "phone": "Telefonnummer",
+      "addressDetails": "Adressangaben",
+      "street": "Straße",
+      "number": "Nr.",
+      "zip": "PLZ",
+      "city": "Stadt",
+      "assignedRestaurant": "Zugeordnetes Restaurant",
+      "restaurantLabel": "Restaurant *",
+      "selectRestaurant": "Restaurant auswählen",
+      "firstNamePlaceholder": "Vorname",
+      "lastNamePlaceholder": "Nachname",
+      "streetPlaceholder": "Straße",
+      "numberPlaceholder": "Nr.",
+      "zipPlaceholder": "PLZ",
+      "cityPlaceholder": "Stadt",
+      "create": "+ Manager erstellen"
+    },
+    "updateModal": {
+      "title": "Manager bearbeiten"
+    },
+    "deleteModal": {
+      "title": "Manager '{name}' wirklich löschen?",
+      "body": "Dieser Manager kann nicht mehr auf das System zugreifen oder den zugewiesenen Filialbetrieb verwalten. Alle Aktivitäten und der Verlauf werden gespeichert.",
+      "confirm": "Manager löschen"
+    },
+    "inviteModal": {
+      "title": "Manager erfolgreich erstellt",
+      "body": "Ein Einladungslink wurde an {email} gesendet. Sie können den Link auch unten kopieren und manuell teilen.",
+      "returnToList": "Zur Managerliste",
+      "createNew": "Neuen Manager erstellen"
+    },
+    "successModal": {
+      "title": "Änderungen erfolgreich gespeichert",
+      "body": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "returnToList": "Zur Managerliste"
+    },
+    "editProfile": "Profil bearbeiten"
+  },
+  "drivers": {
+    "pageTitle": "Lieferfahrer",
+    "listTitle": "Lieferfahrer-Liste ({count})",
+    "addNew": "Neuen Lieferfahrer hinzufügen",
+    "addNewShort": "Hinzufügen",
+    "stats": {
+      "total": "Lieferfahrer gesamt",
+      "active": "Aktive Lieferfahrer",
+      "inactive": "Inaktive Lieferfahrer",
+      "archived": "Archivierte Lieferfahrer"
+    },
+    "emptyTitle": "Keine aktiven Lieferfahrer",
+    "emptySubtitle": "Senden Sie eine Einladung, um Benutzer zum System hinzuzufügen.",
+    "table": {
+      "fullName": "Vollständiger Name",
+      "phone": "Telefon",
+      "zone": "Zone",
+      "restaurant": "Restaurant",
+      "joinDate": "Eintrittsdatum",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "createModal": {
+      "title": "Neuen Fahrer hinzufügen",
+      "personalInfo": "Persönliche Informationen",
+      "firstName": "Vorname *",
+      "lastName": "Nachname *",
+      "email": "E-Mail *",
+      "phone": "Telefonnummer",
+      "addressDetails": "Adressangaben",
+      "street": "Straße",
+      "number": "Nr.",
+      "zip": "PLZ",
+      "city": "Stadt",
+      "firstNamePlaceholder": "Vorname",
+      "lastNamePlaceholder": "Nachname",
+      "streetPlaceholder": "Straße",
+      "numberPlaceholder": "Nr.",
+      "zipPlaceholder": "PLZ",
+      "cityPlaceholder": "Stadt",
+      "assignedZoneRestaurants": "Zone & Restaurants zuweisen",
+      "assignedZone": "Zugewiesene Zone *",
+      "selectZone": "Zone auswählen",
+      "assignedRestaurants": "Zugewiesene Restaurants *",
+      "selectRestaurants": "Restaurants auswählen",
+      "create": "+ Fahrer erstellen"
+    },
+    "updateModal": {
+      "title": "Fahrer bearbeiten"
+    },
+    "deleteModal": {
+      "title": "Fahrer '{name}' wirklich löschen?",
+      "body": "Dieser Lieferfahrer kann nicht mehr auf das System zugreifen oder Bestellungen verfolgen. Alle Aktivitäten und der Verlauf werden gespeichert.",
+      "confirm": "Fahrer löschen"
+    },
+    "inviteModal": {
+      "title": "Fahrer erfolgreich erstellt",
+      "body": "Ein Einladungslink wurde an {email} gesendet. Sie können den Link auch unten kopieren und manuell teilen.",
+      "returnToList": "Zur Fahrerliste",
+      "createNew": "Neuen Fahrer erstellen"
+    },
+    "successModal": {
+      "titleCreated": "Fahrer erfolgreich erstellt",
+      "bodyCreated": "Der Fahrer wurde erstellt und eine Einladung wurde gesendet.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "returnToList": "Zur Fahrerliste"
+    }
+  },
+  "zones": {
+    "pageTitle": "Zonenverwaltung",
+    "listTitle": "Zonenliste ({count})",
+    "addNew": "Neue Zone hinzufügen",
+    "addNewShort": "Hinzufügen",
+    "stats": {
+      "total": "Zonen gesamt",
+      "active": "Aktive Zonen",
+      "inactive": "Inaktive Zonen",
+      "archived": "Archivierte Zonen"
+    },
+    "emptyTitle": "Noch keine Zonen erstellt",
+    "emptySubtitle": "Erstellen Sie Ihre erste Zone.",
+    "table": {
+      "zoneName": "Zonenname",
+      "restaurants": "Restaurants",
+      "drivers": "Lieferfahrer",
+      "customers": "Kunden",
+      "orders": "Bestellungen",
+      "creationDate": "Erstellungsdatum",
+      "description": "Beschreibung",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "restaurants": "Restaurants",
+      "drivers": "Fahrer",
+      "customers": "Kunden",
+      "orders": "Bestellungen",
+      "editZone": "Zone bearbeiten"
+    },
+    "createModal": {
+      "title": "Neue Zone hinzufügen",
+      "zoneDetails": "Zonendetails",
+      "zoneName": "Zonenname *",
+      "zoneNamePlaceholder": "Zonennamen eingeben",
+      "zoneDescription": "Zonenbeschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "zoneMap": "Zonenkarte",
+      "assignedRestaurant": "Zugeordnetes Restaurant",
+      "selectRestaurant": "Restaurant auswählen",
+      "assignedDrivers": "Zugewiesene Fahrer",
+      "selectDrivers": "Fahrer auswählen",
+      "create": "+ Zone erstellen"
+    },
+    "updateModal": {
+      "title": "Zone bearbeiten"
+    },
+    "deleteModal": {
+      "title": "Zone '{name}' wirklich löschen?",
+      "body": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Das Löschen dieser Zone entfernt alle zugehörigen Konfigurationen und Zuweisungen.",
+      "confirm": "Zone löschen"
+    },
+    "successModal": {
+      "titleCreated": "Zone erfolgreich erstellt!",
+      "bodyCreated": "Die Zone wurde erfolgreich erstellt. Sie können jetzt Restaurants zuweisen, die Abdeckung konfigurieren und Abläufe innerhalb dieser Zone verwalten.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "goToList": "Zur Zonenliste",
+      "returnToList": "Zur Zonenliste zurück",
+      "createAnother": "Weitere Zone erstellen"
+    }
+  },
+  "restaurants": {
+    "pageTitle": "Restaurantverwaltung",
+    "listTitle": "Restaurantliste ({count})",
+    "addNew": "Neues Restaurant hinzufügen",
+    "addNewShort": "Hinzufügen",
+    "stats": {
+      "total": "Restaurants gesamt",
+      "active": "Aktive Restaurants",
+      "inactive": "Inaktive Restaurants",
+      "archived": "Archivierte Restaurants"
+    },
+    "emptyTitle": "Noch keine Restaurants erstellt",
+    "emptySubtitle": "Erstellen Sie Ihr erstes Restaurant.",
+    "table": {
+      "restaurantName": "Restaurantname",
+      "manager": "Restaurantmanager",
+      "phone": "Telefon",
+      "creationDate": "Erstellungsdatum",
+      "drivers": "Fahrer",
+      "customers": "Kunden",
+      "orders": "Bestellungen",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "drivers": "Fahrer",
+      "customers": "Kunden",
+      "orders": "Bestellungen",
+      "editRestaurant": "Restaurant bearbeiten"
+    },
+    "wizard": {
+      "headerCreate": "Neues Restaurant hinzufügen",
+      "submitCreate": "+ Restaurant erstellen",
+      "submitUpdate": "Änderungen speichern",
+      "steps": {
+        "restaurantInfo": "Restaurantinformationen",
+        "location": "Standort",
+        "operations": "Betrieb",
+        "onlinePresence": "Online-Präsenz",
+        "overview": "Übersicht"
+      },
+      "step1": {
+        "title": "1. Restaurantinformationen",
+        "restaurantName": "Restaurantname *",
+        "namePlaceholder": "Restaurantname",
+        "email": "E-Mail *",
+        "phone": "Telefonnummer *",
+        "assignedManager": "Zugewiesener Manager",
+        "selectManager": "Manager auswählen",
+        "description": "Restaurantbeschreibung",
+        "descriptionPlaceholder": "Beschreibung eingeben"
+      },
+      "step2": {
+        "title": "2. Standort",
+        "street": "Straße",
+        "number": "Nr.",
+        "zip": "PLZ",
+        "city": "Stadt"
+      },
+      "step3": {
+        "operations": "Betrieb",
+        "activeMenu": "Aktives Menü",
+        "selectMenu": "Menü auswählen",
+        "enableDelivery": "Lieferung aktivieren",
+        "enableCashOnDelivery": "Barzahlung bei Lieferung aktivieren",
+        "openingHours": "Öffnungstage & -zeiten",
+        "addMore": "+ Weitere hinzufügen"
+      },
+      "step4": {
+        "title": "4. Online-Präsenz",
+        "website": "Website-Link",
+        "websitePlaceholder": "www.ihreseite.de",
+        "facebook": "Facebook-Link",
+        "facebookPlaceholder": "https://facebook.com/...",
+        "instagram": "Instagram-Link",
+        "instagramPlaceholder": "https://instagram.com/...",
+        "tiktok": "TikTok-Link",
+        "tiktokPlaceholder": "https://tiktok.com/..."
+      },
+      "step5": {
+        "restaurantInfo": "Restaurantinformationen",
+        "restaurantPicture": "Restaurantbild",
+        "noLogo": "Kein Logo",
+        "location": "Standort",
+        "operations": "Betrieb",
+        "openingHours": "Öffnungszeiten",
+        "workingDays": "Arbeitstage",
+        "from": "Von",
+        "to": "Bis",
+        "onlinePresence": "Online-Präsenz",
+        "readOnly": {
+          "restaurantName": "Restaurantname",
+          "email": "E-Mail",
+          "phone": "Telefonnummer",
+          "assignedManager": "Zugewiesener Manager",
+          "description": "Restaurantbeschreibung",
+          "street": "Straße",
+          "number": "Nr.",
+          "zip": "PLZ",
+          "city": "Stadt",
+          "activeMenu": "Aktives Menü",
+          "website": "Website-Link",
+          "facebook": "Facebook-Link",
+          "instagram": "Instagram-Link",
+          "tiktok": "TikTok-Link"
+        }
+      }
+    },
+    "deleteModal": {
+      "title": "Restaurant '{name}' wirklich löschen?",
+      "body": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden.",
+      "confirm": "Restaurant löschen"
+    },
+    "unassignModal": {
+      "title": "Managerzuweisung entfernen",
+      "body": "Möchten Sie {name} wirklich von diesem Restaurant entfernen?",
+      "confirm": "Manager entfernen",
+      "cancel": "Manager behalten"
+    },
+    "successModal": {
+      "titleCreated": "Restaurant erfolgreich erstellt!",
+      "bodyCreated": "Ihr Restaurant wurde eingerichtet und ist bereit.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "goToList": "Zur Restaurantliste",
+      "returnToList": "Zur Restaurantliste zurück",
+      "createAnother": "Weiteres Restaurant erstellen"
+    },
+    "inlineManager": {
+      "assignManager": "Manager zuweisen",
+      "unassign": "Zuweisung aufheben",
+      "unassignManager": "Manager entfernen"
+    }
+  },
+  "menus": {
+    "pageTitle": "Menüverwaltung",
+    "listTitle": "Menüliste ({count})",
+    "addNew": "Neues Menü hinzufügen",
+    "showing": "{count} von {total} Menüs werden angezeigt",
+    "stats": {
+      "total": "Menüs gesamt",
+      "active": "Aktive Menüs",
+      "inactive": "Inaktive Menüs",
+      "archived": "Archivierte Menüs"
+    },
+    "emptyTitle": "Noch keine Menüs erstellt",
+    "emptySubtitle": "Erstellen Sie Ihr erstes Menü, um Produkte für eine Filiale zu organisieren.",
+    "table": {
+      "productName": "Produktname",
+      "products": "Produkte",
+      "categories": "Kategorien",
+      "branches": "Filialen",
+      "lastUpdated": "Zuletzt aktualisiert",
+      "creationDate": "Erstellungsdatum",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "lastUpdated": "Aktualisiert: {date}",
+      "products": "Produkte",
+      "categories": "Kategorien",
+      "editProduct": "Produkt bearbeiten"
+    },
+    "wizard": {
+      "steps": {
+        "menuInfo": "Menüinformationen",
+        "categories": "Kategorien",
+        "products": "Produkte",
+        "overview": "Übersicht"
+      },
+      "step1": {
+        "title": "1. Menüinformationen",
+        "menuName": "Menüname *",
+        "menuNamePlaceholder": "Menünamen eingeben",
+        "assignedBranches": "Zugewiesene Filialen *",
+        "branchesPlaceholder": "Filialen auswählen",
+        "description": "Menübeschreibung",
+        "descriptionPlaceholder": "Menübeschreibung eingeben (optional)",
+        "pdfLabel": "Menü-PDF-Format"
+      },
+      "step2": {
+        "title": "2. Kategorien",
+        "tableCategoryName": "Kategoriename",
+        "tableSubCategories": "Unterkategorien",
+        "tableProducts": "Produkte"
+      },
+      "step3": {
+        "title": "3. Produkte",
+        "tableProductName": "Produktname",
+        "tableCategory": "Kategorie",
+        "tableDietaryType": "Ernährungstyp",
+        "tablePrice": "Preis",
+        "tableDiscount": "Rabatt"
+      },
+      "miniToolbar": {
+        "filterBtn": "Filter"
+      },
+      "createMenu": "+ Menü erstellen",
+      "saveChanges": "Änderungen speichern"
+    },
+    "deleteModal": {
+      "title": "Menü '{name}' wirklich löschen?",
+      "body": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden.",
+      "confirm": "Menü löschen"
+    },
+    "successModal": {
+      "titleCreated": "Menü erfolgreich erstellt!",
+      "bodyCreated": "Ihr Menü wurde erfolgreich eingerichtet.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "goToList": "Zur Menüliste",
+      "returnToList": "Zur Menüliste zurück",
+      "createAnother": "Weiteres Menü erstellen"
+    }
+  }
+}
