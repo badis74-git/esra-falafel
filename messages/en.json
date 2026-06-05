@@ -836,5 +836,76 @@
       "returnToList": "Return To Add-on Group List",
       "createNew": "+ Create New Add-on Group"
     }
+  },
+  "addOns": {
+    "pageTitle": "Add-ons Management",
+    "breadcrumb": "Admin",
+    "listTitle": "Add-ons List",
+    "addNew": "+ Add New Add-on",
+    "stats": {
+      "total": "Total Add-ons",
+      "active": "Active Add-ons",
+      "inactive": "Inactive Add-ons",
+      "archived": "Archived Add-ons"
+    },
+    "filters": {
+      "all": "View all",
+      "active": "Active",
+      "inactive": "Inactive",
+      "archived": "Archived"
+    },
+    "table": {
+      "name": "Add-on Name",
+      "group": "Add-on Group",
+      "price": "Additional Price",
+      "products": "Products",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "additionalPrice": "Additional Price",
+      "products": "Products",
+      "editGroup": "Edit Add-on Group",
+      "delete": "Delete"
+    },
+    "modal": {
+      "addTitle": "Add New Add-on",
+      "editTitle": "Edit Add-on",
+      "groupRequired": "Selection Add-on Group *",
+      "groupPlaceholder": "Select add-ons group",
+      "nameRequired": "Add-on Name *",
+      "namePlaceholder": "Enter add-on name",
+      "priceLabel": "Additional Price",
+      "pricePlaceholder": "0.00 €",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "createCta": "+ Create Add-on",
+      "saveCta": "Save Changes",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Are You Sure You Want To Delete Add-On '{name}' ?",
+      "subtitle": "The add-on will be permanently removed from all assigned add-on groups and products.",
+      "confirm": "Delete Add-on",
+      "cancel": "Cancel"
+    },
+    "success": {
+      "createdTitle": "Add-on Created Successfully",
+      "createdSubtitle": "The add-on has been added to the add-on group and is now available for management.",
+      "updatedTitle": "Changes Saved Successfully",
+      "updatedSubtitle": "The add-on has been updated successfully.",
+      "returnToList": "Return To Add-on List",
+      "createAnother": "+ Create New Add-on"
+    },
+    "fail": {
+      "title": "Oops! Something went wrong.",
+      "subtitle": "We couldn’t save the changes! Please try again.",
+      "tryAgain": "Try Again",
+      "back": "Back"
+    },
+    "empty": {
+      "title": "No add-ons created yet",
+      "subtitle": "Add options that customers can choose from (e.g., Harissa, Cheese, Fries)."
+    }
   }
 }

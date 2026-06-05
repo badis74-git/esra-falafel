@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
-> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅
+> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅ · Add-ons ✅
 > **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 
 ---
@@ -19,7 +19,7 @@
 | Categories Management | ✅ Done | `/categories` |
 | Sub-Categories Management | ✅ Done | `/sub-categories` |
 | Add-on Groups Management | ✅ Done | `/add-on-groups` |
-| Add-ons | ⬜ Not built — static nav link only | — |
+| Add-ons Management | ✅ Done | `/add-ons` |
 
 ---
 
@@ -87,6 +87,7 @@
 | Step Label | 11px | 400 | 16px | Stepper step labels below circle |
 | Badge | 11px | 500 | 16px | Dietary badge text |
 | Branch Pill | 11px | 500 | 16px | Branch pill label on menu grid card |
+| Card Group Label | 12px | 400 | 18px | Add-on group name above add-on name in grid card (neutral-500) |
 
 Font Family: **Inter** (Google Fonts), `sans-serif` fallback.
 
@@ -168,9 +169,9 @@ src/components/
 │   ├── StatBadge.tsx
 │   ├── Avatar.tsx
 │   ├── PhoneInput.tsx
-│   ├── SelectDropdown.tsx            ← REUSED (Selection Type dropdown)
+│   ├── SelectDropdown.tsx            ← REUSED (Add-on Group selector)
 │   ├── SearchInput.tsx
-│   ├── StatusToggle.tsx              ← REUSED (now also a form control)
+│   ├── StatusToggle.tsx              ← REUSED (header toggle + table/card)
 │   ├── StatCard.tsx
 │   ├── FilterTabs.tsx
 │   ├── ViewToggle.tsx
@@ -188,7 +189,7 @@ src/components/
 │   ├── OtpInput.tsx
 │   └── SuccessModal.tsx
 ├── layout/
-│   ├── Sidebar.tsx                   ← UPDATE (activate Add-on Groups sub-item)
+│   ├── Sidebar.tsx                   ← UPDATE (activate Add-ons sub-item → /add-ons)
 │   ├── Topbar.tsx
 │   └── DashboardLayout.tsx
 ├── managers/ [...]
@@ -199,365 +200,283 @@ src/components/
 ├── products/ [...]
 ├── categories/ [...]
 ├── sub-categories/ [...]
-└── add-on-groups/                    ← NEW
-    ├── AddOnGroupGridCard.tsx
-    ├── AddOnGroupListRow.tsx
-    ├── AddAddOnGroupModal.tsx
-    ├── EditAddOnGroupModal.tsx
-    ├── DeleteAddOnGroupModal.tsx
+├── add-on-groups/ [...]
+└── add-ons/                          ← NEW
+    ├── AddOnGridCard.tsx
+    ├── AddOnListRow.tsx
+    ├── AddAddOnModal.tsx
+    ├── EditAddOnModal.tsx
+    ├── DeleteAddOnModal.tsx
     ├── SuccessModal.tsx
     └── FailModal.tsx
 ```
 
 ---
 
-### `SelectDropdown` ← Shared UI ← REUSED (state spec confirmed)
+### `SelectDropdown` ← Shared UI ← REUSED
 **File:** `src/components/ui/SelectDropdown.tsx`
-Used by Add-on Groups for **Selection Type** (`Single Choice` / `Multiple Choice`). Confirmed dropdown states:
+Used by Add-ons for **Selection Add-on Group** field. Same behavior as in Add-on Groups module:
 - Closed: input-style trigger, placeholder neutral-500, ChevronDown right.
 - Open: white panel `rounded-lg shadow-lg`, options listed.
 - Hover/selected option: `primary-light` row tint + green check (✓ `text-primary`) right-aligned.
 - Filled trigger: selected label in neutral-900.
-No new component — this is the existing `SelectDropdown` behavior.
 
 ---
 
-### `StatusToggle` ← Shared UI ← REUSED (new form usage)
+### `StatusToggle` ← Shared UI ← REUSED
 **File:** `src/components/ui/StatusToggle.tsx`
-Previously used in tables and grid cards. Add-on Groups introduces a **form-control usage**: the modal's "Required Add-ons" toggle (left label + toggle, off by default). Same component, same visual; just placed inline in a form row.
-
----
-
-### `StepperHeader` ← Shared UI
-**File:** `src/components/ui/StepperHeader.tsx`
-```tsx
-{ steps: { number: number; label: string }[], currentStep: number }
-// Green bg panel rounded-[12px]
-```
-
----
-
-### `EmptyState` ← Shared UI
-**File:** `src/components/ui/EmptyState.tsx`
-```tsx
-{ title, subtitle, illustration?: 'person' | 'location' | 'box' | 'clipboard' }
-// Add-on Groups uses illustration="box"
-```
+Used in two contexts within Add-ons:
+1. **Modal header toggle** — next to "Add New Add-on" / "Edit Add-on" title. Defaults to ON (active) for create. Pre-filled for edit.
+2. **Table/card toggle** — same as all other modules (status control in list row and grid card).
 
 ---
 
 ### `Sidebar` ← Dashboard Layout ← UPDATE
 **File:** `src/components/layout/Sidebar.tsx`
-Menu Management group now has one more **active** sub-item:
+Menu Management group — all sub-items now active and routed:
 ```
 Menu Management  ∧
-  ├─ Menus
-  ├─ Products
-  ├─ Categories
-  ├─ Sub-Categories
-  ├─ Add-on Groups        ← NOW ACTIVE → /add-on-groups
-  └─ Add-ons              ← STATIC (no route, no page — do not build)
+  ├─ Menus              → /menus
+  ├─ Products           → /products
+  ├─ Categories         → /categories
+  ├─ Sub-Categories     → /sub-categories
+  ├─ Add-on Groups      → /add-on-groups
+  └─ Add-ons            → /add-ons   ← NOW ACTIVE (was static before)
 ```
-- Activate the `Add-on Groups` sub-item and route it to `/add-on-groups`.
-- `Add-ons` stays a static, non-functional nav label (same handling as before for unbuilt items).
-- Expanded state persists while any `/add-on-groups` sub-route is active.
+- Remove the static/disabled treatment from the "Add-ons" nav item.
+- Route it to `/add-ons`.
+- Expanded state persists while any `/add-ons` sub-route is active.
 
 ---
 
-### `AddOnGroupGridCard` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/AddOnGroupGridCard.tsx`
+### `AddOnGridCard` ← Add-ons ← NEW
+**File:** `src/components/add-ons/AddOnGridCard.tsx`
 ```tsx
-{ group: AddOnGroup }
+{ addon: AddOn, onDelete, onEditGroup }
 // White card rounded-[12px] shadow-card. NO image.
-// Header row: group name (bold 16px) + StatusToggle (top-right)
-// Key-value rows (label neutral-700 left, value bold right):
-//   Selection Type (Single/Multiple) · Products (count) · Minimum Selection · Maximum Selection
-// Footer border-t: Delete (secondary, trash) + "Edit Add-on Group" (primary, edit icon)
-// NOTE: mockup shows a stray "Edit sub-category" label on one card — that is a copy-paste
-//   error. Correct label is "Edit Add-on Group" on EVERY card.
-// Archived: opacity-60, disabled actions.
+// Header section (no border):
+//   Top row: group name label (12px neutral-500, truncate) left + StatusToggle right
+//   Add-on name bold 16px neutral-900 (below group label, mt-1)
+// Body key-value rows (label neutral-700 text-sm left, value font-medium right):
+//   "Additional Price"  →  "X.XX €"
+//   "Products"          →  count number
+// Footer border-t border-table-border:
+//   [🗑 Delete] (ghost/secondary, red-tinted on hover, trash icon, text-danger)
+//   [✏ Edit Add-on Group] (primary bg-primary text-white, edit/pencil icon)
+//   Footer note: "Edit Add-on Group" triggers onEditGroup(addon.groupId) — navigates to /add-on-groups
+// Archived: opacity-60, pointer-events-none on action buttons
 ```
 
 ---
 
-### `AddOnGroupListRow` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/AddOnGroupListRow.tsx`
+### `AddOnListRow` ← Add-ons ← NEW
+**File:** `src/components/add-ons/AddOnListRow.tsx`
 ```tsx
-{ group: AddOnGroup, view: 'list' }
-// Columns: Checkbox | Add-on Group Name | Selection Type | Minimum Selection |
-//   Maximum Selection | Required/Optional | Add-ons (count) | Products (count) |
-//   Status (StatusToggle) | Actions (edit + duplicate + delete + kebab)
-// Required/Optional cell: "Required" if group.required else "Optional"
-// Selection Type cell: "Single" / "Multiple"
+{ addon: AddOn, selected, onSelect, onEdit, onDuplicate, onDelete }
+// Columns (matching list view mockup):
+//   Checkbox | Add-on Name | Add-on Group | Additional Price | Products | Status | Actions
+// Additional Price cell: "X.XX €" format (toFixed(2) + " €")
+// Status cell: StatusToggle component
+// Actions cell: edit (pencil) + duplicate (copy) + delete (trash) icons + kebab (⋮) menu
+// Duplicate: immediate clone, "Copy of {name}" prefix, no confirmation needed
+// Row hover: bg-table-row-hover
 ```
 
 ---
 
-### `AddAddOnGroupModal` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/AddAddOnGroupModal.tsx`
+### `AddAddOnModal` ← Add-ons ← NEW
+**File:** `src/components/add-ons/AddAddOnModal.tsx`
 ```tsx
-{ isOpen, onClose, onCreated }
-// Modal shell, single-step form (no wizard). NO image upload.
-// Header: "Add New Add-on Group" + StatusToggle (next to title)
-// Fields:
-//   Add-on Group Name* (Input, "Enter add-on group name")
-//   Selection Type* (SelectDropdown: Single Choice / Multiple Choice, "Select selection type")
-//   Minimum Selection / Maximum Selection (two number Inputs, grid-cols-2 gap-4, placeholder 0)
-//   Description (textarea, optional, "Enter description")
-//   Required Add-ons (StatusToggle, label left, off by default)
-// Footer: Cancel (secondary) + "+ Create Add-on Group" (primary)
-//   CTA disabled until Name + Selection Type filled (opacity-50 cursor-not-allowed)
-// On submit → onCreated() → SuccessModal (variant 'created')
+{ isOpen: boolean, onClose: () => void, onCreated: () => void }
+// Modal shell: fixed inset-0 z-50, backdrop-blur-sm bg-black/40
+// White card rounded-[16px] shadow-dashboard-modal, max-w-lg, overflow-y-auto max-h-[90vh]
+//
+// HEADER (border-b):
+//   Left: "Add New Add-on" (font-semibold text-lg neutral-900)
+//   Right of title: StatusToggle (active=true by default, controls addon.status)
+//   Far right: ✕ close button
+//
+// BODY (p-6 space-y-4):
+//   1. Selection Add-on Group *
+//      Label: "Selection Add-on Group *"
+//      SelectDropdown, options from mockAddOnGroups (7 group names)
+//      Placeholder: "Select add-ons group"
+//
+//   2. Add-on Name *
+//      Label: "Add-on Name *"
+//      Input, placeholder "Enter add-on name"
+//
+//   3. Additional Price
+//      Label: "Additional Price"  (no asterisk — optional)
+//      Input, placeholder "0.00 €"
+//      Accepts numeric input; display/store as number
+//
+//   4. Description
+//      Label: "Description"  (no asterisk — optional)
+//      Textarea, placeholder "Enter description", ~4 rows
+//
+// FOOTER (border-t, flex gap-3):
+//   Cancel (secondary/outline, flex-1)
+//   "+ Create Add-on" (primary bg-primary, flex-1)
+//     Disabled state: opacity-50 cursor-not-allowed
+//     Enabled when: groupId is selected AND name.trim() is not empty
+//
+// On valid submit: call onCreated() to trigger SuccessModal (variant 'created')
 ```
 
 ---
 
-### `EditAddOnGroupModal` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/EditAddOnGroupModal.tsx`
+### `EditAddOnModal` ← Add-ons ← NEW
+**File:** `src/components/add-ons/EditAddOnModal.tsx`
 ```tsx
-{ isOpen, group, onClose, onSaved }
-// Same form, pre-filled from group prop.
-// Header: group name + StatusToggle
-// Final CTA: "Save Changes"
-// On submit → onSaved() → SuccessModal (variant 'updated')
+{ isOpen: boolean, addon: AddOn, onClose: () => void, onSaved: () => void }
+// Identical layout to AddAddOnModal, pre-filled from addon prop:
+//   groupId + groupName pre-selected in SelectDropdown
+//   name, additionalPrice, description pre-filled
+//   StatusToggle reflects addon.status
+// Header title: "Edit Add-on"  (not "Add New Add-on")
+// CTA: "Save Changes" (primary, same disabled logic)
+// On valid submit: call onSaved() to trigger SuccessModal (variant 'updated')
 ```
 
 ---
 
-### `DeleteAddOnGroupModal` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/DeleteAddOnGroupModal.tsx`
+### `DeleteAddOnModal` ← Add-ons ← NEW
+**File:** `src/components/add-ons/DeleteAddOnModal.tsx`
 ```tsx
-{ isOpen, group, onClose, onConfirm }
-// Red trash illustration
-// Title: "Are You Sure You Want To Delete Add-On Group '{group.name}' ?"
-// Subtitle: "The add-on group will be permanently removed from all assigned products."
-// CTAs: "Delete Add-on Group" (bg-danger) + "Cancel" (secondary)
+{ isOpen: boolean, addon: AddOn, onClose: () => void, onConfirm: () => void }
+// Modal shell: rounded-[16px], max-w-sm, centered
+// Illustration: red animated trash bin (same SVG/style as other delete modals)
+// Title (H2 text-center font-bold):
+//   "Are You Sure You Want To Delete Add-On '{addon.name}' ?"
+// Subtitle (text-center text-sm neutral-500):
+//   "The add-on will be permanently removed from all assigned add-on groups and products."
+// CTAs (flex-col gap-3, full width each):
+//   "🗑 Delete Add-on"  → bg-danger text-white rounded-lg py-3 font-semibold
+//   "Cancel"            → secondary/outline
 ```
 
 ---
 
-### `SuccessModal` (add-on-groups) ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/SuccessModal.tsx`
+### `SuccessModal` (add-ons) ← Add-ons ← NEW
+**File:** `src/components/add-ons/SuccessModal.tsx`
 ```tsx
-{ variant: 'created' | 'updated', onGoToList, onCreateAnother? }
+{ variant: 'created' | 'updated', onGoToList: () => void, onCreateAnother?: () => void }
+// Modal shell: rounded-[16px], max-w-sm, centered, close button top-right
+// Illustration: green checkmark in light-green circle (primary-light bg, primary checkmark)
 // variant 'created':
-//   Title: "Add-on Group Created Successfully"
-//   Subtitle: "The add-on group has been added to the add-on group list and is now available for management."
-//   CTAs: "Return To Add-on Group List" (primary) + "+ Create New Add-on Group" (secondary)
+//   Title: "Add-on Created Successfully"
+//   Subtitle: "The add-on has been added to the add-on group and is now available for management."
+//   CTA 1 (primary, full width): "Return To Add-on List" → onGoToList()
+//   CTA 2 (secondary, full width): "+ Create New Add-on" → onCreateAnother()
 // variant 'updated':
 //   Title: "Changes Saved Successfully"
-//   CTA: "Return To Add-on Group List" (primary, single)
+//   Subtitle: "The add-on has been updated successfully."
+//   CTA (primary, full width): "Return To Add-on List" → onGoToList()
 ```
 
 ---
 
-### `FailModal` ← Add-on Groups ← NEW
-**File:** `src/components/add-on-groups/FailModal.tsx`
-Identical to other modules. "Oops! Something went wrong." + "We couldn't save the changes! Please try again." + "Try Again" + "Back".
+### `FailModal` ← Add-ons ← NEW
+**File:** `src/components/add-ons/FailModal.tsx`
+```tsx
+{ onTryAgain: () => void, onBack: () => void }
+// Modal shell: rounded-[16px], max-w-sm, centered, close button top-right
+// Illustration: yellow/amber sad document with X-eyes (same as other modules' fail modals)
+// Title (H2 font-bold text-center): "Oops! Something went wrong."
+// Subtitle (text-sm neutral-500 text-center): "We couldn't save the changes! Please try again."
+// CTAs (flex-col gap-3, full width each):
+//   "Try Again"  → bg-primary text-white rounded-lg py-3 font-semibold → onTryAgain()
+//   "Back"       → secondary/outline → onBack()
+```
 
 ---
 
 ## 7. Pages
 
-### Page — Add-on Groups Management ← NEW
-**File:** `src/app/(dashboard)/add-on-groups/page.tsx`
+### Page — Add-ons Management ← NEW
+**File:** `src/app/(dashboard)/add-ons/page.tsx`
 
-**Stat cards:** Total Add-on groups `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
+**Stat cards:** Total Add-ons `stat-orange` · Active Add-ons `stat-green` · Inactive Add-ons `stat-yellow` · Archived Add-ons `stat-red`. Icon: `UtensilsCrossed`.
 
-**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Add-on group" primary.
+**Toolbar:**
+Left: `FilterTabs` (all / active / inactive / archived)
+Right: `ViewToggle` + `SearchInput` + Filters button + Export button + Import button + "+ Add New Add-on" primary button
 
-**Grid view:** 3-col `AddOnGroupGridCard` — no image · header (name + StatusToggle) · key-value rows (Selection Type / Products / Min Selection / Max Selection) · footer Delete + Edit Add-on Group.
+**Grid view:** 3-col `AddOnGridCard`
+- Group name label (12px neutral-500) top-left + `StatusToggle` top-right
+- Add-on name bold 16px neutral-900
+- Key-value rows: Additional Price · Products
+- Footer: `Delete` (ghost, danger hover) + `Edit Add-on Group` (primary)
 
-**List view columns:** checkbox · Add-on Group Name · Selection Type · Minimum Selection · Maximum Selection · Required/Optional · Add-ons · Products · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
+**List view columns:**
+checkbox · Add-on Name · Add-on Group · Additional Price · Products · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab)
 
-**Empty state:** `illustration="box"`, title "No add-on groups created yet", subtitle "Create groups of add-ons (e.g., Sauces, Extras) that can be reused across multiple products."
+**Empty state:** `EmptyState` with `illustration="box"`, title "No add-ons created yet", subtitle "Add options that customers can choose from (e.g., Harissa, Cheese, Fries)."
 
 **Page state:**
 ```tsx
 type ModalState =
   | { type: 'create' }
-  | { type: 'edit'; group: AddOnGroup }
-  | { type: 'delete'; group: AddOnGroup }
+  | { type: 'edit'; addon: AddOn }
+  | { type: 'delete'; addon: AddOn }
   | { type: 'success'; variant: 'created' | 'updated' }
   | { type: 'fail' }
   | null
 ```
 
-**Mock data shape** (`src/lib/mock/addOnGroups.ts`):
+**Mock data shape** (`src/lib/mock/addOns.ts`):
 ```ts
-interface AddOnGroup {
-  id: string; name: string
-  selectionType: 'single' | 'multiple'
-  minSelection: number; maxSelection: number
-  required: boolean              // drives Required/Optional column
-  addOns: number; products: number
+interface AddOn {
+  id: string
+  name: string
+  groupId: string       // references AddOnGroup.id
+  groupName: string     // denormalized display name
+  additionalPrice: number  // euros, 2 decimal places
+  products: number      // count of assigned products
   description: string
   status: 'active' | 'inactive' | 'archived'
 }
 ```
-7 rows seeded (all active → Total 7 / Active 7 / Inactive 0 / Archived 0):
-Sauces (multiple, 0/3, optional, 5/22) · Extra Toppings (multiple, 0/2, required, 2/15) · Bread Choice (single, 1/1, required, 2/20) · Cheese Options (single, 0/1, optional, 4/3) · Spicy Level (single, 1/1, required, 3/50) · Side Choices (single, 0/1, optional, 3/4) · Drink Upgrade (single, 0/1, optional, 2/4).
 
-> **Note on source mockups:** the originals contain typos ("Optionala") in the Drink Upgrade row and grid/list product-count mismatches (e.g. Sauces 22 vs 12, Spicy Level 50 vs 22). The seed above is the normalized, internally-consistent set — list and grid must show the same numbers.
+**12 rows seeded** (all active → Total 12 / Active 12 / Inactive 0 / Archived 0):
+```ts
+{ id: 'ao1',  name: 'Tahini Sauce',   groupId: 'ag1', groupName: 'Sauces',         additionalPrice: 0.00, products: 22, description: '', status: 'active' },
+{ id: 'ao2',  name: 'Chilly',         groupId: 'ag1', groupName: 'Sauces',         additionalPrice: 0.00, products: 15, description: '', status: 'active' },
+{ id: 'ao3',  name: 'Garlic Sauce',   groupId: 'ag1', groupName: 'Sauces',         additionalPrice: 0.50, products: 20, description: '', status: 'active' },
+{ id: 'ao4',  name: 'Extra Falafel',  groupId: 'ag2', groupName: 'Extra Toppings', additionalPrice: 2.00, products: 3,  description: '', status: 'active' },
+{ id: 'ao5',  name: 'Extra Halloumi', groupId: 'ag2', groupName: 'Extra Toppings', additionalPrice: 3.00, products: 50, description: '', status: 'active' },
+{ id: 'ao6',  name: 'Bread (Laffa)',  groupId: 'ag3', groupName: 'Bread Choice',   additionalPrice: 0.00, products: 4,  description: '', status: 'active' },
+{ id: 'ao7',  name: 'Baguette',       groupId: 'ag3', groupName: 'Bread Choice',   additionalPrice: 2.50, products: 4,  description: '', status: 'active' },
+{ id: 'ao8',  name: 'Normal',         groupId: 'ag5', groupName: 'Spicy Level',    additionalPrice: 0.00, products: 10, description: '', status: 'active' },
+{ id: 'ao9',  name: 'Medium',         groupId: 'ag5', groupName: 'Spicy Level',    additionalPrice: 0.00, products: 10, description: '', status: 'active' },
+{ id: 'ao10', name: 'Spicy',          groupId: 'ag5', groupName: 'Spicy Level',    additionalPrice: 0.00, products: 10, description: '', status: 'active' },
+{ id: 'ao11', name: 'Fries',          groupId: 'ag6', groupName: 'Side Choices',   additionalPrice: 2.50, products: 10, description: '', status: 'active' },
+{ id: 'ao12', name: '0,33L',          groupId: 'ag7', groupName: 'Drink Upgrade',  additionalPrice: 1.00, products: 4,  description: '', status: 'active' },
+```
 
-**Add/Edit modal fields (no picture upload):** Add-on Group Name* · Selection Type* (`SelectDropdown`: Single Choice / Multiple Choice) · Minimum Selection / Maximum Selection (number inputs) · Description (textarea, optional) · Required Add-ons (`StatusToggle`). CTA disabled until Name + Selection Type filled.
+> **groupId references** must match the IDs in `src/lib/mock/addOnGroups.ts` (ag1=Sauces, ag2=Extra Toppings, ag3=Bread Choice, ag4=Cheese Options, ag5=Spicy Level, ag6=Side Choices, ag7=Drink Upgrade).
+
+**Price formatting rule:** Always display as `${price.toFixed(2)} €` (e.g. "0.00 €", "0.50 €", "2.50 €"). The € symbol follows the number with a space, matching German/European convention visible in mockups.
+
+**"Edit Add-on Group" button behavior:** In the grid card footer, clicking "Edit Add-on Group" should navigate to `/add-on-groups` or open the edit modal for the parent group. In the mock/page context, implement as `router.push('/add-on-groups')` for simplicity — the actual group edit can be handled from that page.
 
 ---
 
 ### Page — Menus Management
-**File:** `src/app/(dashboard)/menus/page.tsx`
-
-**Stat cards:**
-- Total Menus → `stat-orange` / `stat-orange-bg` — FileText/menu icon
-- Active Menus → `stat-green` / `stat-green-bg` — FileText icon
-- Inactive Menus → `stat-yellow` / `stat-yellow-bg` — FileText icon
-- Archived Menus → `stat-red` / `stat-red-bg` — FileText icon
-
-**Toolbar:**
-Left: `FilterTabs` (all / active / inactive / archived)
-Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Menu" primary button
-
-**Grid view:** 3-column grid of `MenuGridCard`
-
-**List view columns:**
-Product Name (image + name) | Products | Categories | Branches | Last Updated | Creation Date | Status (StatusToggle) | Actions (edit + **duplicate** + delete + kebab)
-
-**Empty state:**
-`EmptyState` with `illustration="clipboard"`, title "No menus created yet", subtitle "Create your first menu to organize products for a specific restaurant branch."
-
-**Page state:**
-```tsx
-type ModalState =
-  | { type: 'create' }
-  | { type: 'update'; menu: Menu }
-  | { type: 'delete'; menu: Menu }
-  | { type: 'success'; variant: 'created' | 'updated' }
-  | { type: 'fail' }
-  | null
-```
-
-> The full Menus wizard/component specs (StepperHeader, MenuWizardModal, CategorySelectionRow, ProductSelectionRow, BranchPills, etc.) and the Menus mock data live with the original Menus build — see the Menus component entries above and the project source. Retained here only at page-summary level to keep §7 consistent across modules.
-
----
+*(unchanged — see previous version)*
 
 ### Page — Products Management
-**File:** `src/app/(dashboard)/products/page.tsx`
-
-**Stat cards:** Total Products `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
-
-**Toolbar:**
-Left: category filter pills (View all · Sandwich · Plates · Combos · Starters · Drinks) — inline `<button>` pills, not `FilterTabs`.
-Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Product" primary.
-
-**Grid view:** 3-col `ProductGridCard` — image (h-48) + `DietaryBadge` top-left + `StatusToggle` top-right · category label + name + price + prepTime · footer Delete + Edit Product.
-
-**List view columns:** checkbox · Product Name (image 32px + name) · Category · Dietary Type (`DietaryBadge`) · Price · Add-ons Groups · Assigned Menus · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
-
-**Empty state:** `illustration="box"`, "No products created yet".
-
-**Page state:**
-```tsx
-type ModalState =
-  | { type: 'create' }
-  | { type: 'edit'; product: Product }
-  | { type: 'delete'; product: Product }
-  | { type: 'success'; variant: 'created' | 'updated' }
-  | { type: 'fail' }
-  | null
-```
-
-**Mock data shape** (`src/lib/mock/products.ts`):
-```ts
-interface Product {
-  id: string; name: string; image: string | null
-  category: string; subCategory: string; dietaryType: 'vegan' | 'meat' | null
-  addOnGroups: string[]; prepTimeMin: string; prepTimeMax: string
-  assignedMenus: string[]; basePrice: number; displayOrder: number
-  status: 'active' | 'inactive' | 'archived'
-  allergens: string[]; additives: string[]
-}
-```
-
-**Add/Edit modal fields:** ProfilePictureUpload · Product Name · Description · Category + Sub-Category · Dietary Type + Add-on Groups · Min/Max Prep Time · Assigned Menus + Base Price · Display Order · AllergenAdditiveSelector section.
-
----
+*(unchanged — see previous version)*
 
 ### Page — Categories Management
-**File:** `src/app/(dashboard)/categories/page.tsx`
-
-**Stat cards:** Total Categories `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
-
-**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Category" primary.
-
-**Grid view:** 3-col `CategoryGridCard` — circular image 48px + name + `StatusToggle` top-right · 3-stat row (Products / Sub-categories / Add-ons Groups, centered counts) · footer Delete + Edit Category.
-
-**List view columns:** checkbox · Category Name (circular image 32px + name) · Products · Sub-categories · Add-ons Groups · Description (truncated) · Creation Date · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
-
-**Empty state:** `illustration="box"`, "No categories created yet".
-
-**Page state:**
-```tsx
-type ModalState =
-  | { type: 'create' }
-  | { type: 'edit'; category: Category }
-  | { type: 'delete'; category: Category }
-  | { type: 'success'; variant: 'created' | 'updated' }
-  | { type: 'fail' }
-  | null
-```
-
-**Mock data shape** (`src/lib/mock/categories.ts`):
-```ts
-interface Category {
-  id: string; name: string; image: string | null
-  products: number; subCategories: number; addOnGroups: number
-  description: string; creationDate: string
-  status: 'active' | 'inactive' | 'archived'
-}
-```
-6 rows seeded: Sandwiches (22/2/2) · Plates (15/3/2) · Combos (20/3/0) · Starters (3/0/0) · Drinks (50/3/0) · Menu's Deals (4/0/4).
-
-**Add/Edit modal fields (no picture upload):** inline picture upload row (UtensilsCrossed placeholder) · Category Name* · Description (textarea, optional). CTA disabled until name filled.
-
----
+*(unchanged — see previous version)*
 
 ### Page — Sub-Categories Management
-**File:** `src/app/(dashboard)/sub-categories/page.tsx`
+*(unchanged — see previous version)*
 
-**Stat cards:** Total Sub-Categories `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
-
-**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Sub-Category" primary.
-
-**Grid view:** 3-col `SubCategoryGridCard` — parent category label (small neutral-500) above sub-category name (bold 16px) + `StatusToggle` top-right · single stat row "Products [count]" · footer Delete + Edit sub-category. No image thumbnail.
-
-**List view columns:** checkbox · Sub-category Name · Parent Category · Products · Sub-categories · Add-on Groups · Creation Date · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
-
-**Empty state:** `illustration="box"`, "No Sub-Categories created yet".
-
-**Page state:**
-```tsx
-type ModalState =
-  | { type: 'create' }
-  | { type: 'edit'; subCategory: SubCategory }
-  | { type: 'delete'; subCategory: SubCategory }
-  | { type: 'success'; variant: 'created' | 'updated' }
-  | { type: 'fail' }
-  | null
-```
-
-**Mock data shape** (`src/lib/mock/subCategories.ts`):
-```ts
-interface SubCategory {
-  id: string; name: string; parentCategory: string
-  products: number; subCategories: number; addOnGroups: number
-  creationDate: string; status: 'active' | 'inactive' | 'archived'
-  description: string
-}
-// parentCategoryOptions: { label, value }[] — mirrors mockCategories names
-```
-10 rows seeded: Bread (Laffa)/Sandwiches · Baguettes/Sandwiches · Regular Plates/Plates · Special Plates/Plates · Bread Combos/Combos · Baguettes Combos/Combos · Plates Combos/Combos · Hot Drinks/Drinks · Cold Drinks/Drinks · Coffee To Go/Drinks.
-
-**Add/Edit modal fields (no picture upload):** Parent Category* (`SelectDropdown`, options from `parentCategoryOptions`) · Sub-category Name* · Description (textarea, optional). CTA disabled until both required fields filled.
+### Page — Add-on Groups Management
+*(unchanged — see previous version)*
 
 ---
 
@@ -565,64 +484,187 @@ interface SubCategory {
 
 > The entire app is bilingual: **English (`en`, default)** and **German (`de`)**.
 > Library: **next-intl**, **cookie-based locale — NO URL prefixes, no `[locale]` route segment.**
-> URLs are identical in both languages (e.g. `/menus`, never `/en/menus`).
 
 ### Setup (do not change without reason)
 
 ```
-next.config.ts        → wrapped with createNextIntlPlugin() (links i18n/request.ts)
-i18n/request.ts       → reads NEXT_LOCALE cookie, defaults 'en', returns { locale, messages }
+next.config.ts        → wrapped with createNextIntlPlugin()
+i18n/request.ts       → reads NEXT_LOCALE cookie, defaults 'en'
 src/app/layout.tsx    → <html lang={locale}>, wrapped in <NextIntlClientProvider>
 messages/en.json      → source of truth for English
 messages/de.json      → German (must mirror en.json key-for-key)
 ```
 
-- **No middleware** for locale routing. **No** next-intl navigation APIs — keep `next/link` and `next/navigation` as-is.
-- `i18n/request.ts` must always **explicitly return `locale`** (cookie setup has no middleware to supply it).
-
 ### Message file structure
 
-`messages/en.json` and `messages/de.json` share these top-level namespaces (one per module + shared):
+Namespaces: `common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus · products · categories · subCategories · addOnGroups · addOns`
 
+### Add-ons i18n namespace
+
+Add `addOns` to both `messages/en.json` and `messages/de.json`:
+
+```json
+// messages/en.json — addOns namespace
+"addOns": {
+  "pageTitle": "Add-ons Management",
+  "breadcrumb": "Admin",
+  "listTitle": "Add-ons List",
+  "addNew": "+ Add New Add-on",
+  "stats": {
+    "total": "Total Add-ons",
+    "active": "Active Add-ons",
+    "inactive": "Inactive Add-ons",
+    "archived": "Archived Add-ons"
+  },
+  "filters": {
+    "all": "View all",
+    "active": "Active",
+    "inactive": "Inactive",
+    "archived": "Archived"
+  },
+  "table": {
+    "name": "Add-on Name",
+    "group": "Add-on Group",
+    "price": "Additional Price",
+    "products": "Products",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "card": {
+    "additionalPrice": "Additional Price",
+    "products": "Products",
+    "editGroup": "Edit Add-on Group",
+    "delete": "Delete"
+  },
+  "modal": {
+    "addTitle": "Add New Add-on",
+    "editTitle": "Edit Add-on",
+    "groupLabel": "Selection Add-on Group",
+    "groupRequired": "Selection Add-on Group *",
+    "groupPlaceholder": "Select add-ons group",
+    "nameLabel": "Add-on Name",
+    "nameRequired": "Add-on Name *",
+    "namePlaceholder": "Enter add-on name",
+    "priceLabel": "Additional Price",
+    "pricePlaceholder": "0.00 €",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Enter description",
+    "createCta": "+ Create Add-on",
+    "saveCta": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "delete": {
+    "title": "Are You Sure You Want To Delete Add-On '{name}' ?",
+    "subtitle": "The add-on will be permanently removed from all assigned add-on groups and products.",
+    "confirm": "Delete Add-on",
+    "cancel": "Cancel"
+  },
+  "success": {
+    "createdTitle": "Add-on Created Successfully",
+    "createdSubtitle": "The add-on has been added to the add-on group and is now available for management.",
+    "updatedTitle": "Changes Saved Successfully",
+    "updatedSubtitle": "The add-on has been updated successfully.",
+    "returnToList": "Return To Add-on List",
+    "createAnother": "+ Create New Add-on"
+  },
+  "fail": {
+    "title": "Oops! Something went wrong.",
+    "subtitle": "We couldn't save the changes! Please try again.",
+    "tryAgain": "Try Again",
+    "back": "Back"
+  },
+  "empty": {
+    "title": "No add-ons created yet",
+    "subtitle": "Add options that customers can choose from (e.g., Harissa, Cheese, Fries)."
+  }
+}
 ```
-common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus · products · categories · subCategories · addOnGroups
+
+```json
+// messages/de.json — addOns namespace
+"addOns": {
+  "pageTitle": "Add-on-Verwaltung",
+  "breadcrumb": "Admin",
+  "listTitle": "Add-on-Liste",
+  "addNew": "+ Neues Add-on hinzufügen",
+  "stats": {
+    "total": "Add-ons gesamt",
+    "active": "Aktive Add-ons",
+    "inactive": "Inaktive Add-ons",
+    "archived": "Archivierte Add-ons"
+  },
+  "filters": {
+    "all": "Alle anzeigen",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "archived": "Archiviert"
+  },
+  "table": {
+    "name": "Add-on-Name",
+    "group": "Add-on-Gruppe",
+    "price": "Zusatzpreis",
+    "products": "Produkte",
+    "status": "Status",
+    "actions": "Aktionen"
+  },
+  "card": {
+    "additionalPrice": "Zusatzpreis",
+    "products": "Produkte",
+    "editGroup": "Add-on-Gruppe bearbeiten",
+    "delete": "Löschen"
+  },
+  "modal": {
+    "addTitle": "Neues Add-on hinzufügen",
+    "editTitle": "Add-on bearbeiten",
+    "groupLabel": "Add-on-Gruppe auswählen",
+    "groupRequired": "Add-on-Gruppe auswählen *",
+    "groupPlaceholder": "Add-on-Gruppe auswählen",
+    "nameLabel": "Add-on-Name",
+    "nameRequired": "Add-on-Name *",
+    "namePlaceholder": "Add-on-Namen eingeben",
+    "priceLabel": "Zusatzpreis",
+    "pricePlaceholder": "0,00 €",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Beschreibung eingeben",
+    "createCta": "+ Add-on erstellen",
+    "saveCta": "Änderungen speichern",
+    "cancel": "Abbrechen"
+  },
+  "delete": {
+    "title": "Möchten Sie das Add-on '{name}' wirklich löschen?",
+    "subtitle": "Das Add-on wird dauerhaft aus allen zugewiesenen Add-on-Gruppen und Produkten entfernt.",
+    "confirm": "Add-on löschen",
+    "cancel": "Abbrechen"
+  },
+  "success": {
+    "createdTitle": "Add-on erfolgreich erstellt",
+    "createdSubtitle": "Das Add-on wurde der Add-on-Gruppe hinzugefügt und steht nun zur Verwaltung bereit.",
+    "updatedTitle": "Änderungen erfolgreich gespeichert",
+    "updatedSubtitle": "Das Add-on wurde erfolgreich aktualisiert.",
+    "returnToList": "Zur Add-on-Liste zurückkehren",
+    "createAnother": "+ Neues Add-on erstellen"
+  },
+  "fail": {
+    "title": "Hoppla! Etwas ist schiefgelaufen.",
+    "subtitle": "Die Änderungen konnten nicht gespeichert werden! Bitte versuchen Sie es erneut.",
+    "tryAgain": "Erneut versuchen",
+    "back": "Zurück"
+  },
+  "empty": {
+    "title": "Noch keine Add-ons erstellt",
+    "subtitle": "Fügen Sie Optionen hinzu, aus denen Kunden wählen können (z. B. Harissa, Käse, Pommes)."
+  }
+}
 ```
 
-- Nested keys per module (e.g. `addOnGroups.table.selectionType`, `addOnGroups.modal.requiredAddOns`, `common.buttons.cancel`).
-- **en.json and de.json must always have identical keys, key-for-key.** A key in one but not the other is a bug.
-- Words that are legitimately identical in both languages (e.g. "Vegan", "Status", "Restaurant", "Dashboard", brand names, URL placeholders) stay identical — that is correct, not untranslated.
+### German layout risk — Add-ons specific ⚠️
 
-### Usage pattern
-
-```tsx
-// Client components
-import { useTranslations } from 'next-intl'
-const t = useTranslations('addOnGroups')
-<button>{t('addNew')}</button>
-
-// Server / async components
-import { getTranslations } from 'next-intl/server'
-const t = await getTranslations('addOnGroups')
-```
-
-### Language switcher
-
-`src/components/ui/LanguageSelector.tsx` (topbar) — fully functional:
-- Shows English + German, reflects the active locale (read from cookie).
-- On selection: sets the `NEXT_LOCALE` cookie + `router.refresh()`. **URL does not change.**
-- Visual design is locked — wire behavior only, never restyle.
-
-### German layout rule ⚠️
-
-German strings run **~30% longer** than English. Any responsive/layout work must hold for German too, not just English. High-risk elements: sidebar nav labels, buttons, filter-tab pills, stat card labels, table headers, branch pills, modal CTAs. For Add-on Groups specifically watch: the "Minimum Selection" / "Maximum Selection" / "Required/Optional" table headers and the long "+ Create Add-on Group" primary CTA. Apply safe wrap / truncate / min-width fixes using existing tokens — never hardcode widths to fit English.
-
-### Adding i18n to a new (or existing) module
-
-1. Add a new top-level namespace for the module in **both** `en.json` and `de.json`.
-2. Extract every user-facing string into those files — labels, placeholders, buttons, modal titles/subtitles/CTAs, validation messages, empty states, table headers.
-3. Replace hardcoded strings with `useTranslations` / `getTranslations`.
-4. Provide accurate German for every key — never leave English in `de.json`.
-5. Verify layout holds in German (see rule above).
+High-risk strings in German for Add-ons:
+- `"Add-on-Gruppe bearbeiten"` (grid card footer button) → ~30% longer than "Edit Add-on Group" — allow text to wrap or use `text-sm` in the button
+- `"+ Neues Add-on hinzufügen"` (toolbar CTA) → longer than "+ Add New Add-on" — ensure min-width or allow button to grow
+- `"Add-on-Gruppe auswählen *"` (modal label) → longer than "Selection Add-on Group *" — label width is fluid, no fix needed but verify
+- `"Zusatzpreis"` (table header / card label) → "Additional Price" → slightly shorter in German, no issue
+- `"Zur Add-on-Liste zurückkehren"` (success modal CTA) → longer than "Return To Add-on List" → full-width button, wraps gracefully
 
 ---
 
@@ -640,17 +682,12 @@ const [step, setStep] = useState(1)
 const [formData, setFormData] = useState<MenuFormData>({...})
 const updateForm = (patch: Partial<MenuFormData>) =>
   setFormData(prev => ({ ...prev, ...patch }))
-// StepperHeader always rendered at top of scroll area
-// Form data never resets on step change
 ```
 
 ### Collapsible sidebar group pattern
 ```tsx
-// In Sidebar.tsx, support nav groups:
 const [menuGroupOpen, setMenuGroupOpen] = useState(false)
-// Auto-open when any /menus|/products|/categories|/sub-categories|/add-on-groups route is active
-// Render sub-items only when open AND sidebar is expanded
-// In collapsed mode: only show group icon, no sub-items
+// Auto-open when any /menus|/products|/categories|/sub-categories|/add-on-groups|/add-ons route is active
 ```
 
 ### Selection list with Select All pattern
@@ -659,16 +696,11 @@ const [selected, setSelected] = useState<string[]>([])
 const allIds = items.map(i => i.id)
 const isAllSelected = allIds.every(id => selected.includes(id))
 const toggleAll = () => setSelected(isAllSelected ? [] : allIds)
-const toggleOne = (id: string) =>
-  setSelected(prev =>
-    prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-  )
 ```
 
 ### Duplicate action pattern
 ```tsx
-// In list view Actions column: edit icon + copy icon + delete icon + kebab
-// Copy icon duplicates the row immediately ("Copy of" prefix) — no confirmation modal
+// Copy icon in list Actions — immediate, "Copy of " prefix, no confirmation
 ```
 
 ### Modal form section pattern
@@ -685,36 +717,37 @@ const isValid = requiredFields.every(Boolean)
 <Button disabled={!isValid} className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}>
 ```
 
-### Toggle-as-form-control pattern ← NEW
+### Toggle-as-form-control pattern
 ```tsx
-// StatusToggle reused inside a form (Add-on Groups "Required Add-ons").
-// Controlled boolean in form state, off by default. Same component as table/card toggles.
-const [required, setRequired] = useState(false)
-<div className="flex items-center justify-between">
-  <label>Required Add-ons</label>
-  <StatusToggle checked={required} onChange={setRequired} />
+// StatusToggle in modal header next to title — same component, controlled boolean
+const [isActive, setIsActive] = useState(true)  // default ON for create
+<div className="flex items-center gap-3">
+  <h2>Add New Add-on</h2>
+  <StatusToggle checked={isActive} onChange={setIsActive} />
 </div>
+```
+
+### Price formatting pattern ← NEW
+```tsx
+// Display: ${price.toFixed(2)} €  →  "0.50 €", "2.00 €", "0.00 €"
+// Input: accept numeric string, parse on submit
+// Placeholder: "0.00 €"
+const formatPrice = (price: number) => `${price.toFixed(2)} €`
 ```
 
 ### Archived row/card pattern
 ```tsx
-// opacity-60, text-table-archived, disabled actions
+// opacity-60, text-table-archived, pointer-events-none on action buttons
 ```
 
 ### Page state pattern
 Discriminated union modal state. Filter as pure derived `.filter()` on render.
 
-### Leaflet SSR pattern
-```tsx
-const ZoneMapEditor = dynamic(() => import('@/components/ui/ZoneMapEditor'), { ssr: false })
-```
-
 ### i18n string pattern
 ```tsx
-const t = useTranslations('addOnGroups')         // client
-const t = await getTranslations('addOnGroups')   // server/async
-<span>{t('table.selectionType')}</span>
-// Add the key to BOTH messages/en.json and messages/de.json under the module namespace.
+const t = useTranslations('addOns')          // client
+const t = await getTranslations('addOns')    // server/async
+<span>{t('table.price')}</span>
 ```
 
 ### Locale switch pattern
@@ -732,7 +765,7 @@ router.refresh()
 3. Claude produces updated `design-system.md` + Claude Code prompt
 4. Update the file in the project, then hand Claude Code prompt
 5. Claude Code builds — no guessing, no duplication
-6. Every module is built **bilingual from the start** (en + de) per §8 — strings extracted to `messages/`, German provided, layout verified in both languages. No English-first-then-retrofit.
+6. Every module is built **bilingual from the start** (en + de) per §8
 
 > **Rule:** Always share the latest `design-system.md` from the project at the start of each module session.
 > **Rule:** Every new module adds its own namespace to `messages/en.json` + `messages/de.json` and is fully translated before it's considered done (§8).

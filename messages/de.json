@@ -836,5 +836,76 @@
       "returnToList": "Zur Zusatzgruppen-Liste",
       "createNew": "+ Neue Zusatzgruppe erstellen"
     }
+  },
+  "addOns": {
+    "pageTitle": "Add-on-Verwaltung",
+    "breadcrumb": "Admin",
+    "listTitle": "Add-on-Liste",
+    "addNew": "+ Neues Add-on hinzufügen",
+    "stats": {
+      "total": "Add-ons gesamt",
+      "active": "Aktive Add-ons",
+      "inactive": "Inaktive Add-ons",
+      "archived": "Archivierte Add-ons"
+    },
+    "filters": {
+      "all": "Alle anzeigen",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "archived": "Archiviert"
+    },
+    "table": {
+      "name": "Add-on-Name",
+      "group": "Add-on-Gruppe",
+      "price": "Zusatzpreis",
+      "products": "Produkte",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "additionalPrice": "Zusatzpreis",
+      "products": "Produkte",
+      "editGroup": "Add-on-Gruppe bearbeiten",
+      "delete": "Löschen"
+    },
+    "modal": {
+      "addTitle": "Neues Add-on hinzufügen",
+      "editTitle": "Add-on bearbeiten",
+      "groupRequired": "Add-on-Gruppe auswählen *",
+      "groupPlaceholder": "Add-on-Gruppe auswählen",
+      "nameRequired": "Add-on-Name *",
+      "namePlaceholder": "Add-on-Namen eingeben",
+      "priceLabel": "Zusatzpreis",
+      "pricePlaceholder": "0,00 €",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "createCta": "+ Add-on erstellen",
+      "saveCta": "Änderungen speichern",
+      "cancel": "Abbrechen"
+    },
+    "delete": {
+      "title": "Möchten Sie das Add-on '{name}' wirklich löschen?",
+      "subtitle": "Das Add-on wird dauerhaft aus allen zugewiesenen Add-on-Gruppen und Produkten entfernt.",
+      "confirm": "Add-on löschen",
+      "cancel": "Abbrechen"
+    },
+    "success": {
+      "createdTitle": "Add-on erfolgreich erstellt",
+      "createdSubtitle": "Das Add-on wurde der Add-on-Gruppe hinzugefügt und steht nun zur Verwaltung bereit.",
+      "updatedTitle": "Änderungen erfolgreich gespeichert",
+      "updatedSubtitle": "Das Add-on wurde erfolgreich aktualisiert.",
+      "returnToList": "Zur Add-on-Liste zurückkehren",
+      "createAnother": "+ Neues Add-on erstellen"
+    },
+    "fail": {
+      "title": "Hoppla! Etwas ist schiefgelaufen.",
+      "subtitle": "Die Änderungen konnten nicht gespeichert werden! Bitte versuchen Sie es erneut.",
+      "tryAgain": "Erneut versuchen",
+      "back": "Zurück"
+    },
+    "empty": {
+      "title": "Noch keine Add-ons erstellt",
+      "subtitle": "Fügen Sie Optionen hinzu, aus denen Kunden wählen können (z. B. Harissa, Käse, Pommes)."
+    }
   }
 }
