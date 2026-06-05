@@ -466,6 +466,116 @@
       "unassignManager": "Unassign Manager"
     }
   },
+  "products": {
+    "pageTitle": "Products Management",
+    "listTitle": "Products List ({count})",
+    "addNew": "+ Add New Product",
+    "showing": "Showing {count} of {total} products",
+    "stats": {
+      "total": "Total Products",
+      "active": "Active Products",
+      "inactive": "Inactive Products",
+      "archived": "Archived Products"
+    },
+    "tabs": {
+      "viewAll": "View all",
+      "sandwich": "Sandwich",
+      "plates": "Plates",
+      "combos": "Combos",
+      "starters": "Starters",
+      "drinks": "Drinks"
+    },
+    "emptyTitle": "No products yet",
+    "emptySubtitle": "Start building your menu by adding your first product. You'll be able to assign it to categories and customize it with add-ons.",
+    "table": {
+      "productName": "Product Name",
+      "category": "Category",
+      "dietaryType": "Dietary Type",
+      "price": "Price",
+      "addOns": "Add-ons",
+      "assignedMenus": "Assigned Menus",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "delete": "Delete",
+      "editProduct": "Edit Product"
+    },
+    "form": {
+      "addTitle": "Add New Product",
+      "editTitle": "Edit Product",
+      "productPicture": "Product picture",
+      "pictureHint": "PNG, JPEG under 15MB",
+      "uploadPicture": "Upload Picture",
+      "productName": "Product Name *",
+      "productNamePlaceholder": "Enter product name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "category": "Category *",
+      "categoryPlaceholder": "Select category",
+      "subCategory": "Sub-Category *",
+      "subCategoryPlaceholder": "Select sub-category",
+      "dietaryType": "Dietary Type *",
+      "dietaryTypePlaceholder": "Select dietary type",
+      "addOnGroups": "Add-on Groups",
+      "addOnGroupsPlaceholder": "Select groups",
+      "minPrepTime": "Minimum Preparation Time *",
+      "maxPrepTime": "Maximum Preparation Time *",
+      "prepTimePlaceholder": "00 min",
+      "assignedMenus": "Assigned Menus",
+      "assignedMenusPlaceholder": "Select menus",
+      "basePrice": "Base Price *",
+      "basePricePlaceholder": "0 €",
+      "displayOrder": "Display Order",
+      "displayOrderPlaceholder": "1",
+      "allergensTitle": "Allergens & Additives",
+      "allergensLabel": "Allergens",
+      "additivesLabel": "Additives",
+      "selectAll": "Select All",
+      "createProduct": "+ Create Product",
+      "saveChanges": "Save Changes",
+      "allergenLabels": {
+        "A": "A. Cereals containing gluten",
+        "B": "B. Crustaceans",
+        "C": "C. Eggs",
+        "D": "D. Fish",
+        "E": "E. Peanuts",
+        "F": "F. Soy",
+        "G": "G. Milk and dairy products (incl. lactose)",
+        "H": "H. Nuts",
+        "I": "I. Celery",
+        "J": "J. Mustard",
+        "K": "K. Sesame seeds",
+        "L": "L. Sulfur dioxide and sulfites",
+        "M": "M. Lupin",
+        "N": "N. Molluscs"
+      },
+      "additiveLabels": {
+        "1": "1. With coloring agents",
+        "2": "2. With preservatives",
+        "3": "3. With antioxidants",
+        "4": "4. With flavor enhancers",
+        "5": "5. Contains sodium-nitrite",
+        "6": "6. Contains caffeine",
+        "7": "7. Contains a source of phenylalanine",
+        "8": "8. With sweeteners",
+        "9": "9. Blackened"
+      }
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Products '{name}' ?",
+      "body": "The product will be permanently removed from all assigned menus and categories.",
+      "confirm": "Delete Product"
+    },
+    "successModal": {
+      "titleCreated": "Product Created Successfully",
+      "bodyCreated": "The product has been added to the menu and is now available for management.",
+      "titleUpdated": "Changes Saved Successfully",
+      "bodyUpdated": "All edits have been saved and are now visible in the system.",
+      "returnToList": "Return To Products List",
+      "createNew": "+ Create New Product"
+    }
+  },
   "menus": {
     "pageTitle": "Menus Management",
     "listTitle": "Menus List ({count})",

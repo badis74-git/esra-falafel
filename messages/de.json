@@ -466,6 +466,116 @@
       "unassignManager": "Manager entfernen"
     }
   },
+  "products": {
+    "pageTitle": "Produktverwaltung",
+    "listTitle": "Produktliste ({count})",
+    "addNew": "+ Neues Produkt",
+    "showing": "{count} von {total} Produkten",
+    "stats": {
+      "total": "Produkte gesamt",
+      "active": "Aktive Produkte",
+      "inactive": "Inaktive Produkte",
+      "archived": "Archivierte Produkte"
+    },
+    "tabs": {
+      "viewAll": "Alle",
+      "sandwich": "Sandwich",
+      "plates": "Teller",
+      "combos": "Kombis",
+      "starters": "Vorspeisen",
+      "drinks": "Getränke"
+    },
+    "emptyTitle": "Noch keine Produkte",
+    "emptySubtitle": "Beginnen Sie mit dem Aufbau Ihres Menüs, indem Sie Ihr erstes Produkt hinzufügen. Sie können es Kategorien zuweisen und mit Add-ons anpassen.",
+    "table": {
+      "productName": "Produktname",
+      "category": "Kategorie",
+      "dietaryType": "Ernährungstyp",
+      "price": "Preis",
+      "addOns": "Add-ons",
+      "assignedMenus": "Zugewiesene Menüs",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "delete": "Löschen",
+      "editProduct": "Produkt bearbeiten"
+    },
+    "form": {
+      "addTitle": "Neues Produkt hinzufügen",
+      "editTitle": "Produkt bearbeiten",
+      "productPicture": "Produktbild",
+      "pictureHint": "PNG, JPEG unter 15 MB",
+      "uploadPicture": "Bild hochladen",
+      "productName": "Produktname *",
+      "productNamePlaceholder": "Produktnamen eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "category": "Kategorie *",
+      "categoryPlaceholder": "Kategorie auswählen",
+      "subCategory": "Unterkategorie *",
+      "subCategoryPlaceholder": "Unterkategorie auswählen",
+      "dietaryType": "Ernährungstyp *",
+      "dietaryTypePlaceholder": "Ernährungstyp auswählen",
+      "addOnGroups": "Add-on-Gruppen",
+      "addOnGroupsPlaceholder": "Gruppen auswählen",
+      "minPrepTime": "Mindest-Zubereitungszeit *",
+      "maxPrepTime": "Max. Zubereitungszeit *",
+      "prepTimePlaceholder": "00 min",
+      "assignedMenus": "Zugewiesene Menüs",
+      "assignedMenusPlaceholder": "Menüs auswählen",
+      "basePrice": "Grundpreis *",
+      "basePricePlaceholder": "0 €",
+      "displayOrder": "Reihenfolge",
+      "displayOrderPlaceholder": "1",
+      "allergensTitle": "Allergene & Zusatzstoffe",
+      "allergensLabel": "Allergene",
+      "additivesLabel": "Zusatzstoffe",
+      "selectAll": "Alle auswählen",
+      "createProduct": "+ Produkt erstellen",
+      "saveChanges": "Änderungen speichern",
+      "allergenLabels": {
+        "A": "A. Glutenhaltiges Getreide",
+        "B": "B. Krebstiere",
+        "C": "C. Eier",
+        "D": "D. Fisch",
+        "E": "E. Erdnüsse",
+        "F": "F. Soja",
+        "G": "G. Milch und Milchprodukte (einschl. Laktose)",
+        "H": "H. Schalenfrüchte",
+        "I": "I. Sellerie",
+        "J": "J. Senf",
+        "K": "K. Sesam",
+        "L": "L. Schwefeldioxid und Sulfite",
+        "M": "M. Lupinen",
+        "N": "N. Weichtiere"
+      },
+      "additiveLabels": {
+        "1": "1. Mit Farbstoffen",
+        "2": "2. Mit Konservierungsstoffen",
+        "3": "3. Mit Antioxidationsmitteln",
+        "4": "4. Mit Geschmacksverstärkern",
+        "5": "5. Enthält Natriumnitrit",
+        "6": "6. Enthält Koffein",
+        "7": "7. Enthält eine Phenylalaninquelle",
+        "8": "8. Mit Süßungsmitteln",
+        "9": "9. Geschwärzt"
+      }
+    },
+    "deleteModal": {
+      "title": "Produkt '{name}' wirklich löschen?",
+      "body": "Das Produkt wird dauerhaft aus allen zugewiesenen Menüs und Kategorien entfernt.",
+      "confirm": "Produkt löschen"
+    },
+    "successModal": {
+      "titleCreated": "Produkt erfolgreich erstellt",
+      "bodyCreated": "Das Produkt wurde zum Menü hinzugefügt und steht nun zur Verwaltung bereit.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "returnToList": "Zur Produktliste",
+      "createNew": "+ Neues Produkt erstellen"
+    }
+  },
   "menus": {
     "pageTitle": "Menüverwaltung",
     "listTitle": "Menüliste ({count})",

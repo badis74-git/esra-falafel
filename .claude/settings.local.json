@@ -15,7 +15,8 @@
       "Bash(mkdir -p /Users/macbookairm1/Documents/esra-falafel/src/app/\\\\\\(dashboard\\\\\\)/menus)",
       "Bash(npm list *)",
       "Bash(node *)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "Bash(npx next *)"
     ]
   }
 }
