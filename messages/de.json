@@ -766,5 +766,75 @@
       "returnToList": "Zur Unterkategorieliste zurück",
       "createNew": "+ Neue Unterkategorie erstellen"
     }
+  },
+  "addOnGroups": {
+    "pageTitle": "Zusatzgruppen-Verwaltung",
+    "listTitle": "Zusatzgruppen-Liste ({count})",
+    "addNew": "+ Neue Zusatzgruppe hinzufügen",
+    "showing": "{count} von {total} Zusatzgruppen angezeigt",
+    "stats": {
+      "total": "Zusatzgruppen gesamt",
+      "active": "Aktive Zusatzgruppen",
+      "inactive": "Inaktive Zusatzgruppen",
+      "archived": "Archivierte Zusatzgruppen"
+    },
+    "emptyTitle": "Noch keine Zusatzgruppen erstellt",
+    "emptySubtitle": "Erstellen Sie Gruppen von Zusätzen (z. B. Saucen, Extras), die für mehrere Produkte wiederverwendet werden können.",
+    "table": {
+      "name": "Zusatzgruppenname",
+      "selectionType": "Auswahltyp",
+      "minSelection": "Mindestauswahl",
+      "maxSelection": "Maximalauswahl",
+      "requiredOptional": "Pflichtfeld/Optional",
+      "addOns": "Zusätze",
+      "products": "Produkte",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "selectionType": "Auswahltyp",
+      "products": "Produkte",
+      "minSelection": "Mindestauswahl",
+      "maxSelection": "Maximalauswahl",
+      "delete": "Löschen",
+      "edit": "Zusatzgruppe bearbeiten"
+    },
+    "selectionTypes": {
+      "single": "Einfach",
+      "multiple": "Mehrfach",
+      "singleChoice": "Einzelauswahl",
+      "multipleChoice": "Mehrfachauswahl"
+    },
+    "required": "Pflichtfeld",
+    "optional": "Optional",
+    "form": {
+      "addTitle": "Neue Zusatzgruppe hinzufügen",
+      "editTitle": "Zusatzgruppe bearbeiten",
+      "name": "Zusatzgruppenname *",
+      "namePlaceholder": "Zusatzgruppenname eingeben",
+      "selectionType": "Auswahltyp *",
+      "selectionTypePlaceholder": "Auswahltyp auswählen",
+      "minSelection": "Mindestauswahl",
+      "maxSelection": "Maximalauswahl",
+      "selectionPlaceholder": "0",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "requiredAddOns": "Pflicht-Zusätze",
+      "create": "+ Zusatzgruppe erstellen",
+      "saveChanges": "Änderungen speichern"
+    },
+    "deleteModal": {
+      "title": "Zusatzgruppe '{name}' wirklich löschen?",
+      "body": "Die Zusatzgruppe wird dauerhaft aus allen zugewiesenen Produkten entfernt.",
+      "confirm": "Zusatzgruppe löschen"
+    },
+    "successModal": {
+      "title": "Zusatzgruppe erfolgreich erstellt",
+      "body": "Die Zusatzgruppe wurde zur Liste hinzugefügt und ist nun zur Verwaltung verfügbar.",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "titleUpdated": "Änderungen erfolgreich gespeichert",
+      "returnToList": "Zur Zusatzgruppen-Liste",
+      "createNew": "+ Neue Zusatzgruppe erstellen"
+    }
   }
 }

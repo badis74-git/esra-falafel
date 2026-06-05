@@ -766,5 +766,75 @@
       "returnToList": "Return To Sub-category List",
       "createNew": "+ Create New Sub-category"
     }
+  },
+  "addOnGroups": {
+    "pageTitle": "Add-on groups Management",
+    "listTitle": "Add-on groups List ({count})",
+    "addNew": "+ Add New Add-on group",
+    "showing": "Showing {count} of {total} add-on groups",
+    "stats": {
+      "total": "Total Add-on groups",
+      "active": "Active Add-on groups",
+      "inactive": "Inactive Add-on groups",
+      "archived": "Archived Add-on groups"
+    },
+    "emptyTitle": "No add-on groups created yet",
+    "emptySubtitle": "Create groups of add-ons (e.g., Sauces, Extras) that can be reused across multiple products.",
+    "table": {
+      "name": "Add-on Group Name",
+      "selectionType": "Selection Type",
+      "minSelection": "Minimum Selection",
+      "maxSelection": "Maximum Selection",
+      "requiredOptional": "Required/Optional",
+      "addOns": "Add-ons",
+      "products": "Products",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "selectionType": "Selection Type",
+      "products": "Products",
+      "minSelection": "Minimum Selection",
+      "maxSelection": "Maximum Selection",
+      "delete": "Delete",
+      "edit": "Edit Add-on Group"
+    },
+    "selectionTypes": {
+      "single": "Single",
+      "multiple": "Multiple",
+      "singleChoice": "Single Choice",
+      "multipleChoice": "Multiple Choice"
+    },
+    "required": "Required",
+    "optional": "Optional",
+    "form": {
+      "addTitle": "Add New Add-on Group",
+      "editTitle": "Edit Add-on Group",
+      "name": "Add-on Group Name *",
+      "namePlaceholder": "Enter add-on group name",
+      "selectionType": "Selection Type *",
+      "selectionTypePlaceholder": "Select selection type",
+      "minSelection": "Minimum Selection",
+      "maxSelection": "Maximum Selection",
+      "selectionPlaceholder": "0",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "requiredAddOns": "Required Add-ons",
+      "create": "+ Create Add-on Group",
+      "saveChanges": "Save Changes"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Add-On Group '{name}' ?",
+      "body": "The add-on group will be permanently removed from all assigned products.",
+      "confirm": "Delete Add-on Group"
+    },
+    "successModal": {
+      "title": "Add-on Group Created Successfully",
+      "body": "The add-on group has been added to the add-on group list and is now available for management.",
+      "bodyUpdated": "All changes have been saved and are now visible in the system.",
+      "titleUpdated": "Changes Saved Successfully",
+      "returnToList": "Return To Add-on Group List",
+      "createNew": "+ Create New Add-on Group"
+    }
   }
 }

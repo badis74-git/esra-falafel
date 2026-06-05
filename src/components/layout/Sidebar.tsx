@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useState, useEffect } from 'react'
 
-const MENU_GROUP_ROOTS = ['/menus', '/products', '/categories', '/sub-categories', '/addons-group', '/addons']
+const MENU_GROUP_ROOTS = ['/menus', '/products', '/categories', '/sub-categories', '/add-on-groups', '/addons']
 
 interface SidebarProps {
   collapsed: boolean
@@ -39,7 +39,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
     { label: t('products'), href: '/products' },
     { label: t('categories'), href: '/categories' },
     { label: t('subCategories'), href: '/sub-categories' },
-    { label: t('addonsGroup'), href: '/addons-group' },
+    { label: t('addonsGroup'), href: '/add-on-groups' },
     { label: t('addons'), href: '/addons' },
   ]
 

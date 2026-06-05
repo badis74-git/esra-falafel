@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
-> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅
+> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅
 > **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 
 ---
@@ -18,6 +18,8 @@
 | Products Management | ✅ Done | `/products` |
 | Categories Management | ✅ Done | `/categories` |
 | Sub-Categories Management | ✅ Done | `/sub-categories` |
+| Add-on Groups Management | ✅ Done | `/add-on-groups` |
+| Add-ons | ⬜ Not built — static nav link only | — |
 
 ---
 
@@ -27,7 +29,7 @@
 |---|---|---|---|
 | Primary | `#2D6A3F` | `primary` | Buttons, checkbox fill, active states, sidebar bg |
 | Primary Dark | `#1E4D2B` | `primary-dark` | Button hover, left auth panel gradient end |
-| Primary Light | `#EAF2EC` | `primary-light` | Subtle green tints, success check bg |
+| Primary Light | `#EAF2EC` | `primary-light` | Subtle green tints, success check bg, dropdown selected-row tint |
 | Accent Orange | `#C97B2E` | `accent-orange` | "Forgot Password?", "Contact Administrator" links |
 | Neutral 900 | `#1A1A1A` | `neutral-900` | Headings |
 | Neutral 700 | `#3D3D3D` | `neutral-700` | Body text |
@@ -166,9 +168,9 @@ src/components/
 │   ├── StatBadge.tsx
 │   ├── Avatar.tsx
 │   ├── PhoneInput.tsx
-│   ├── SelectDropdown.tsx
+│   ├── SelectDropdown.tsx            ← REUSED (Selection Type dropdown)
 │   ├── SearchInput.tsx
-│   ├── StatusToggle.tsx
+│   ├── StatusToggle.tsx              ← REUSED (now also a form control)
 │   ├── StatCard.tsx
 │   ├── FilterTabs.tsx
 │   ├── ViewToggle.tsx
@@ -179,90 +181,50 @@ src/components/
 │   ├── ZoneMapEditor.tsx
 │   ├── StepperHeader.tsx
 │   ├── TimeInput.tsx
-│   ├── PdfUploadZone.tsx            ← NEW
-│   └── DietaryBadge.tsx             ← NEW
+│   ├── PdfUploadZone.tsx
+│   └── DietaryBadge.tsx
 ├── auth/
 │   ├── AuthLayout.tsx
 │   ├── OtpInput.tsx
 │   └── SuccessModal.tsx
 ├── layout/
-│   ├── Sidebar.tsx                  ← UPDATE (collapsible nav group)
+│   ├── Sidebar.tsx                   ← UPDATE (activate Add-on Groups sub-item)
 │   ├── Topbar.tsx
 │   └── DashboardLayout.tsx
 ├── managers/ [...]
 ├── drivers/ [...]
 ├── zones/ [...]
 ├── restaurants/ [...]
-├── menus/
-│   ├── MenuGridCard.tsx
-│   ├── BranchPills.tsx
-│   ├── CategorySelectionRow.tsx
-│   ├── ProductSelectionRow.tsx
-│   ├── MenuWizardModal.tsx
-│   ├── UpdateMenuModal.tsx
-│   ├── DeleteMenuModal.tsx
-│   ├── SuccessModal.tsx
-│   └── FailModal.tsx
-├── products/
-│   ├── ProductGridCard.tsx
-│   ├── ProductListRow.tsx
-│   ├── AddProductModal.tsx
-│   ├── EditProductModal.tsx
-│   ├── DeleteProductModal.tsx
-│   ├── AllergenAdditiveSelector.tsx
-│   ├── SuccessModal.tsx
-│   └── FailModal.tsx
-├── categories/
-│   ├── CategoryGridCard.tsx
-│   ├── CategoryListRow.tsx
-│   ├── AddCategoryModal.tsx
-│   ├── EditCategoryModal.tsx
-│   ├── DeleteCategoryModal.tsx
-│   ├── SuccessModal.tsx
-│   └── FailModal.tsx
-└── sub-categories/
-    ├── SubCategoryGridCard.tsx
-    ├── SubCategoryListRow.tsx
-    ├── AddSubCategoryModal.tsx
-    ├── EditSubCategoryModal.tsx
-    ├── DeleteSubCategoryModal.tsx
+├── menus/ [...]
+├── products/ [...]
+├── categories/ [...]
+├── sub-categories/ [...]
+└── add-on-groups/                    ← NEW
+    ├── AddOnGroupGridCard.tsx
+    ├── AddOnGroupListRow.tsx
+    ├── AddAddOnGroupModal.tsx
+    ├── EditAddOnGroupModal.tsx
+    ├── DeleteAddOnGroupModal.tsx
     ├── SuccessModal.tsx
     └── FailModal.tsx
 ```
 
 ---
 
-### `PdfUploadZone` ← Shared UI ← NEW
-**File:** `src/components/ui/PdfUploadZone.tsx`
-```tsx
-{ file?: { name: string; date: string; size: string } | null
-  onUpload: (file: File) => void
-  onView?: () => void
-  onDownload?: () => void
-  onDelete: () => void
-}
-// Empty state:
-//   Dashed border box rounded-lg p-6, centered content
-//   Upload cloud icon (neutral-400)
-//   "Click to upload" (text-primary, underline) + " or drag and drop" (neutral-500)
-//   "PDF (max. 1MB)" small neutral-500 below
-//   Entire zone is a drag target + hidden file input
-// Filled state:
-//   White row with border rounded-lg p-4
-//   PDF icon (red) + file name (bold 14px) + date · size (neutral-500 small)
-//   Right side: Eye icon + Download icon + Trash icon (danger color)
-```
+### `SelectDropdown` ← Shared UI ← REUSED (state spec confirmed)
+**File:** `src/components/ui/SelectDropdown.tsx`
+Used by Add-on Groups for **Selection Type** (`Single Choice` / `Multiple Choice`). Confirmed dropdown states:
+- Closed: input-style trigger, placeholder neutral-500, ChevronDown right.
+- Open: white panel `rounded-lg shadow-lg`, options listed.
+- Hover/selected option: `primary-light` row tint + green check (✓ `text-primary`) right-aligned.
+- Filled trigger: selected label in neutral-900.
+No new component — this is the existing `SelectDropdown` behavior.
 
 ---
 
-### `DietaryBadge` ← Shared UI ← NEW
-**File:** `src/components/ui/DietaryBadge.tsx`
-```tsx
-{ type: 'vegan' | 'meat' }
-// 'vegan': bg-vegan-badge-bg text-vegan-badge-text "🌱 Vegan"
-// 'meat':  bg-meat-badge-bg text-meat-badge-text "🥩 Meat"
-// rounded-full px-2 py-0.5 text-[11px] font-medium
-```
+### `StatusToggle` ← Shared UI ← REUSED (new form usage)
+**File:** `src/components/ui/StatusToggle.tsx`
+Previously used in tables and grid cards. Add-on Groups introduces a **form-control usage**: the modal's "Required Add-ons" toggle (left label + toggle, off by default). Same component, same visual; just placed inline in a form row.
 
 ---
 
@@ -271,8 +233,6 @@ src/components/
 ```tsx
 { steps: { number: number; label: string }[], currentStep: number }
 // Green bg panel rounded-[12px]
-// Menus steps: [{number:1,label:'Menu Information'},{number:2,label:'Categories'},
-//   {number:3,label:'Products'},{number:4,label:'Overview'}]
 ```
 
 ---
@@ -281,196 +241,170 @@ src/components/
 **File:** `src/components/ui/EmptyState.tsx`
 ```tsx
 { title, subtitle, illustration?: 'person' | 'location' | 'box' | 'clipboard' }
-// 'clipboard': notepad/clipboard illustration — used by Menus empty state
+// Add-on Groups uses illustration="box"
 ```
 
 ---
 
 ### `Sidebar` ← Dashboard Layout ← UPDATE
 **File:** `src/components/layout/Sidebar.tsx`
-Sidebar must support **collapsible nav groups**. Menu Management item expands to show sub-items:
+Menu Management group now has one more **active** sub-item:
 ```
-Menu Management  ∧ (chevron toggles open/close)
+Menu Management  ∧
   ├─ Menus
   ├─ Products
   ├─ Categories
   ├─ Sub-Categories
-  ├─ Add-ons Group
-  └─ Add-ons
+  ├─ Add-on Groups        ← NOW ACTIVE → /add-on-groups
+  └─ Add-ons              ← STATIC (no route, no page — do not build)
 ```
-- Group header: same style as nav item + ChevronUp/Down right
-- Sub-items: indented `pl-8`, smaller text (12px), no icon, same hover style
-- Expanded state persists while any sub-route is active
-- In collapsed sidebar: show only the group icon, no sub-items visible
+- Activate the `Add-on Groups` sub-item and route it to `/add-on-groups`.
+- `Add-ons` stays a static, non-functional nav label (same handling as before for unbuilt items).
+- Expanded state persists while any `/add-on-groups` sub-route is active.
 
 ---
 
-### `BranchPills` ← Menus ← NEW
-**File:** `src/components/menus/BranchPills.tsx`
+### `AddOnGroupGridCard` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/AddOnGroupGridCard.tsx`
 ```tsx
-{ branches: string[], maxVisible?: number }
-// Each pill: bg-primary text-white rounded-full px-2 py-0.5 text-[11px]
-//   Store icon (10px) + branch name
-// maxVisible (default 2): if branches.length > maxVisible, show first N pills
-//   then "+{remaining}" pill (same style)
-// Laid out as flex-wrap gap-1
+{ group: AddOnGroup }
+// White card rounded-[12px] shadow-card. NO image.
+// Header row: group name (bold 16px) + StatusToggle (top-right)
+// Key-value rows (label neutral-700 left, value bold right):
+//   Selection Type (Single/Multiple) · Products (count) · Minimum Selection · Maximum Selection
+// Footer border-t: Delete (secondary, trash) + "Edit Add-on Group" (primary, edit icon)
+// NOTE: mockup shows a stray "Edit sub-category" label on one card — that is a copy-paste
+//   error. Correct label is "Edit Add-on Group" on EVERY card.
+// Archived: opacity-60, disabled actions.
 ```
 
 ---
 
-### `CategorySelectionRow` ← Menus ← NEW
-**File:** `src/components/menus/CategorySelectionRow.tsx`
+### `AddOnGroupListRow` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/AddOnGroupListRow.tsx`
 ```tsx
-{ category: { id, name, image, products: number, subCategories: string[] }
-  selected: boolean
-  onToggle: () => void
-  expanded: boolean
-  onExpandToggle: () => void
-}
-// Row layout: Checkbox | food image (40px rounded-lg) | name (bold) |
-//   Products count + label | Sub-categories count + label | ChevronDown/Up
-// Expanded panel below row:
-//   "Sub-categories :" label + sub-category checkboxes inline
-//   If no sub-categories: "There is no sub-categories." (neutral-500)
-// Selected row: Checkbox checked (primary green)
-// Border-b between rows, white bg
+{ group: AddOnGroup, view: 'list' }
+// Columns: Checkbox | Add-on Group Name | Selection Type | Minimum Selection |
+//   Maximum Selection | Required/Optional | Add-ons (count) | Products (count) |
+//   Status (StatusToggle) | Actions (edit + duplicate + delete + kebab)
+// Required/Optional cell: "Required" if group.required else "Optional"
+// Selection Type cell: "Single" / "Multiple"
 ```
 
 ---
 
-### `ProductSelectionRow` ← Menus ← NEW
-**File:** `src/components/menus/ProductSelectionRow.tsx`
-```tsx
-{ product: { id, name, image, category, dietaryType, price, prepTime }
-  selected: boolean
-  onToggle: () => void
-  view: 'grid' | 'list'
-}
-// Grid view row layout:
-//   Checkbox | food image (56px rounded-lg) | DietaryBadge (top of name area) |
-//   category (small neutral-500) | name (bold 14px) |
-//   price (text-primary bold, right) + prepTime (neutral-500 small, right)
-// List view columns:
-//   Checkbox | image (32px) | Product Name | Category | Dietary Type | Price | Discount
-// Selected: Checkbox checked (primary green)
-```
-
----
-
-### `MenuGridCard` ← Menus ← NEW
-**File:** `src/components/menus/MenuGridCard.tsx`
-```tsx
-{ menu: Menu }
-// White card rounded-[12px] shadow-card overflow-hidden
-// Top section: menu image full width h-48 object-cover + StatusToggle (top-right, absolute)
-// Below image: BranchPills (overlapping image bottom or just below)
-// Body p-4:
-//   Name (bold 16px) + "Last Updated: {date}" (neutral-500 small) on same row
-//   Products count (bold) + "Products" label | Categories count + "Categories" label
-// Footer border-t pt-3:
-//   Delete (secondary, trash icon) + Edit Product (primary, edit icon)
-// Archived: opacity-60, disabled buttons
-```
-
----
-
-### `MenuWizardModal` ← Menus ← NEW
-**File:** `src/components/menus/MenuWizardModal.tsx`
+### `AddAddOnGroupModal` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/AddAddOnGroupModal.tsx`
 ```tsx
 { isOpen, onClose, onCreated }
-// 4-step wizard. max-w-2xl, scrollable body.
-// Header: "Add New Menu" + StatusToggle
-// StepperHeader: steps 01–04
-//
-// Step 1 — Menu Information:
-//   ProfilePictureUpload (menu picture)
-//   Section "1. Menu Information" (text-primary)
-//   Menu Name* (Input, 2-col, menu icon left) + Assigned Branches* (MultiSelectDropdown, 2-col)
-//   Menu Description (textarea, full width, optional)
-//   Menu PDF Format (PdfUploadZone, full width)
-//
-// Step 2 — Categories:
-//   Section header "2. Categories"
-//   Mini toolbar: ViewToggle (Grid/List) + SearchInput + Filters button
-//   "Select All" checkbox row
-//   Grid view: list of CategorySelectionRow (expandable)
-//   List view: table — Category Name (image+name) | Sub-categories (comma) | Products
-//   Both views: Checkbox per row, Select All works
-//   Next enabled when at least 1 category selected
-//
-// Step 3 — Products:
-//   Section header "3. Products"
-//   Mini toolbar: ViewToggle + SearchInput + Filters
-//   Category filter tabs: View all · [selected category names from step 2]
-//   "Select All" checkbox row
-//   ProductSelectionRow list (paginated — Previous/1/2/3/.../8/9/10/Next)
-//   Grid view: image + badge + category + name + price + prepTime per row
-//   List view: table — Product Name | Category | Dietary Type | Price | Discount
-//   Next enabled when at least 1 product selected
-//
-// Step 4 — Overview (read-only):
-//   Full summary: ProfilePictureUpload (read-only) + Step 1 fields + Step 2 categories list + Step 3 products list
-//   Same mini toolbar + category tabs visible in overview for categories and products sections
-//   CTA: "+ Create Menu" (primary, full width)
-//
-// Footer navigation:
-//   Step 1: Cancel | Next → (disabled until menuName + branches filled)
-//   Steps 2–3: ← Previous | Next →
-//   Step 4: ← Previous | + Create Menu
-// On submit → onCreated() → SuccessModal
+// Modal shell, single-step form (no wizard). NO image upload.
+// Header: "Add New Add-on Group" + StatusToggle (next to title)
+// Fields:
+//   Add-on Group Name* (Input, "Enter add-on group name")
+//   Selection Type* (SelectDropdown: Single Choice / Multiple Choice, "Select selection type")
+//   Minimum Selection / Maximum Selection (two number Inputs, grid-cols-2 gap-4, placeholder 0)
+//   Description (textarea, optional, "Enter description")
+//   Required Add-ons (StatusToggle, label left, off by default)
+// Footer: Cancel (secondary) + "+ Create Add-on Group" (primary)
+//   CTA disabled until Name + Selection Type filled (opacity-50 cursor-not-allowed)
+// On submit → onCreated() → SuccessModal (variant 'created')
 ```
 
 ---
 
-### `UpdateMenuModal` ← Menus ← NEW
-**File:** `src/components/menus/UpdateMenuModal.tsx`
+### `EditAddOnGroupModal` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/EditAddOnGroupModal.tsx`
 ```tsx
-{ isOpen, menu, onClose, onSaved }
-// Same 4-step wizard, pre-filled from menu prop
-// Header: menu name + StatusToggle
+{ isOpen, group, onClose, onSaved }
+// Same form, pre-filled from group prop.
+// Header: group name + StatusToggle
 // Final CTA: "Save Changes"
-// On submit → onSaved() → SuccessModal (variant: 'updated')
+// On submit → onSaved() → SuccessModal (variant 'updated')
 ```
 
 ---
 
-### `DeleteMenuModal` ← Menus ← NEW
-**File:** `src/components/menus/DeleteMenuModal.tsx`
+### `DeleteAddOnGroupModal` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/DeleteAddOnGroupModal.tsx`
 ```tsx
-{ isOpen, menu, onClose, onConfirm }
+{ isOpen, group, onClose, onConfirm }
 // Red trash illustration
-// Title: "Are You Sure You Want To Delete Menu '{menu.name}' ?"
-// Subtitle: "This action is permanent and cannot be undone."
-// CTAs: "Delete Menu" (bg-danger) + "Cancel" (secondary)
+// Title: "Are You Sure You Want To Delete Add-On Group '{group.name}' ?"
+// Subtitle: "The add-on group will be permanently removed from all assigned products."
+// CTAs: "Delete Add-on Group" (bg-danger) + "Cancel" (secondary)
 ```
 
 ---
 
-### `SuccessModal` (menus) ← Menus ← NEW
-**File:** `src/components/menus/SuccessModal.tsx`
+### `SuccessModal` (add-on-groups) ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/SuccessModal.tsx`
 ```tsx
 { variant: 'created' | 'updated', onGoToList, onCreateAnother? }
 // variant 'created':
-//   Title: "Menu Created Successfully!"
-//   Subtitle: "Your menu has been set up successfully."
-//   CTAs: "Go To Menus List" (primary) + "+ Create Another Menu" (secondary)
+//   Title: "Add-on Group Created Successfully"
+//   Subtitle: "The add-on group has been added to the add-on group list and is now available for management."
+//   CTAs: "Return To Add-on Group List" (primary) + "+ Create New Add-on Group" (secondary)
 // variant 'updated':
 //   Title: "Changes Saved Successfully"
-//   Subtitle: "All edits have been saved and are now visible in the system."
-//   CTA: "Return To Menus List" (primary, single)
+//   CTA: "Return To Add-on Group List" (primary, single)
 ```
 
 ---
 
-### `FailModal` ← Menus ← NEW
-**File:** `src/components/menus/FailModal.tsx`
-Identical to other modules. "Oops! Something went wrong." + "Try Again" + "Back".
+### `FailModal` ← Add-on Groups ← NEW
+**File:** `src/components/add-on-groups/FailModal.tsx`
+Identical to other modules. "Oops! Something went wrong." + "We couldn't save the changes! Please try again." + "Try Again" + "Back".
 
 ---
 
 ## 7. Pages
 
-### Page — Menus Management ← NEW
+### Page — Add-on Groups Management ← NEW
+**File:** `src/app/(dashboard)/add-on-groups/page.tsx`
+
+**Stat cards:** Total Add-on groups `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
+
+**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Add-on group" primary.
+
+**Grid view:** 3-col `AddOnGroupGridCard` — no image · header (name + StatusToggle) · key-value rows (Selection Type / Products / Min Selection / Max Selection) · footer Delete + Edit Add-on Group.
+
+**List view columns:** checkbox · Add-on Group Name · Selection Type · Minimum Selection · Maximum Selection · Required/Optional · Add-ons · Products · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
+
+**Empty state:** `illustration="box"`, title "No add-on groups created yet", subtitle "Create groups of add-ons (e.g., Sauces, Extras) that can be reused across multiple products."
+
+**Page state:**
+```tsx
+type ModalState =
+  | { type: 'create' }
+  | { type: 'edit'; group: AddOnGroup }
+  | { type: 'delete'; group: AddOnGroup }
+  | { type: 'success'; variant: 'created' | 'updated' }
+  | { type: 'fail' }
+  | null
+```
+
+**Mock data shape** (`src/lib/mock/addOnGroups.ts`):
+```ts
+interface AddOnGroup {
+  id: string; name: string
+  selectionType: 'single' | 'multiple'
+  minSelection: number; maxSelection: number
+  required: boolean              // drives Required/Optional column
+  addOns: number; products: number
+  description: string
+  status: 'active' | 'inactive' | 'archived'
+}
+```
+7 rows seeded (all active → Total 7 / Active 7 / Inactive 0 / Archived 0):
+Sauces (multiple, 0/3, optional, 5/22) · Extra Toppings (multiple, 0/2, required, 2/15) · Bread Choice (single, 1/1, required, 2/20) · Cheese Options (single, 0/1, optional, 4/3) · Spicy Level (single, 1/1, required, 3/50) · Side Choices (single, 0/1, optional, 3/4) · Drink Upgrade (single, 0/1, optional, 2/4).
+
+> **Note on source mockups:** the originals contain typos ("Optionala") in the Drink Upgrade row and grid/list product-count mismatches (e.g. Sauces 22 vs 12, Spicy Level 50 vs 22). The seed above is the normalized, internally-consistent set — list and grid must show the same numbers.
+
+**Add/Edit modal fields (no picture upload):** Add-on Group Name* · Selection Type* (`SelectDropdown`: Single Choice / Multiple Choice) · Minimum Selection / Maximum Selection (number inputs) · Description (textarea, optional) · Required Add-ons (`StatusToggle`). CTA disabled until Name + Selection Type filled.
+
+---
+
+### Page — Menus Management
 **File:** `src/app/(dashboard)/menus/page.tsx`
 
 **Stat cards:**
@@ -502,71 +436,7 @@ type ModalState =
   | null
 ```
 
-**Mock data:**
-```ts
-// src/lib/mock/menus.ts
-export const mockMenus = [
-  {
-    id: '1', name: 'Vegan Falafel Menu',
-    image: null,
-    branches: ['Esraa Falafel 1', 'Esraa Falafel 2'],
-    products: 37, categories: 8,
-    lastUpdated: '06/05/2026', creationDate: '11/02/2026',
-    status: 'active',
-    description: '',
-    assignedBranches: ['Esraa Falafel 1', 'Esraa Falafel 2'],
-    selectedCategories: ['Sandwiches','Plates','Combos','Drinks','Starters','Menu\'s'],
-    selectedProducts: [],
-  },
-  {
-    id: '2', name: 'Our Menu',
-    image: null,
-    branches: ['Esraa Falafel 3'],
-    products: 25, categories: 7,
-    lastUpdated: '03/01/2026', creationDate: '11/02/2026',
-    status: 'active',
-    description: '',
-    assignedBranches: ['Esraa Falafel 3'],
-    selectedCategories: [],
-    selectedProducts: [],
-  },
-  {
-    id: '3', name: 'Ramadan Special Menu',
-    image: null,
-    branches: ['Esraa Falafel 1', 'Esraa Falafel 2', 'Esraa Falafel 3'],
-    products: 15, categories: 5,
-    lastUpdated: '25/03/2026', creationDate: '10/02/2026',
-    status: 'inactive',
-    description: '',
-    assignedBranches: ['Esraa Falafel 1', 'Esraa Falafel 2', 'Esraa Falafel 3'],
-    selectedCategories: [],
-    selectedProducts: [],
-  },
-]
-
-export const mockCategories = [
-  { id: 'c1', name: 'Sandwiches', image: null, products: 22, subCategories: ['Bread(Laffa)', 'Baguettes'] },
-  { id: 'c2', name: 'Plates', image: null, products: 15, subCategories: ['Regular', 'Special'] },
-  { id: 'c3', name: 'Combos', image: null, products: 20, subCategories: ['Bread Combos', 'Baguette Combos', 'Plates Combos'] },
-  { id: 'c4', name: 'Drinks', image: null, products: 50, subCategories: ['Hot Drinks', 'Cold Drinks', 'Coffe To Go'] },
-  { id: 'c5', name: 'Starters', image: null, products: 3, subCategories: [] },
-  { id: 'c6', name: "Menu's Deals", image: null, products: 4, subCategories: [] },
-]
-
-export const mockProducts = [
-  { id: 'p1', name: 'Falafel Veggies in Bread (Laffa)', image: null, category: 'Bread', dietaryType: 'vegan', price: 6.00, prepTime: '10 - 15 min', discount: 0 },
-  { id: 'p2', name: 'Falafel Plate Veggies', image: null, category: 'Plates', dietaryType: 'vegan', price: 11.80, prepTime: '20 - 25 min', discount: 0 },
-  { id: 'p3', name: 'Hummus', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
-  { id: 'p4', name: 'Falafel Makali Plate', image: null, category: 'Combos', dietaryType: 'vegan', price: 12.00, prepTime: '20 - 25 min', discount: 0 },
-  { id: 'p5', name: 'Baba Ganoush', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
-  { id: 'p6', name: 'Grilled Merguez Plate', image: null, category: 'Plates', dietaryType: 'meat', price: 13.00, prepTime: '20 - 25 min', discount: 0 },
-  { id: 'p7', name: 'Halloumi Plate Veggies', image: null, category: 'Plate', dietaryType: 'vegan', price: 11.00, prepTime: '20 - 25 min', discount: 0 },
-  { id: 'p8', name: 'Sprite Drink', image: null, category: 'Drinks > Cold Drinks', dietaryType: null, price: 2.00, prepTime: '5 min', discount: 0 },
-  { id: 'p9', name: 'Coca Cola Drink', image: null, category: 'Drinks > Cold Drinks', dietaryType: null, price: 2.00, prepTime: '5 min', discount: 0 },
-  { id: 'p10', name: 'Althaus Tea', image: null, category: 'Drinks > Hot Drinks', dietaryType: null, price: 1.50, prepTime: '5 min', discount: 0 },
-  { id: 'p11', name: 'Tabboulah Salade', image: null, category: 'Starters', dietaryType: 'vegan', price: 3.50, prepTime: '10 - 15 min', discount: 0 },
-]
-```
+> The full Menus wizard/component specs (StepperHeader, MenuWizardModal, CategorySelectionRow, ProductSelectionRow, BranchPills, etc.) and the Menus mock data live with the original Menus build — see the Menus component entries above and the project source. Retained here only at page-summary level to keep §7 consistent across modules.
 
 ---
 
@@ -703,8 +573,8 @@ interface SubCategory {
 next.config.ts        → wrapped with createNextIntlPlugin() (links i18n/request.ts)
 i18n/request.ts       → reads NEXT_LOCALE cookie, defaults 'en', returns { locale, messages }
 src/app/layout.tsx    → <html lang={locale}>, wrapped in <NextIntlClientProvider>
-messages/en.json      → 402 keys, source of truth for English
-messages/de.json      → 402 keys, German (must mirror en.json key-for-key)
+messages/en.json      → source of truth for English
+messages/de.json      → German (must mirror en.json key-for-key)
 ```
 
 - **No middleware** for locale routing. **No** next-intl navigation APIs — keep `next/link` and `next/navigation` as-is.
@@ -715,11 +585,11 @@ messages/de.json      → 402 keys, German (must mirror en.json key-for-key)
 `messages/en.json` and `messages/de.json` share these top-level namespaces (one per module + shared):
 
 ```
-common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus · products · categories · subCategories
+common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus · products · categories · subCategories · addOnGroups
 ```
 
-- Nested keys per module (e.g. `menus.table.status`, `menus.wizard.step1.menuName`, `common.buttons.cancel`).
-- **en.json and de.json must always have identical keys.** A key in one but not the other is a bug.
+- Nested keys per module (e.g. `addOnGroups.table.selectionType`, `addOnGroups.modal.requiredAddOns`, `common.buttons.cancel`).
+- **en.json and de.json must always have identical keys, key-for-key.** A key in one but not the other is a bug.
 - Words that are legitimately identical in both languages (e.g. "Vegan", "Status", "Restaurant", "Dashboard", brand names, URL placeholders) stay identical — that is correct, not untranslated.
 
 ### Usage pattern
@@ -727,12 +597,12 @@ common · auth · sidebar · topbar · managers · drivers · zones · restauran
 ```tsx
 // Client components
 import { useTranslations } from 'next-intl'
-const t = useTranslations('menus')
+const t = useTranslations('addOnGroups')
 <button>{t('addNew')}</button>
 
 // Server / async components
 import { getTranslations } from 'next-intl/server'
-const t = await getTranslations('menus')
+const t = await getTranslations('addOnGroups')
 ```
 
 ### Language switcher
@@ -744,7 +614,7 @@ const t = await getTranslations('menus')
 
 ### German layout rule ⚠️
 
-German strings run **~30% longer** than English. Any responsive/layout work must hold for German too, not just English. High-risk elements: sidebar nav labels, buttons, filter-tab pills, stat card labels, table headers, branch pills, modal CTAs. Apply safe wrap / truncate / min-width fixes using existing tokens — never hardcode widths to fit English.
+German strings run **~30% longer** than English. Any responsive/layout work must hold for German too, not just English. High-risk elements: sidebar nav labels, buttons, filter-tab pills, stat card labels, table headers, branch pills, modal CTAs. For Add-on Groups specifically watch: the "Minimum Selection" / "Maximum Selection" / "Required/Optional" table headers and the long "+ Create Add-on Group" primary CTA. Apply safe wrap / truncate / min-width fixes using existing tokens — never hardcode widths to fit English.
 
 ### Adding i18n to a new (or existing) module
 
@@ -774,35 +644,31 @@ const updateForm = (patch: Partial<MenuFormData>) =>
 // Form data never resets on step change
 ```
 
-### Collapsible sidebar group pattern ← NEW
+### Collapsible sidebar group pattern
 ```tsx
-// In Sidebar.tsx, add support for nav groups:
+// In Sidebar.tsx, support nav groups:
 const [menuGroupOpen, setMenuGroupOpen] = useState(false)
-// Auto-open when any /menus/* route is active
+// Auto-open when any /menus|/products|/categories|/sub-categories|/add-on-groups route is active
 // Render sub-items only when open AND sidebar is expanded
 // In collapsed mode: only show group icon, no sub-items
 ```
 
-### Selection list with Select All pattern ← NEW
+### Selection list with Select All pattern
 ```tsx
-// Used in Steps 2 and 3
 const [selected, setSelected] = useState<string[]>([])
 const allIds = items.map(i => i.id)
 const isAllSelected = allIds.every(id => selected.includes(id))
-
-const toggleAll = () =>
-  setSelected(isAllSelected ? [] : allIds)
+const toggleAll = () => setSelected(isAllSelected ? [] : allIds)
 const toggleOne = (id: string) =>
   setSelected(prev =>
     prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
   )
 ```
 
-### Duplicate action pattern ← NEW
+### Duplicate action pattern
 ```tsx
 // In list view Actions column: edit icon + copy icon + delete icon + kebab
-// Copy icon triggers a duplicate of the menu (creates a copy with "Copy of" prefix)
-// No confirmation modal needed — immediate action
+// Copy icon duplicates the row immediately ("Copy of" prefix) — no confirmation modal
 ```
 
 ### Modal form section pattern
@@ -819,6 +685,17 @@ const isValid = requiredFields.every(Boolean)
 <Button disabled={!isValid} className={!isValid ? 'opacity-50 cursor-not-allowed' : ''}>
 ```
 
+### Toggle-as-form-control pattern ← NEW
+```tsx
+// StatusToggle reused inside a form (Add-on Groups "Required Add-ons").
+// Controlled boolean in form state, off by default. Same component as table/card toggles.
+const [required, setRequired] = useState(false)
+<div className="flex items-center justify-between">
+  <label>Required Add-ons</label>
+  <StatusToggle checked={required} onChange={setRequired} />
+</div>
+```
+
 ### Archived row/card pattern
 ```tsx
 // opacity-60, text-table-archived, disabled actions
@@ -832,18 +709,16 @@ Discriminated union modal state. Filter as pure derived `.filter()` on render.
 const ZoneMapEditor = dynamic(() => import('@/components/ui/ZoneMapEditor'), { ssr: false })
 ```
 
-### i18n string pattern ← NEW
+### i18n string pattern
 ```tsx
-// Never hardcode user-facing text. Always:
-const t = useTranslations('menus')          // client
-const t = await getTranslations('menus')    // server/async
-<span>{t('table.status')}</span>
+const t = useTranslations('addOnGroups')         // client
+const t = await getTranslations('addOnGroups')   // server/async
+<span>{t('table.selectionType')}</span>
 // Add the key to BOTH messages/en.json and messages/de.json under the module namespace.
 ```
 
-### Locale switch pattern ← NEW
+### Locale switch pattern
 ```tsx
-// Cookie-based, no URL change:
 document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`
 router.refresh()
 ```
