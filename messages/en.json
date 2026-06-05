@@ -656,5 +656,62 @@
       "returnToList": "Return To Menus List",
       "createAnother": "Create Another Menu"
     }
+  },
+  "categories": {
+    "pageTitle": "Categories Management",
+    "listTitle": "Categories List ({count})",
+    "addNew": "+ Add New Category",
+    "showing": "Showing {count} of {total} categories",
+    "stats": {
+      "total": "Total Categories",
+      "active": "Active Categories",
+      "inactive": "Inactive Categories",
+      "archived": "Archived Categories"
+    },
+    "emptyTitle": "No categories created yet",
+    "emptySubtitle": "Organize your menu by creating categories (e.g., Sandwiches, Plates, Drinks).",
+    "table": {
+      "categoryName": "Category Name",
+      "products": "Products",
+      "subCategories": "Sub-categories",
+      "addOnsGroups": "Add-ons Groups",
+      "description": "Description",
+      "creationDate": "Creation Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "products": "Products",
+      "subCategories": "Sub-categories",
+      "addOnsGroups": "Add-ons Groups",
+      "delete": "Delete",
+      "editCategory": "Edit Category"
+    },
+    "form": {
+      "addTitle": "Add New Category",
+      "editTitle": "Edit Category",
+      "categoryPicture": "Category picture",
+      "pictureFormats": "PNG, JPEG under 15MB",
+      "uploadPicture": "Upload Picture",
+      "deletePicture": "Delete",
+      "categoryName": "Category Name *",
+      "categoryNamePlaceholder": "Enter category name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "createCategory": "+ Create Category",
+      "saveChanges": "Save Changes"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Category '{name}' ?",
+      "body": "The category will be permanently removed from all assigned products.",
+      "confirm": "Delete Category"
+    },
+    "successModal": {
+      "title": "Category Created Successfully",
+      "body": "The category has been added to the categories list and is now available for management.",
+      "bodyUpdated": "All changes have been saved and are now visible in the system.",
+      "returnToList": "Return To Categories List",
+      "createNew": "+ Create New Category"
+    }
   }
 }

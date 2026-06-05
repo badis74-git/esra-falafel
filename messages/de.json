@@ -656,5 +656,62 @@
       "returnToList": "Zur Menüliste zurück",
       "createAnother": "Weiteres Menü erstellen"
     }
+  },
+  "categories": {
+    "pageTitle": "Kategorien-Verwaltung",
+    "listTitle": "Kategorien-Liste ({count})",
+    "addNew": "+ Neue Kategorie hinzufügen",
+    "showing": "{count} von {total} Kategorien angezeigt",
+    "stats": {
+      "total": "Kategorien gesamt",
+      "active": "Aktive Kategorien",
+      "inactive": "Inaktive Kategorien",
+      "archived": "Archivierte Kategorien"
+    },
+    "emptyTitle": "Noch keine Kategorien erstellt",
+    "emptySubtitle": "Organisieren Sie Ihr Menü, indem Sie Kategorien erstellen (z. B. Sandwiches, Teller, Getränke).",
+    "table": {
+      "categoryName": "Kategoriename",
+      "products": "Produkte",
+      "subCategories": "Unterkategorien",
+      "addOnsGroups": "Add-ons-Gruppen",
+      "description": "Beschreibung",
+      "creationDate": "Erstellungsdatum",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "products": "Produkte",
+      "subCategories": "Unterkategorien",
+      "addOnsGroups": "Add-ons-Gruppen",
+      "delete": "Löschen",
+      "editCategory": "Kategorie bearbeiten"
+    },
+    "form": {
+      "addTitle": "Neue Kategorie hinzufügen",
+      "editTitle": "Kategorie bearbeiten",
+      "categoryPicture": "Kategoriebild",
+      "pictureFormats": "PNG, JPEG unter 15 MB",
+      "uploadPicture": "Bild hochladen",
+      "deletePicture": "Löschen",
+      "categoryName": "Kategoriename *",
+      "categoryNamePlaceholder": "Kategorienamen eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "createCategory": "+ Kategorie erstellen",
+      "saveChanges": "Änderungen speichern"
+    },
+    "deleteModal": {
+      "title": "Möchten Sie die Kategorie '{name}' wirklich löschen?",
+      "body": "Die Kategorie wird dauerhaft aus allen zugewiesenen Produkten entfernt.",
+      "confirm": "Kategorie löschen"
+    },
+    "successModal": {
+      "title": "Kategorie erfolgreich erstellt",
+      "body": "Die Kategorie wurde der Kategorieliste hinzugefügt und steht nun zur Verwaltung bereit.",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "returnToList": "Zur Kategorieliste zurück",
+      "createNew": "+ Neue Kategorie erstellen"
+    }
   }
 }

@@ -20,7 +20,8 @@
       "Bash(npm ci *)",
       "Bash(git -C /Users/macbookairm1/Documents/esra-falafel diff --name-only)",
       "Bash(git -C /Users/macbookairm1/Documents/esra-falafel status --short)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(python3 *)"
     ]
   }
 }
