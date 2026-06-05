@@ -65,7 +65,7 @@ interface MiniToolbarProps {
 function MiniToolbar({ view, onViewChange, search, onSearch }: MiniToolbarProps) {
   const tCommon = useTranslations('common')
   return (
-    <div className="flex items-center gap-2 mb-3">
+    <div className="flex items-center gap-2 flex-wrap mb-3">
       <ViewToggle view={view} onChange={onViewChange} />
       <SearchInput
         placeholder="Search..."
@@ -197,7 +197,7 @@ function Step1({ formData, updateForm }: Step1Props) {
 
       <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Input
           label={t('wizard.step1.menuName')}
           leftIcon={<ClipboardList size={16} />}
@@ -311,41 +311,43 @@ function Step2({ formData, updateForm, readOnly = false }: Step2Props) {
           ))}
         </div>
       ) : (
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-neutral-50 border-b border-neutral-200">
-              <th className="text-left py-2.5 px-3 w-8" />
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableCategoryName')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableSubCategories')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableProducts')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((cat) => (
-              <tr key={cat.id} className="border-b border-neutral-200 hover:bg-neutral-50">
-                <td className="py-2.5 px-3">
-                  {readOnly ? (
-                    <div className="pointer-events-none">
-                      <Checkbox id={`cat-list-${cat.id}`} checked={formData.selectedCategories.includes(cat.id)} onChange={() => {}} />
-                    </div>
-                  ) : (
-                    <Checkbox id={`cat-list-${cat.id}`} checked={formData.selectedCategories.includes(cat.id)} onChange={() => toggleOne(cat.id)} />
-                  )}
-                </td>
-                <td className="py-2.5 px-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center flex-shrink-0" />
-                    <span className="font-medium text-neutral-900">{cat.name}</span>
-                  </div>
-                </td>
-                <td className="py-2.5 px-3 text-neutral-600">
-                  {cat.subCategories.length > 0 ? cat.subCategories.join(', ') : '–'}
-                </td>
-                <td className="py-2.5 px-3 font-medium text-neutral-900">{cat.products}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-neutral-50 border-b border-neutral-200">
+                <th className="text-left py-2.5 px-3 w-8" />
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableCategoryName')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableSubCategories')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step2.tableProducts')}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((cat) => (
+                <tr key={cat.id} className="border-b border-neutral-200 hover:bg-neutral-50">
+                  <td className="py-2.5 px-3">
+                    {readOnly ? (
+                      <div className="pointer-events-none">
+                        <Checkbox id={`cat-list-${cat.id}`} checked={formData.selectedCategories.includes(cat.id)} onChange={() => {}} />
+                      </div>
+                    ) : (
+                      <Checkbox id={`cat-list-${cat.id}`} checked={formData.selectedCategories.includes(cat.id)} onChange={() => toggleOne(cat.id)} />
+                    )}
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-neutral-100 flex items-center justify-center flex-shrink-0" />
+                      <span className="font-medium text-neutral-900">{cat.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-2.5 px-3 text-neutral-600">
+                    {cat.subCategories.length > 0 ? cat.subCategories.join(', ') : '–'}
+                  </td>
+                  <td className="py-2.5 px-3 font-medium text-neutral-900">{cat.products}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )
@@ -432,30 +434,32 @@ function Step3({ formData, updateForm, readOnly = false }: Step3Props) {
           ))}
         </div>
       ) : (
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-neutral-50 border-b border-neutral-200">
-              <th className="text-left py-2.5 px-3 w-8" />
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableProductName')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableCategory')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDietaryType')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tablePrice')}</th>
-              <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDiscount')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((prod) => (
-              <ProductSelectionRow
-                key={prod.id}
-                product={prod}
-                selected={formData.selectedProducts.includes(prod.id)}
-                onToggle={() => toggleOne(prod.id)}
-                view="list"
-                readOnly={readOnly}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-neutral-50 border-b border-neutral-200">
+                <th className="text-left py-2.5 px-3 w-8" />
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableProductName')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableCategory')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDietaryType')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tablePrice')}</th>
+                <th className="text-left py-2.5 px-3 font-medium text-neutral-600">{t('wizard.step3.tableDiscount')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((prod) => (
+                <ProductSelectionRow
+                  key={prod.id}
+                  product={prod}
+                  selected={formData.selectedProducts.includes(prod.id)}
+                  onToggle={() => toggleOne(prod.id)}
+                  view="list"
+                  readOnly={readOnly}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <Pagination />
@@ -564,7 +568,7 @@ export function MenuWizardModal({
                   onDelete={() => {}}
                 />
                 <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div className="flex flex-col gap-1">
                     <label className="text-xs font-medium text-neutral-500">Menu Name</label>
                     <div className="flex items-center gap-2 border border-neutral-200 rounded-lg px-3 py-2.5 bg-neutral-50">

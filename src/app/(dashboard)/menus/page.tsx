@@ -97,7 +97,7 @@ export default function MenusPage() {
   return (
     <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
-      <div className="flex gap-4 mb-6 flex-wrap">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard
           label={t('stats.total')}
           count={counts.total}
@@ -162,7 +162,7 @@ export default function MenusPage() {
         {/* Toolbar */}
         <div className="flex items-center justify-between gap-3 mb-5 flex-wrap">
           <FilterTabs active={activeTab} onChange={setActiveTab} />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
             <ViewToggle view={view} onChange={setView} />
             <SearchInput
               placeholder={tCommon('search')}

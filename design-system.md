@@ -1,6 +1,7 @@
 # Esra Falafel — Design System
-> Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css)
-> Last updated: 2026-05-14 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅
+> Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
+> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅
+> **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 
 ---
 
@@ -541,7 +542,72 @@ export const mockProducts = [
 
 ---
 
-## 8. Patterns
+## 8. Internationalization (i18n)
+
+> The entire app is bilingual: **English (`en`, default)** and **German (`de`)**.
+> Library: **next-intl**, **cookie-based locale — NO URL prefixes, no `[locale]` route segment.**
+> URLs are identical in both languages (e.g. `/menus`, never `/en/menus`).
+
+### Setup (do not change without reason)
+
+```
+next.config.ts        → wrapped with createNextIntlPlugin() (links i18n/request.ts)
+i18n/request.ts       → reads NEXT_LOCALE cookie, defaults 'en', returns { locale, messages }
+src/app/layout.tsx    → <html lang={locale}>, wrapped in <NextIntlClientProvider>
+messages/en.json      → 402 keys, source of truth for English
+messages/de.json      → 402 keys, German (must mirror en.json key-for-key)
+```
+
+- **No middleware** for locale routing. **No** next-intl navigation APIs — keep `next/link` and `next/navigation` as-is.
+- `i18n/request.ts` must always **explicitly return `locale`** (cookie setup has no middleware to supply it).
+
+### Message file structure
+
+`messages/en.json` and `messages/de.json` share these top-level namespaces (one per module + shared):
+
+```
+common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus
+```
+
+- Nested keys per module (e.g. `menus.table.status`, `menus.wizard.step1.menuName`, `common.buttons.cancel`).
+- **en.json and de.json must always have identical keys.** A key in one but not the other is a bug.
+- Words that are legitimately identical in both languages (e.g. "Vegan", "Status", "Restaurant", "Dashboard", brand names, URL placeholders) stay identical — that is correct, not untranslated.
+
+### Usage pattern
+
+```tsx
+// Client components
+import { useTranslations } from 'next-intl'
+const t = useTranslations('menus')
+<button>{t('addNew')}</button>
+
+// Server / async components
+import { getTranslations } from 'next-intl/server'
+const t = await getTranslations('menus')
+```
+
+### Language switcher
+
+`src/components/ui/LanguageSelector.tsx` (topbar) — fully functional:
+- Shows English + German, reflects the active locale (read from cookie).
+- On selection: sets the `NEXT_LOCALE` cookie + `router.refresh()`. **URL does not change.**
+- Visual design is locked — wire behavior only, never restyle.
+
+### German layout rule ⚠️
+
+German strings run **~30% longer** than English. Any responsive/layout work must hold for German too, not just English. High-risk elements: sidebar nav labels, buttons, filter-tab pills, stat card labels, table headers, branch pills, modal CTAs. Apply safe wrap / truncate / min-width fixes using existing tokens — never hardcode widths to fit English.
+
+### Adding i18n to a new (or existing) module
+
+1. Add a new top-level namespace for the module in **both** `en.json` and `de.json`.
+2. Extract every user-facing string into those files — labels, placeholders, buttons, modal titles/subtitles/CTAs, validation messages, empty states, table headers.
+3. Replace hardcoded strings with `useTranslations` / `getTranslations`.
+4. Provide accurate German for every key — never leave English in `de.json`.
+5. Verify layout holds in German (see rule above).
+
+---
+
+## 9. Patterns
 
 ### Dashboard layout pattern
 `<DashboardLayout title="...">` manages sidebar collapse. Sidebar fixed, main `marginLeft: sidebarWidth` + `padding-top: 64px`. `transition-all duration-300`.
@@ -617,6 +683,22 @@ Discriminated union modal state. Filter as pure derived `.filter()` on render.
 const ZoneMapEditor = dynamic(() => import('@/components/ui/ZoneMapEditor'), { ssr: false })
 ```
 
+### i18n string pattern ← NEW
+```tsx
+// Never hardcode user-facing text. Always:
+const t = useTranslations('menus')          // client
+const t = await getTranslations('menus')    // server/async
+<span>{t('table.status')}</span>
+// Add the key to BOTH messages/en.json and messages/de.json under the module namespace.
+```
+
+### Locale switch pattern ← NEW
+```tsx
+// Cookie-based, no URL change:
+document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`
+router.refresh()
+```
+
 ---
 
 ## Process — How to handle each new module
@@ -626,5 +708,7 @@ const ZoneMapEditor = dynamic(() => import('@/components/ui/ZoneMapEditor'), { s
 3. Claude produces updated `design-system.md` + Claude Code prompt
 4. Update the file in the project, then hand Claude Code prompt
 5. Claude Code builds — no guessing, no duplication
+6. Every module is built **bilingual from the start** (en + de) per §8 — strings extracted to `messages/`, German provided, layout verified in both languages. No English-first-then-retrofit.
 
 > **Rule:** Always share the latest `design-system.md` from the project at the start of each module session.
+> **Rule:** Every new module adds its own namespace to `messages/en.json` + `messages/de.json` and is fully translated before it's considered done (§8).

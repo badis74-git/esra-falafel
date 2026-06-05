@@ -19,7 +19,7 @@ export function ViewToggle({ view, onChange }: ViewToggleProps) {
         )}
       >
         <Grid size={14} />
-        <span>Grid View</span>
+        <span className="hidden sm:inline">Grid View</span>
       </button>
       <button
         onClick={() => onChange('list')}
@@ -29,7 +29,7 @@ export function ViewToggle({ view, onChange }: ViewToggleProps) {
         )}
       >
         <List size={14} />
-        <span>List View</span>
+        <span className="hidden sm:inline">List View</span>
       </button>
     </div>
   )
