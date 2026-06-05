@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
-> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅
+> Last updated: 2026-06-05 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅
 > **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 
 ---
@@ -15,6 +15,9 @@
 | Zone Management | ✅ Done | `/zones` |
 | Restaurants Management | ✅ Done | `/restaurants` |
 | Menus Management | ✅ Done | `/menus` |
+| Products Management | ✅ Done | `/products` |
+| Categories Management | ✅ Done | `/categories` |
+| Sub-Categories Management | ✅ Done | `/sub-categories` |
 
 ---
 
@@ -190,16 +193,41 @@ src/components/
 ├── drivers/ [...]
 ├── zones/ [...]
 ├── restaurants/ [...]
-└── menus/
-    ├── MenuGridCard.tsx             ← NEW
-    ├── BranchPills.tsx              ← NEW
-    ├── CategorySelectionRow.tsx     ← NEW
-    ├── ProductSelectionRow.tsx      ← NEW
-    ├── MenuWizardModal.tsx          ← NEW
-    ├── UpdateMenuModal.tsx          ← NEW
-    ├── DeleteMenuModal.tsx          ← NEW
-    ├── SuccessModal.tsx             ← NEW
-    └── FailModal.tsx                ← NEW
+├── menus/
+│   ├── MenuGridCard.tsx
+│   ├── BranchPills.tsx
+│   ├── CategorySelectionRow.tsx
+│   ├── ProductSelectionRow.tsx
+│   ├── MenuWizardModal.tsx
+│   ├── UpdateMenuModal.tsx
+│   ├── DeleteMenuModal.tsx
+│   ├── SuccessModal.tsx
+│   └── FailModal.tsx
+├── products/
+│   ├── ProductGridCard.tsx
+│   ├── ProductListRow.tsx
+│   ├── AddProductModal.tsx
+│   ├── EditProductModal.tsx
+│   ├── DeleteProductModal.tsx
+│   ├── AllergenAdditiveSelector.tsx
+│   ├── SuccessModal.tsx
+│   └── FailModal.tsx
+├── categories/
+│   ├── CategoryGridCard.tsx
+│   ├── CategoryListRow.tsx
+│   ├── AddCategoryModal.tsx
+│   ├── EditCategoryModal.tsx
+│   ├── DeleteCategoryModal.tsx
+│   ├── SuccessModal.tsx
+│   └── FailModal.tsx
+└── sub-categories/
+    ├── SubCategoryGridCard.tsx
+    ├── SubCategoryListRow.tsx
+    ├── AddSubCategoryModal.tsx
+    ├── EditSubCategoryModal.tsx
+    ├── DeleteSubCategoryModal.tsx
+    ├── SuccessModal.tsx
+    └── FailModal.tsx
 ```
 
 ---
@@ -542,6 +570,127 @@ export const mockProducts = [
 
 ---
 
+### Page — Products Management
+**File:** `src/app/(dashboard)/products/page.tsx`
+
+**Stat cards:** Total Products `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
+
+**Toolbar:**
+Left: category filter pills (View all · Sandwich · Plates · Combos · Starters · Drinks) — inline `<button>` pills, not `FilterTabs`.
+Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Product" primary.
+
+**Grid view:** 3-col `ProductGridCard` — image (h-48) + `DietaryBadge` top-left + `StatusToggle` top-right · category label + name + price + prepTime · footer Delete + Edit Product.
+
+**List view columns:** checkbox · Product Name (image 32px + name) · Category · Dietary Type (`DietaryBadge`) · Price · Add-ons Groups · Assigned Menus · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
+
+**Empty state:** `illustration="box"`, "No products created yet".
+
+**Page state:**
+```tsx
+type ModalState =
+  | { type: 'create' }
+  | { type: 'edit'; product: Product }
+  | { type: 'delete'; product: Product }
+  | { type: 'success'; variant: 'created' | 'updated' }
+  | { type: 'fail' }
+  | null
+```
+
+**Mock data shape** (`src/lib/mock/products.ts`):
+```ts
+interface Product {
+  id: string; name: string; image: string | null
+  category: string; subCategory: string; dietaryType: 'vegan' | 'meat' | null
+  addOnGroups: string[]; prepTimeMin: string; prepTimeMax: string
+  assignedMenus: string[]; basePrice: number; displayOrder: number
+  status: 'active' | 'inactive' | 'archived'
+  allergens: string[]; additives: string[]
+}
+```
+
+**Add/Edit modal fields:** ProfilePictureUpload · Product Name · Description · Category + Sub-Category · Dietary Type + Add-on Groups · Min/Max Prep Time · Assigned Menus + Base Price · Display Order · AllergenAdditiveSelector section.
+
+---
+
+### Page — Categories Management
+**File:** `src/app/(dashboard)/categories/page.tsx`
+
+**Stat cards:** Total Categories `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
+
+**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Category" primary.
+
+**Grid view:** 3-col `CategoryGridCard` — circular image 48px + name + `StatusToggle` top-right · 3-stat row (Products / Sub-categories / Add-ons Groups, centered counts) · footer Delete + Edit Category.
+
+**List view columns:** checkbox · Category Name (circular image 32px + name) · Products · Sub-categories · Add-ons Groups · Description (truncated) · Creation Date · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
+
+**Empty state:** `illustration="box"`, "No categories created yet".
+
+**Page state:**
+```tsx
+type ModalState =
+  | { type: 'create' }
+  | { type: 'edit'; category: Category }
+  | { type: 'delete'; category: Category }
+  | { type: 'success'; variant: 'created' | 'updated' }
+  | { type: 'fail' }
+  | null
+```
+
+**Mock data shape** (`src/lib/mock/categories.ts`):
+```ts
+interface Category {
+  id: string; name: string; image: string | null
+  products: number; subCategories: number; addOnGroups: number
+  description: string; creationDate: string
+  status: 'active' | 'inactive' | 'archived'
+}
+```
+6 rows seeded: Sandwiches (22/2/2) · Plates (15/3/2) · Combos (20/3/0) · Starters (3/0/0) · Drinks (50/3/0) · Menu's Deals (4/0/4).
+
+**Add/Edit modal fields (no picture upload):** inline picture upload row (UtensilsCrossed placeholder) · Category Name* · Description (textarea, optional). CTA disabled until name filled.
+
+---
+
+### Page — Sub-Categories Management
+**File:** `src/app/(dashboard)/sub-categories/page.tsx`
+
+**Stat cards:** Total Sub-Categories `stat-orange` · Active `stat-green` · Inactive `stat-yellow` · Archived `stat-red`. Icon: `UtensilsCrossed`.
+
+**Toolbar:** Left: `FilterTabs` (all/active/inactive/archived). Right: `ViewToggle` + `SearchInput` + Filters + Export + Import + "+ Add New Sub-Category" primary.
+
+**Grid view:** 3-col `SubCategoryGridCard` — parent category label (small neutral-500) above sub-category name (bold 16px) + `StatusToggle` top-right · single stat row "Products [count]" · footer Delete + Edit sub-category. No image thumbnail.
+
+**List view columns:** checkbox · Sub-category Name · Parent Category · Products · Sub-categories · Add-on Groups · Creation Date · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab).
+
+**Empty state:** `illustration="box"`, "No Sub-Categories created yet".
+
+**Page state:**
+```tsx
+type ModalState =
+  | { type: 'create' }
+  | { type: 'edit'; subCategory: SubCategory }
+  | { type: 'delete'; subCategory: SubCategory }
+  | { type: 'success'; variant: 'created' | 'updated' }
+  | { type: 'fail' }
+  | null
+```
+
+**Mock data shape** (`src/lib/mock/subCategories.ts`):
+```ts
+interface SubCategory {
+  id: string; name: string; parentCategory: string
+  products: number; subCategories: number; addOnGroups: number
+  creationDate: string; status: 'active' | 'inactive' | 'archived'
+  description: string
+}
+// parentCategoryOptions: { label, value }[] — mirrors mockCategories names
+```
+10 rows seeded: Bread (Laffa)/Sandwiches · Baguettes/Sandwiches · Regular Plates/Plates · Special Plates/Plates · Bread Combos/Combos · Baguettes Combos/Combos · Plates Combos/Combos · Hot Drinks/Drinks · Cold Drinks/Drinks · Coffee To Go/Drinks.
+
+**Add/Edit modal fields (no picture upload):** Parent Category* (`SelectDropdown`, options from `parentCategoryOptions`) · Sub-category Name* · Description (textarea, optional). CTA disabled until both required fields filled.
+
+---
+
 ## 8. Internationalization (i18n)
 
 > The entire app is bilingual: **English (`en`, default)** and **German (`de`)**.
@@ -566,7 +715,7 @@ messages/de.json      → 402 keys, German (must mirror en.json key-for-key)
 `messages/en.json` and `messages/de.json` share these top-level namespaces (one per module + shared):
 
 ```
-common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus
+common · auth · sidebar · topbar · managers · drivers · zones · restaurants · menus · products · categories · subCategories
 ```
 
 - Nested keys per module (e.g. `menus.table.status`, `menus.wizard.step1.menuName`, `common.buttons.cancel`).

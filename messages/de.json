@@ -713,5 +713,58 @@
       "returnToList": "Zur Kategorieliste zurück",
       "createNew": "+ Neue Kategorie erstellen"
     }
+  },
+  "subCategories": {
+    "pageTitle": "Unterkategorien-Verwaltung",
+    "listTitle": "Unterkategorien-Liste ({count})",
+    "addNew": "+ Neue Unterkategorie hinzufügen",
+    "showing": "{count} von {total} Unterkategorien angezeigt",
+    "stats": {
+      "total": "Unterkategorien gesamt",
+      "active": "Aktive Unterkategorien",
+      "inactive": "Inaktive Unterkategorien",
+      "archived": "Archivierte Unterkategorien"
+    },
+    "emptyTitle": "Noch keine Unterkategorien erstellt",
+    "emptySubtitle": "Unterteilen Sie Ihre Kategorien in spezifischere Gruppen, um Ihr Menü besser zu organisieren.",
+    "table": {
+      "subCategoryName": "Unterkategoriename",
+      "parentCategory": "Übergeordnete Kategorie",
+      "products": "Produkte",
+      "subCategories": "Unterkategorien",
+      "addOnGroups": "Add-ons-Gruppen",
+      "creationDate": "Erstellungsdatum",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "card": {
+      "products": "Produkte",
+      "delete": "Löschen",
+      "editSubCategory": "Unterkategorie bearbeiten"
+    },
+    "form": {
+      "addTitle": "Neue Unterkategorie hinzufügen",
+      "editTitle": "Unterkategorie bearbeiten",
+      "parentCategory": "Übergeordnete Kategorie *",
+      "parentCategoryPlaceholder": "Übergeordnete Kategorie auswählen",
+      "subCategoryName": "Unterkategoriename *",
+      "subCategoryNamePlaceholder": "Unterkategorienamen eingeben",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "createSubCategory": "+ Unterkategorie erstellen",
+      "saveChanges": "Änderungen speichern"
+    },
+    "deleteModal": {
+      "title": "Möchten Sie die Unterkategorie '{name}' wirklich löschen?",
+      "body": "Die Unterkategorie wird dauerhaft aus allen zugewiesenen übergeordneten Kategorien und Produkten entfernt.",
+      "confirm": "Unterkategorie löschen"
+    },
+    "successModal": {
+      "title": "Unterkategorie erfolgreich erstellt",
+      "body": "Die Unterkategorie wurde der übergeordneten Kategorie hinzugefügt und steht nun zur Verwaltung bereit.",
+      "bodyUpdated": "Alle Änderungen wurden gespeichert und sind nun im System sichtbar.",
+      "returnToList": "Zur Unterkategorieliste zurück",
+      "createNew": "+ Neue Unterkategorie erstellen"
+    }
   }
 }

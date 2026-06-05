@@ -713,5 +713,58 @@
       "returnToList": "Return To Categories List",
       "createNew": "+ Create New Category"
     }
+  },
+  "subCategories": {
+    "pageTitle": "Sub-Categories Management",
+    "listTitle": "Sub-Categories List ({count})",
+    "addNew": "+ Add New Sub-Category",
+    "showing": "Showing {count} of {total} sub-categories",
+    "stats": {
+      "total": "Total Sub-Categories",
+      "active": "Active Sub-Categories",
+      "inactive": "Inactive Sub-Categories",
+      "archived": "Archived Sub-Categories"
+    },
+    "emptyTitle": "No Sub-Categories created yet",
+    "emptySubtitle": "Break down your categories into more specific groups to better organize your menu.",
+    "table": {
+      "subCategoryName": "Sub-category Name",
+      "parentCategory": "Parent Category",
+      "products": "Products",
+      "subCategories": "Sub-categories",
+      "addOnGroups": "Add-on Groups",
+      "creationDate": "Creation Date",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "card": {
+      "products": "Products",
+      "delete": "Delete",
+      "editSubCategory": "Edit sub-category"
+    },
+    "form": {
+      "addTitle": "Add New Sub-category",
+      "editTitle": "Edit Sub-category",
+      "parentCategory": "Parent Category *",
+      "parentCategoryPlaceholder": "Select parent category",
+      "subCategoryName": "Sub-category Name *",
+      "subCategoryNamePlaceholder": "Enter sub-catgory name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter description",
+      "createSubCategory": "+ Create Sub-category",
+      "saveChanges": "Save Changes"
+    },
+    "deleteModal": {
+      "title": "Are You Sure You Want To Delete Sub-Category '{name}' ?",
+      "body": "The sub-category will be permanently removed from all assigned Parent categories and products.",
+      "confirm": "Delete Sub-category"
+    },
+    "successModal": {
+      "title": "Sub-category Created Successfully",
+      "body": "The sub-category has been added to the parent category and is now available for management.",
+      "bodyUpdated": "All changes have been saved and are now visible in the system.",
+      "returnToList": "Return To Sub-category List",
+      "createNew": "+ Create New Sub-category"
+    }
   }
 }
