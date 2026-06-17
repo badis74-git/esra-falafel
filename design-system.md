@@ -252,7 +252,7 @@ Menu Management  ∧
 ### `AddOnGridCard` ← Add-ons ← NEW
 **File:** `src/components/add-ons/AddOnGridCard.tsx`
 ```tsx
-{ addon: AddOn, onDelete, onEditGroup }
+{ addon: AddOn, onDelete, onEdit, onToggleStatus }
 // White card rounded-[12px] shadow-card. NO image.
 // Header section (no border):
 //   Top row: group name label (12px neutral-500, truncate) left + StatusToggle right
@@ -260,10 +260,9 @@ Menu Management  ∧
 // Body key-value rows (label neutral-700 text-sm left, value font-medium right):
 //   "Additional Price"  →  "X.XX €"
 //   "Products"          →  count number
-// Footer border-t border-table-border:
-//   [🗑 Delete] (ghost/secondary, red-tinted on hover, trash icon, text-danger)
-//   [✏ Edit Add-on Group] (primary bg-primary text-white, edit/pencil icon)
-//   Footer note: "Edit Add-on Group" triggers onEditGroup(addon.groupId) — navigates to /add-on-groups
+// Footer: flex items-stretch gap-2, border-t border-table-border
+//   [🗑 Delete] (secondary, flex-1) — calls onDelete(addon)
+//   [✏ Edit Add-on] (primary, flex-1) — calls onEdit(addon), opens EditAddOnModal in-place
 // Archived: opacity-60, pointer-events-none on action buttons
 ```
 
@@ -407,7 +406,7 @@ Right: `ViewToggle` + `SearchInput` + Filters button + Export button + Import bu
 - Group name label (12px neutral-500) top-left + `StatusToggle` top-right
 - Add-on name bold 16px neutral-900
 - Key-value rows: Additional Price · Products
-- Footer: `Delete` (ghost, danger hover) + `Edit Add-on Group` (primary)
+- Footer: `Delete` (secondary, flex-1) + `Edit Add-on` (primary, flex-1) — Edit opens EditAddOnModal in-place
 
 **List view columns:**
 checkbox · Add-on Name · Add-on Group · Additional Price · Products · Status (`StatusToggle`) · Actions (edit + duplicate + delete + kebab)
@@ -459,7 +458,7 @@ interface AddOn {
 
 **Price formatting rule:** Always display as `${price.toFixed(2)} €` (e.g. "0.00 €", "0.50 €", "2.50 €"). The € symbol follows the number with a space, matching German/European convention visible in mockups.
 
-**"Edit Add-on Group" button behavior:** In the grid card footer, clicking "Edit Add-on Group" should navigate to `/add-on-groups` or open the edit modal for the parent group. In the mock/page context, implement as `router.push('/add-on-groups')` for simplicity — the actual group edit can be handled from that page.
+**Grid card footer convention (all modules):** Footer is `flex items-stretch gap-2` so both buttons grow to equal height. Each button has `flex-1`. Icon size is `size={14}` in both buttons. The Delete button uses `variant="secondary"` and the Edit button uses `variant="primary"`.
 
 ---
 

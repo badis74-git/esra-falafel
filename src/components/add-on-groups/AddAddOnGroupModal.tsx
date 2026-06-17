@@ -87,6 +87,7 @@ export function AddAddOnGroupModal({ isOpen, onClose, onCreated }: AddAddOnGroup
             placeholder={t('form.namePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Selection Type */}

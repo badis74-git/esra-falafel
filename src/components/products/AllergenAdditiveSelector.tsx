@@ -57,7 +57,7 @@ export function AllergenAdditiveSelector({
               className="relative flex items-center justify-center cursor-pointer"
               onClick={toggleAllAllergens}
             >
-              <input type="checkbox" className="sr-only" readOnly checked={isAllAllergens} />
+              <input type="checkbox" className="sr-only" checked={isAllAllergens} onChange={toggleAllAllergens} />
               <div className={`h-4 w-4 rounded border flex items-center justify-center transition-colors ${isAllAllergens ? 'bg-primary border-primary' : 'bg-white border-neutral-300'}`}>
                 {isAllAllergens && (
                   <svg viewBox="0 0 10 10" className="w-2.5 h-2.5 text-white" fill="none">
@@ -89,7 +89,7 @@ export function AllergenAdditiveSelector({
               className="relative flex items-center justify-center cursor-pointer"
               onClick={toggleAllAdditives}
             >
-              <input type="checkbox" className="sr-only" readOnly checked={isAllAdditives} />
+              <input type="checkbox" className="sr-only" checked={isAllAdditives} onChange={toggleAllAdditives} />
               <div className={`h-4 w-4 rounded border flex items-center justify-center transition-colors ${isAllAdditives ? 'bg-primary border-primary' : 'bg-white border-neutral-300'}`}>
                 {isAllAdditives && (
                   <svg viewBox="0 0 10 10" className="w-2.5 h-2.5 text-white" fill="none">

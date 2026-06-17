@@ -12,14 +12,19 @@ interface OpeningHoursRowProps {
   onChange: (row: OpeningHoursEntry) => void
   onDelete: () => void
   isOnly: boolean
+  disabledDays?: string[]
 }
 
-export function OpeningHoursRow({ row, onChange, onDelete, isOnly }: OpeningHoursRowProps) {
+export function OpeningHoursRow({ row, onChange, onDelete, isOnly, disabledDays }: OpeningHoursRowProps) {
+  const availableOptions = disabledDays?.length
+    ? DAY_OPTIONS.filter((d) => !disabledDays.includes(d.value))
+    : DAY_OPTIONS
+
   return (
     <div className="flex items-end gap-3">
       <div className="flex-1 min-w-0">
         <MultiSelectDropdown
-          options={DAY_OPTIONS}
+          options={availableOptions}
           value={row.workingDays}
           onChange={(workingDays) => onChange({ ...row, workingDays })}
           placeholder="Select working days"

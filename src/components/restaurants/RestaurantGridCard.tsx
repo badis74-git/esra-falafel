@@ -64,7 +64,7 @@ export function RestaurantGridCard({ restaurant, onEdit, onDelete, onToggleStatu
       </div>
 
       {/* Footer */}
-      <div className="flex items-center gap-2 border-t border-table-border mt-3 pt-3">
+      <div className="flex items-stretch gap-2 border-t border-table-border mt-3 pt-3">
         <Button
           variant="secondary"
           fullWidth={false}

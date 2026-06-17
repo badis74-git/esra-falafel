@@ -96,6 +96,7 @@ export function EditAddOnGroupModal({ isOpen, group, onClose, onSaved }: EditAdd
             placeholder={t('form.namePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Selection Type */}

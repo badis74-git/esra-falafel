@@ -18,9 +18,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ClipboardList,
-  FileText,
   Filter,
-  Plus,
   X,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -90,9 +88,9 @@ interface CategoryTabsProps {
   onTabChange: (tab: string) => void
 }
 
-function CategoryTabs({ categories, selectedCatIds, activeTab, onTabChange }: CategoryTabsProps) {
+function CategoryTabs({ categories, activeTab, onTabChange }: CategoryTabsProps) {
   const tCommon = useTranslations('common')
-  const selectedCats = categories.filter((c) => selectedCatIds.includes(c.id))
+  const selectedCats = categories
   return (
     <div className="flex flex-wrap gap-2 mb-3">
       <button
@@ -549,7 +547,7 @@ export function MenuWizardModal({
         </div>
 
         {/* Stepper */}
-        <div className="px-6 pt-4 flex-shrink-0">
+        <div className="pt-4 flex-shrink-0">
           <StepperHeader steps={wizardSteps} currentStep={step} />
         </div>
 
@@ -560,53 +558,8 @@ export function MenuWizardModal({
           {step === 3 && <Step3 formData={formData} updateForm={updateForm} />}
           {step === 4 && (
             <div className="space-y-8">
-              {/* Step 1 overview */}
-              <div>
-                <ProfilePictureUpload
-                  src={formData.image}
-                  onChange={() => {}}
-                  onDelete={() => {}}
-                />
-                <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-medium text-neutral-500">Menu Name</label>
-                    <div className="flex items-center gap-2 border border-neutral-200 rounded-lg px-3 py-2.5 bg-neutral-50">
-                      <FileText size={14} className="text-neutral-400" />
-                      <span className="text-sm text-neutral-900">{formData.name}</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-medium text-neutral-500">Assigned Branches</label>
-                    <div className="border border-neutral-200 rounded-lg px-3 py-2.5 bg-neutral-50 text-sm text-neutral-900">
-                      {formData.assignedBranches.join(', ') || '–'}
-                    </div>
-                  </div>
-                </div>
-                {formData.description && (
-                  <div className="flex flex-col gap-1 mb-4">
-                    <label className="text-xs font-medium text-neutral-500">Menu Description</label>
-                    <div className="border border-neutral-200 rounded-lg px-3 py-2.5 bg-neutral-50 text-sm text-neutral-900">
-                      {formData.description}
-                    </div>
-                  </div>
-                )}
-                {formData.pdfFile && (
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-medium text-neutral-500">Menu PDF Format</label>
-                    <PdfUploadZone
-                      file={formData.pdfFile}
-                      onUpload={() => {}}
-                      onDelete={() => {}}
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* Step 2 overview (read-only) */}
+              <Step1 formData={formData} updateForm={updateForm} />
               <Step2 formData={formData} updateForm={updateForm} />
-
-              {/* Step 3 overview */}
               <Step3 formData={formData} updateForm={updateForm} />
             </div>
           )}
@@ -635,11 +588,7 @@ export function MenuWizardModal({
             </Button>
           ) : (
             <Button variant="primary" fullWidth={false} onClick={handleSubmit}>
-              {mode === 'create' ? (
-                <><Plus size={14} /> {t('wizard.createMenu')}</>
-              ) : (
-                t('wizard.saveChanges')
-              )}
+              {mode === 'create' ? t('wizard.createMenu') : t('wizard.saveChanges')}
             </Button>
           )}
         </div>

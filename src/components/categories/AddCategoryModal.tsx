@@ -109,6 +109,7 @@ export function AddCategoryModal({ isOpen, onClose, onCreated }: AddCategoryModa
             placeholder={t('form.categoryNamePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Description */}

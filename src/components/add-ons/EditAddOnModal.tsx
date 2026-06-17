@@ -95,6 +95,7 @@ export function EditAddOnModal({ isOpen, addon, onClose, onSaved }: EditAddOnMod
             placeholder={t('modal.namePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Additional Price */}

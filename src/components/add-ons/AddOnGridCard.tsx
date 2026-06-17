@@ -10,11 +10,11 @@ import { AddOn, formatPrice } from '@/lib/mock/addOns'
 interface AddOnGridCardProps {
   addon: AddOn
   onDelete: (addon: AddOn) => void
-  onEditGroup: (groupId: string) => void
+  onEdit: (addon: AddOn) => void
   onToggleStatus: (addon: AddOn) => void
 }
 
-export function AddOnGridCard({ addon, onDelete, onEditGroup, onToggleStatus }: AddOnGridCardProps) {
+export function AddOnGridCard({ addon, onDelete, onEdit, onToggleStatus }: AddOnGridCardProps) {
   const t = useTranslations('addOns')
   const archived = addon.status === 'archived'
 
@@ -49,14 +49,14 @@ export function AddOnGridCard({ addon, onDelete, onEditGroup, onToggleStatus }: 
       </div>
 
       {/* Footer */}
-      <div className="border-t border-table-border pt-3 flex items-center gap-2 mt-auto">
+      <div className="border-t border-table-border pt-3 flex items-stretch gap-2 mt-auto">
         <Button
           variant="secondary"
           size="md"
           fullWidth={false}
           disabled={archived}
           onClick={() => !archived && onDelete(addon)}
-          className={cn('flex-shrink-0', archived && 'pointer-events-none')}
+          className={cn('flex-1', archived && 'pointer-events-none')}
         >
           <Trash2 size={14} /> {t('card.delete')}
         </Button>
@@ -65,10 +65,10 @@ export function AddOnGridCard({ addon, onDelete, onEditGroup, onToggleStatus }: 
           size="md"
           fullWidth={false}
           disabled={archived}
-          onClick={() => !archived && onEditGroup(addon.groupId)}
-          className={cn('flex-1 text-sm', archived && 'pointer-events-none')}
+          onClick={() => !archived && onEdit(addon)}
+          className={cn('flex-1', archived && 'pointer-events-none')}
         >
-          <Edit2 size={14} /> {t('card.editGroup')}
+          <Edit2 size={14} /> {t('card.edit')}
         </Button>
       </div>
     </div>

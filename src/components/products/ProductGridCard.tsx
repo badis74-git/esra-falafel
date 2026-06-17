@@ -62,7 +62,7 @@ export function ProductGridCard({ product, onEdit, onDelete, onToggleStatus }: P
       </div>
 
       {/* Footer */}
-      <div className="border-t border-table-border px-4 pt-3 pb-4 flex items-center gap-2">
+      <div className="border-t border-table-border px-4 pt-3 pb-4 flex items-stretch gap-2">
         <Button
           variant="secondary"
           size="md"

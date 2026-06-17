@@ -117,6 +117,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
             placeholder={t('form.productNamePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Description */}
@@ -177,12 +178,14 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
               placeholder={t('form.prepTimePlaceholder')}
               value={form.prepTimeMin}
               onChange={(e) => update({ prepTimeMin: e.target.value })}
+              required
             />
             <Input
               label={t('form.maxPrepTime')}
               placeholder={t('form.prepTimePlaceholder')}
               value={form.prepTimeMax}
               onChange={(e) => update({ prepTimeMax: e.target.value })}
+              required
             />
           </div>
 
@@ -200,6 +203,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
               placeholder={t('form.basePricePlaceholder')}
               value={form.basePrice}
               onChange={(e) => update({ basePrice: e.target.value })}
+              required
             />
           </div>
 

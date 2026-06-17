@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { ChevronLeft, ChevronRight, Download, Filter, Plus, Upload, UtensilsCrossed } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Download, Filter, Upload, UtensilsCrossed } from 'lucide-react'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { StatCard } from '@/components/ui/StatCard'
 import { FilterTabs, TabValue } from '@/components/ui/FilterTabs'
@@ -32,7 +31,6 @@ type ModalState =
 export default function AddOnsPage() {
   const t = useTranslations('addOns')
   const tCommon = useTranslations('common')
-  const router = useRouter()
 
   const [addOns, setAddOns] = useState<AddOn[]>(mockAddOns)
   const [filter, setFilter] = useState<TabValue>('all')
@@ -74,11 +72,6 @@ export default function AddOnsPage() {
   function handleDelete(id: string) {
     setAddOns((prev) => prev.filter((a) => a.id !== id))
     setModal(null)
-  }
-
-  function handleEditGroup(groupId: string) {
-    void groupId
-    router.push('/add-on-groups')
   }
 
   const allFilteredIds = filtered.map((a) => a.id)
@@ -157,7 +150,7 @@ export default function AddOnsPage() {
               fullWidth={false}
               onClick={() => setModal({ type: 'create' })}
             >
-              <Plus size={14} /> {t('addNew')}
+              {t('addNew')}
             </Button>
           </div>
         </div>
@@ -194,7 +187,7 @@ export default function AddOnsPage() {
                   key={addon.id}
                   addon={addon}
                   onDelete={(a) => setModal({ type: 'delete', addon: a })}
-                  onEditGroup={handleEditGroup}
+                  onEdit={(a) => setModal({ type: 'edit', addon: a })}
                   onToggleStatus={handleToggleStatus}
                 />
               ))}

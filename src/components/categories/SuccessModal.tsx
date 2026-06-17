@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button'
 import { useTranslations } from 'next-intl'
-import { Check, Plus, X } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 
 interface SuccessModalProps {
   variant: 'created' | 'updated'
@@ -38,7 +38,7 @@ export function SuccessModal({ variant, onReturnToList, onCreateNew }: SuccessMo
               {t('successModal.returnToList')}
             </Button>
             <Button variant="secondary" onClick={onCreateNew}>
-              <Plus size={14} /> {t('successModal.createNew')}
+              {t('successModal.createNew')}
             </Button>
           </>
         ) : (

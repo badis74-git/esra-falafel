@@ -21,7 +21,6 @@ import {
   ChevronRight,
   Download,
   Filter,
-  Plus,
   UtensilsCrossed,
   Upload,
 } from 'lucide-react'
@@ -147,7 +146,7 @@ export default function CategoriesPage() {
               fullWidth={false}
               onClick={() => setModal({ type: 'create' })}
             >
-              <Plus size={14} /> {t('addNew')}
+              {t('addNew')}
             </Button>
           </div>
         </div>

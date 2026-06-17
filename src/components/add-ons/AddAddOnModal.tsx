@@ -90,6 +90,7 @@ export function AddAddOnModal({ isOpen, onClose, onCreated }: AddAddOnModalProps
             placeholder={t('modal.namePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Additional Price */}

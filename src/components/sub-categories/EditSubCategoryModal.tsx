@@ -77,6 +77,7 @@ export function EditSubCategoryModal({ isOpen, subCategory, onClose, onSaved }: 
             placeholder={t('form.subCategoryNamePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           <div className="flex flex-col gap-1.5">

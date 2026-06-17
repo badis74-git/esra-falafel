@@ -103,6 +103,7 @@ export function EditCategoryModal({ isOpen, category, onClose, onSaved }: EditCa
             placeholder={t('form.categoryNamePlaceholder')}
             value={form.name}
             onChange={(e) => update({ name: e.target.value })}
+            required
           />
 
           {/* Description */}

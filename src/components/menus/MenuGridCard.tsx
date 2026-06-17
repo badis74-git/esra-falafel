@@ -67,7 +67,7 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
       </div>
 
       {/* Footer */}
-      <div className="border-t border-table-border px-4 pt-3 pb-4 flex gap-2">
+      <div className="border-t border-table-border px-4 pt-3 pb-4 flex items-stretch gap-2">
         <Button
           variant="secondary"
           size="md"

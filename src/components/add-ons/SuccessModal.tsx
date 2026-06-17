@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Check, Plus, X } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 
 interface SuccessModalProps {
   variant: 'created' | 'updated'
@@ -48,7 +48,7 @@ export function SuccessModal({ variant, onGoToList, onCreateAnother }: SuccessMo
             onClick={onCreateAnother}
             className="w-full border border-neutral-300 text-neutral-700 rounded-lg py-3 font-medium flex items-center justify-center gap-1 hover:bg-neutral-50 transition-colors"
           >
-            <Plus size={14} /> {t('success.createAnother')}
+            {t('success.createAnother')}
           </button>
         )}
       </div>

@@ -53,7 +53,7 @@ export function ZoneGridCard({ zone, onEdit, onDelete, onToggleStatus }: ZoneGri
       </div>
 
       {/* Footer */}
-      <div className="flex items-center gap-2 border-t border-table-border pt-3">
+      <div className="flex items-stretch gap-2 border-t border-table-border pt-3">
         <Button
           variant="secondary"
           fullWidth={false}

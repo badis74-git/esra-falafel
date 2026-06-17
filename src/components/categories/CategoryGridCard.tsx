@@ -56,7 +56,7 @@ export function CategoryGridCard({ category, onEdit, onDelete, onToggleStatus }:
       </div>
 
       {/* Footer */}
-      <div className="border-t border-table-border pt-3 flex items-center gap-2">
+      <div className="border-t border-table-border pt-3 flex items-stretch gap-2">
         <Button
           variant="secondary"
           size="md"

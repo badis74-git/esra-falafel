@@ -18,7 +18,7 @@ import {
   OpeningHoursEntry,
 } from '@/lib/mock/restaurants'
 import { useTranslations } from 'next-intl'
-import { Globe, Mail, Plus, Store, X } from 'lucide-react'
+import { Globe, Mail, Store, X } from 'lucide-react'
 import { useState } from 'react'
 
 export interface RestaurantFormData {
@@ -284,15 +284,21 @@ export function WizardModal({
 
               <SectionTitle>{t('wizard.step3.openingHours')}</SectionTitle>
               <div className="space-y-3">
-                {formData.openingHours.map((row, i) => (
-                  <OpeningHoursRow
-                    key={i}
-                    row={row}
-                    onChange={(r) => handleOpeningHoursChange(i, r)}
-                    onDelete={() => handleOpeningHoursDelete(i)}
-                    isOnly={formData.openingHours.length === 1}
-                  />
-                ))}
+                {formData.openingHours.map((row, i) => {
+                  const disabledDays = formData.openingHours.flatMap((r, idx) =>
+                    idx !== i ? r.workingDays : []
+                  )
+                  return (
+                    <OpeningHoursRow
+                      key={i}
+                      row={row}
+                      onChange={(r) => handleOpeningHoursChange(i, r)}
+                      onDelete={() => handleOpeningHoursDelete(i)}
+                      isOnly={formData.openingHours.length === 1}
+                      disabledDays={disabledDays}
+                    />
+                  )
+                })}
               </div>
               <div className="flex justify-end mt-3">
                 <Button
@@ -303,7 +309,7 @@ export function WizardModal({
                   onClick={handleAddOpeningHours}
                   className="gap-1.5"
                 >
-                  <Plus size={14} /> {t('wizard.step3.addMore')}
+                  {t('wizard.step3.addMore')}
                 </Button>
               </div>
             </div>
