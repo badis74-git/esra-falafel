@@ -14,6 +14,26 @@ export interface Menu {
   assignedBranches: string[]
   selectedCategories: string[]
   selectedProducts: string[]
+  pdf?: { name: string; date: string; size: string; url: string }
+}
+
+export interface MenuCategory {
+  id: string
+  name: string
+  image: string | null
+  productCount: number
+  subCategoryCount: number
+  subCategories: string[]
+}
+
+export interface MenuProduct {
+  id: string
+  name: string
+  image: string | null
+  category: string
+  dietary: 'vegan' | 'meat' | null
+  price: number
+  prepTime: string
 }
 
 export interface Category {
@@ -35,6 +55,35 @@ export interface Product {
   discount: number
 }
 
+export const mockBranches = [
+  { label: 'Esra Falafel 1', value: 'Esra Falafel 1' },
+  { label: 'Esra Falafel 2', value: 'Esra Falafel 2' },
+  { label: 'Esra Falafel 3', value: 'Esra Falafel 3' },
+]
+
+export const mockMenuCategories: MenuCategory[] = [
+  { id: 'mc1', name: 'Sandwiches', image: null, productCount: 22, subCategoryCount: 2, subCategories: ['Bread (Laffa)', 'Baguettes'] },
+  { id: 'mc2', name: 'Plates', image: null, productCount: 15, subCategoryCount: 2, subCategories: ['Regular', 'Special'] },
+  { id: 'mc3', name: 'Combos', image: null, productCount: 20, subCategoryCount: 3, subCategories: ['Bread Combos', 'Baguette Combos', 'Plates Combos'] },
+  { id: 'mc4', name: 'Drinks', image: null, productCount: 50, subCategoryCount: 3, subCategories: ['Hot Drinks', 'Cold Drinks', 'Coffee To Go'] },
+  { id: 'mc5', name: 'Starters', image: null, productCount: 3, subCategoryCount: 0, subCategories: [] },
+  { id: 'mc6', name: "Menu's Deals", image: null, productCount: 4, subCategoryCount: 0, subCategories: [] },
+]
+
+export const mockMenuProducts: MenuProduct[] = [
+  { id: 'mp1', name: 'Falafel Veggies in Bread (Laffa)', image: null, category: 'Sandwiches', dietary: 'vegan', price: 6.00, prepTime: '10 - 15 min' },
+  { id: 'mp2', name: 'Falafel Plate Veggies', image: null, category: 'Plates', dietary: 'vegan', price: 11.80, prepTime: '20 - 25 min' },
+  { id: 'mp3', name: 'Hummus', image: null, category: 'Starters', dietary: 'vegan', price: 3.50, prepTime: '10 - 15 min' },
+  { id: 'mp4', name: 'Falafel Makali Plate', image: null, category: 'Combos', dietary: 'vegan', price: 12.00, prepTime: '20 - 25 min' },
+  { id: 'mp5', name: 'Baba Ganoush', image: null, category: 'Starters', dietary: 'vegan', price: 3.50, prepTime: '10 - 15 min' },
+  { id: 'mp6', name: 'Grilled Merguez Plate', image: null, category: 'Plates', dietary: 'meat', price: 13.00, prepTime: '20 - 25 min' },
+  { id: 'mp7', name: 'Halloumi Plate Veggies', image: null, category: 'Plates', dietary: 'vegan', price: 11.00, prepTime: '20 - 25 min' },
+  { id: 'mp8', name: 'Sprite Drink', image: null, category: 'Drinks', dietary: null, price: 2.00, prepTime: '5 min' },
+  { id: 'mp9', name: 'Coca Cola Drink', image: null, category: 'Drinks', dietary: null, price: 2.00, prepTime: '5 min' },
+  { id: 'mp10', name: 'Althaus Tea', image: null, category: 'Drinks', dietary: null, price: 1.50, prepTime: '5 min' },
+  { id: 'mp11', name: 'Tabbouleh Salad', image: null, category: 'Starters', dietary: 'vegan', price: 3.50, prepTime: '10 - 15 min' },
+]
+
 export const mockMenus: Menu[] = [
   {
     id: '1',
@@ -48,8 +97,9 @@ export const mockMenus: Menu[] = [
     status: 'active',
     description: '',
     assignedBranches: ['Esraa Falafel 1', 'Esraa Falafel 2'],
-    selectedCategories: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'],
-    selectedProducts: ['p1', 'p2', 'p5', 'p6'],
+    selectedCategories: ['mc1', 'mc2', 'mc3', 'mc4', 'mc5'],
+    selectedProducts: ['mp1', 'mp2', 'mp5', 'mp6'],
+    pdf: { name: 'Vegan Menu.pdf', date: '16 Mai 2026', size: '5MB', url: '#' },
   },
   {
     id: '2',

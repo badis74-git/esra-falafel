@@ -12,7 +12,7 @@ import { StatusToggle } from '@/components/ui/StatusToggle'
 import { BranchPills } from '@/components/menus/BranchPills'
 import { MenuGridCard } from '@/components/menus/MenuGridCard'
 import { MenuWizardModal } from '@/components/menus/MenuWizardModal'
-import { UpdateMenuModal } from '@/components/menus/UpdateMenuModal'
+import { EditMenuModal } from '@/components/menus/EditMenuModal'
 import { DeleteMenuModal } from '@/components/menus/DeleteMenuModal'
 import { SuccessModal } from '@/components/menus/SuccessModal'
 import { FailModal } from '@/components/menus/FailModal'
@@ -355,11 +355,12 @@ export default function MenusPage() {
       )}
 
       {modal?.type === 'update' && (
-        <UpdateMenuModal
+        <EditMenuModal
           isOpen
           menu={modal.menu}
           onClose={() => setModal(null)}
           onSaved={handleSaved}
+          onToggleStatus={handleToggleStatus}
         />
       )}
 

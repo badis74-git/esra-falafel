@@ -722,6 +722,55 @@
       "goToList": "Go To Menus List",
       "returnToList": "Return To Menus List",
       "createAnother": "Create Another Menu"
+    },
+    "edit": {
+      "navGroup": "General",
+      "nav": {
+        "info": "Menu Information",
+        "categories": "Categories",
+        "products": "Products"
+      },
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    },
+    "info": {
+      "title": "Menu Information",
+      "picture": "Menu picture",
+      "pictureHint": "PNG, JPEG under 15MB",
+      "delete": "Delete",
+      "upload": "Upload Picture",
+      "name": "Menu Name",
+      "namePlaceholder": "Enter menu name",
+      "branches": "Assigned Branches",
+      "branchesPlaceholder": "Select branches",
+      "description": "Menu Description",
+      "descriptionPlaceholder": "Enter description",
+      "pdfLabel": "Menu PDF Format"
+    },
+    "categories": {
+      "title": "Categories",
+      "selectAll": "Select All",
+      "colName": "Category Name",
+      "colSubcategories": "Sub-categories",
+      "colProducts": "Products",
+      "noneDash": "-"
+    },
+    "products": {
+      "title": "Products",
+      "selectAll": "Select All",
+      "colName": "Product Name",
+      "colCategory": "Category",
+      "colDietary": "Dietary T.",
+      "colPrice": "Price",
+      "colDiscount": "Discount",
+      "tabs": {
+        "all": "View all",
+        "sandwich": "Sandwich",
+        "plates": "Plates",
+        "combos": "Combos",
+        "starters": "Starters",
+        "drinks": "Drinks"
+      }
     }
   },
   "categories": {

@@ -1,6 +1,6 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
-> Last updated: 2026-06-18 | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers 🔄 (v2 redesign) · Zone Management ✅ · Restaurants ✅ · Menus Management ✅ · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅ · Add-ons ✅
+> Last updated: 2026-06-18 (Edit Menu v2 added) | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ (v2 + mobile) · Zone Management ✅ · Restaurants ✅ · Menus Management 🔄 (Edit Menu v2) · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅ · Add-ons ✅
 > **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 > **All modules must be mobile-responsive.** See §5b Mobile / Responsive Rules before building any modal, stepper, or stat grid.
 > **This is the CORE file.** Per-module detail (components, pages, i18n namespaces) is split into:
@@ -277,6 +277,8 @@ src/components/
 │   ├── PhotoUploadBox.tsx             ← NEW (dashed "Upload photo" tile — ID front/back, vehicle)
 │   ├── FileAttachmentRow.tsx          ← NEW (PDF row: icon + name + date·size + view/download/delete)
 │   ├── OrderStatusPill.tsx            ← NEW (New / Preparing / Ready for pick up / On the Way)
+│   ├── SelectableCategoryRow.tsx      ← NEW (grid + list variants; checkbox category row — Edit Menu Categories)
+│   ├── SelectableProductRow.tsx       ← NEW (grid + list variants; checkbox product row — Edit Menu Products)
 │   ├── RatingStars.tsx                ← NEW (1–5 star row, supports half star)
 │   ├── RatingBarChart.tsx            ← NEW (5→1 horizontal distribution bars)
 │   └── DietaryBadge.tsx

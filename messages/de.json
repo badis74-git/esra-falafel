@@ -722,6 +722,55 @@
       "goToList": "Zur Menüliste",
       "returnToList": "Zur Menüliste zurück",
       "createAnother": "Weiteres Menü erstellen"
+    },
+    "edit": {
+      "navGroup": "Allgemein",
+      "nav": {
+        "info": "Menüinformationen",
+        "categories": "Kategorien",
+        "products": "Produkte"
+      },
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern"
+    },
+    "info": {
+      "title": "Menüinformationen",
+      "picture": "Menübild",
+      "pictureHint": "PNG, JPEG unter 15MB",
+      "delete": "Löschen",
+      "upload": "Bild hochladen",
+      "name": "Menüname",
+      "namePlaceholder": "Menünamen eingeben",
+      "branches": "Zugewiesene Filialen",
+      "branchesPlaceholder": "Filialen auswählen",
+      "description": "Menübeschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "pdfLabel": "Menü-PDF-Format"
+    },
+    "categories": {
+      "title": "Kategorien",
+      "selectAll": "Alle auswählen",
+      "colName": "Kategoriename",
+      "colSubcategories": "Unterkategorien",
+      "colProducts": "Produkte",
+      "noneDash": "-"
+    },
+    "products": {
+      "title": "Produkte",
+      "selectAll": "Alle auswählen",
+      "colName": "Produktname",
+      "colCategory": "Kategorie",
+      "colDietary": "Ernährungstyp",
+      "colPrice": "Preis",
+      "colDiscount": "Rabatt",
+      "tabs": {
+        "all": "Alle anzeigen",
+        "sandwich": "Sandwich",
+        "plates": "Platten",
+        "combos": "Kombos",
+        "starters": "Vorspeisen",
+        "drinks": "Getränke"
+      }
     }
   },
   "categories": {
