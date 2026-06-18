@@ -262,11 +262,11 @@ export function AssignedOrdersSection({ orders, onSave, onCancel }: Props) {
       </div>
 
       {/* Section footer */}
-      <div className="flex items-center gap-3 border-t border-table-border px-5 py-4 flex-shrink-0">
-        <Button variant="secondary" fullWidth={false} size="md" onClick={onCancel}>
+      <div className="relative z-10 flex items-center gap-3 border-t border-table-border px-5 py-4 flex-shrink-0">
+        <Button variant="secondary" fullWidth={false} size="md" onClick={onCancel} className="flex-1 md:flex-none">
           {t('edit.cancel')}
         </Button>
-        <Button variant="primary" fullWidth={false} size="md" onClick={onSave}>
+        <Button variant="primary" fullWidth={false} size="md" onClick={onSave} className="flex-1 md:flex-none">
           {t('edit.save')}
         </Button>
       </div>

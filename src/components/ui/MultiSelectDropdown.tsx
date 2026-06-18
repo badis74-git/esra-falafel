@@ -79,7 +79,7 @@ export function MultiSelectDropdown({
         </button>
 
         {open && (
-          <div className="absolute left-0 right-0 top-full mt-1 z-50 bg-white border border-neutral-300 rounded-lg shadow-dashboard-modal overflow-hidden">
+          <div className="absolute left-0 right-0 top-full mt-1 z-[1000] bg-white border border-neutral-300 rounded-lg shadow-dashboard-modal overflow-hidden">
             {options.map((option) => {
               const selected = value.includes(option.value)
               return (

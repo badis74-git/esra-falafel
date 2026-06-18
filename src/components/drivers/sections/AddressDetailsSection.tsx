@@ -32,9 +32,9 @@ export function AddressDetailsSection({ driver, onSave, onCancel }: Props) {
         </div>
         <MapPreview />
       </div>
-      <div className="flex items-center gap-3 border-t border-table-border px-5 py-4 flex-shrink-0">
-        <Button variant="secondary" fullWidth={false} size="md" onClick={onCancel}>{t('edit.cancel')}</Button>
-        <Button variant="primary" fullWidth={false} size="md" onClick={onSave}>{t('edit.save')}</Button>
+      <div className="relative z-10 flex items-center gap-3 border-t border-table-border px-5 py-4 flex-shrink-0">
+        <Button variant="secondary" fullWidth={false} size="md" onClick={onCancel} className="flex-1 md:flex-none">{t('edit.cancel')}</Button>
+        <Button variant="primary" fullWidth={false} size="md" onClick={onSave} className="flex-1 md:flex-none">{t('edit.save')}</Button>
       </div>
     </div>
   )
