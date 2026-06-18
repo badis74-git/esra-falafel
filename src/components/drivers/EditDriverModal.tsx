@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { X, User, MapPin, FileText, Truck, ShoppingBag, Map, Star } from 'lucide-react'
+import { X, ArrowLeft, User, MapPin, FileText, Truck, ShoppingBag, Map, Star } from 'lucide-react'
 import { useState } from 'react'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { cn } from '@/lib/utils'
@@ -38,9 +38,15 @@ const NAV_ITEMS: { key: DriverEditSection; icon: React.ReactNode }[] = [
 export function EditDriverModal({ isOpen, driver, onClose, onSaved, onFail, onToggleStatus }: EditDriverModalProps) {
   const t = useTranslations('drivers')
   const [activeSection, setActiveSection] = useState<DriverEditSection>('personal')
+  const [mobileView, setMobileView] = useState<'list' | 'section'>('list')
   const [isActive, setIsActive] = useState(driver.status === 'active')
 
   if (!isOpen) return null
+
+  function handleNavClick(key: DriverEditSection) {
+    setActiveSection(key)
+    setMobileView('section')
+  }
 
   function handleToggle(val: boolean) {
     setIsActive(val)
@@ -75,8 +81,12 @@ export function EditDriverModal({ isOpen, driver, onClose, onSaved, onFail, onTo
 
         {/* Two-pane body */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
-          {/* Left rail */}
-          <div className="w-56 flex-shrink-0 border-r border-table-border p-4 overflow-y-auto">
+          {/* Left rail — full-width list on mobile, fixed sidebar on desktop */}
+          <div className={cn(
+            'flex-shrink-0 border-table-border p-4 overflow-y-auto',
+            mobileView === 'list' ? 'block w-full border-b md:border-b-0' : 'hidden',
+            'md:block md:w-56 md:border-r'
+          )}>
             <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">
               {t('edit.navGroup')}
             </p>
@@ -87,7 +97,7 @@ export function EditDriverModal({ isOpen, driver, onClose, onSaved, onFail, onTo
                   <button
                     key={key}
                     type="button"
-                    onClick={() => setActiveSection(key)}
+                    onClick={() => handleNavClick(key)}
                     className={cn(
                       'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left',
                       active
@@ -105,8 +115,23 @@ export function EditDriverModal({ isOpen, driver, onClose, onSaved, onFail, onTo
             </nav>
           </div>
 
-          {/* Right pane */}
-          <div className="flex-1 min-w-0 overflow-hidden flex flex-col">
+          {/* Right pane — hidden on mobile when list view, always visible on desktop */}
+          <div className={cn(
+            'min-w-0 overflow-hidden flex-col',
+            mobileView === 'section' ? 'flex flex-1' : 'hidden',
+            'md:flex md:flex-1'
+          )}>
+            {/* Mobile back header */}
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-table-border flex-shrink-0 md:hidden">
+              <button
+                type="button"
+                onClick={() => setMobileView('list')}
+                className="p-1 text-neutral-500 hover:text-neutral-700 transition-colors"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <span className="text-sm font-semibold text-neutral-900">{navLabels[activeSection]}</span>
+            </div>
             <div className="flex-1 overflow-y-auto">
               <div className="bg-white rounded-[12px] h-full flex flex-col">
                 {activeSection === 'personal' && (
