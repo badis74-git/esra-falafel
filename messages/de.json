@@ -213,8 +213,16 @@
       "inactive": "Inaktive Lieferfahrer",
       "archived": "Archivierte Lieferfahrer"
     },
-    "filters": { "all": "Alle anzeigen", "inactive": "Inaktiv", "active": "Aktiv", "archived": "Archiviert" },
-    "view": { "grid": "Rasteransicht", "list": "Listenansicht" },
+    "filters": {
+      "all": "Alle anzeigen",
+      "inactive": "Inaktiv",
+      "active": "Aktiv",
+      "archived": "Archiviert"
+    },
+    "view": {
+      "grid": "Rasteransicht",
+      "list": "Listenansicht"
+    },
     "table": {
       "fullName": "Vollständiger Name",
       "phone": "Telefon",
@@ -225,16 +233,41 @@
       "activeInactive": "Aktiv/Inaktiv",
       "actions": "Aktionen"
     },
-    "verification": { "verified": "Verifiziert", "pending": "Verifizierung ausstehend" },
+    "verification": {
+      "verified": "Verifiziert",
+      "pending": "Verifizierung ausstehend"
+    },
     "role": "Lieferfahrer",
-    "card": { "roleZone": "Lieferfahrer : {zones}", "delete": "Löschen", "edit": "Bearbeiten" },
-    "actionsMenu": { "edit": "Bearbeiten", "resend": "Einladung erneut senden", "delete": "Löschen" },
+    "card": {
+      "roleZone": "Lieferfahrer : {zones}",
+      "delete": "Löschen",
+      "edit": "Bearbeiten"
+    },
+    "actionsMenu": {
+      "edit": "Bearbeiten",
+      "resend": "Einladung erneut senden",
+      "delete": "Löschen"
+    },
     "wizard": {
       "title": "Neuen Fahrer hinzufügen",
-      "steps": { "personal": "Persönliche Daten", "address": "Adressdaten", "id": "ID-Verifizierung", "vehicle": "Fahrzeugdaten", "overview": "Übersicht" },
-      "cancel": "Abbrechen", "next": "Weiter", "previous": "Zurück", "create": "+ Fahrer erstellen"
+      "steps": {
+        "personal": "Persönliche Daten",
+        "address": "Adressdaten",
+        "id": "ID-Verifizierung",
+        "vehicle": "Fahrzeugdaten",
+        "overview": "Übersicht"
+      },
+      "cancel": "Abbrechen",
+      "next": "Weiter",
+      "previous": "Zurück",
+      "create": "+ Fahrer erstellen"
     },
-    "profile": { "label": "Profilbild", "hint": "PNG, JPEG unter 15MB", "upload": "Bild hochladen", "delete": "Löschen" },
+    "profile": {
+      "label": "Profilbild",
+      "hint": "PNG, JPEG unter 15MB",
+      "upload": "Bild hochladen",
+      "delete": "Löschen"
+    },
     "personal": {
       "sectionTitle": "Persönliche Informationen",
       "firstName": "Vorname",
@@ -281,7 +314,12 @@
     },
     "orders": {
       "sectionTitle": "Zugewiesene Bestellungen",
-      "filters": { "all": "Alle anzeigen", "pending": "Ausstehend", "completed": "Abgeschlossen", "cancelled": "Storniert" },
+      "filters": {
+        "all": "Alle anzeigen",
+        "pending": "Ausstehend",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      },
       "searchPlaceholder": "Suchen",
       "filtersBtn": "Filter",
       "pickup": "Abholung",
@@ -289,8 +327,17 @@
       "order": "Bestellung",
       "items": "{count} Artikel",
       "km": "{distance} km",
-      "status": { "new": "Neu", "preparing": "In Zubereitung", "ready": "Bereit zur Abholung", "ontheway": "Unterwegs" },
-      "empty": { "title": "Keine Bestellungen zugewiesen", "subtitle": "Dieser Fahrer hat keine Bestellungen, die dem ausgewählten Filter entsprechen." }
+      "status": {
+        "new": "Neu",
+        "preparing": "In Zubereitung",
+        "ready": "Bereit zur Abholung",
+        "ontheway": "Unterwegs",
+        "cancelled": "Storniert"
+      },
+      "empty": {
+        "title": "Keine Bestellungen zugewiesen",
+        "subtitle": "Dieser Fahrer hat keine Bestellungen, die dem ausgewählten Filter entsprechen."
+      }
     },
     "zone": {
       "sectionTitle": "Zugewiesene Zone & Restaurants",
@@ -333,8 +380,16 @@
       "confirm": "Fahrer löschen",
       "cancel": "Abbrechen"
     },
-    "fail": { "title": "Hoppla! Etwas ist schiefgelaufen.", "subtitle": "Die Änderungen konnten nicht gespeichert werden! Bitte versuchen Sie es erneut.", "tryAgain": "Erneut versuchen", "back": "Zurück" },
-    "empty": { "title": "Keine aktiven Lieferfahrer", "subtitle": "Senden Sie eine Einladung, um Benutzer zu Ihrem System hinzuzufügen." }
+    "fail": {
+      "title": "Hoppla! Etwas ist schiefgelaufen.",
+      "subtitle": "Die Änderungen konnten nicht gespeichert werden! Bitte versuchen Sie es erneut.",
+      "tryAgain": "Erneut versuchen",
+      "back": "Zurück"
+    },
+    "empty": {
+      "title": "Keine aktiven Lieferfahrer",
+      "subtitle": "Senden Sie eine Einladung, um Benutzer zu Ihrem System hinzuzufügen."
+    }
   },
   "zones": {
     "pageTitle": "Zonenverwaltung",
@@ -531,6 +586,107 @@
       "assignManager": "Manager zuweisen",
       "unassign": "Zuweisung aufheben",
       "unassignManager": "Manager entfernen"
+    },
+    "edit": {
+      "navGroup": "Allgemein",
+      "nav": {
+        "info": "Restaurantinformationen",
+        "location": "Standort",
+        "operations": "Betrieb",
+        "team": "Team",
+        "menu": "Menü",
+        "orders": "Bestellungen",
+        "reviews": "Bewertungen",
+        "support": "Support-Kontakt",
+        "online": "Online-Präsenz"
+      },
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern"
+    },
+    "info": {
+      "title": "Restaurantinformationen",
+      "picture": "Restaurantbild",
+      "pictureHint": "PNG, JPEG unter 15 MB",
+      "delete": "Löschen",
+      "name": "Restaurantname",
+      "namePlaceholder": "Restaurantname eingeben",
+      "email": "E-Mail",
+      "phone": "Telefonnummer",
+      "manager": "Zugewiesener Manager",
+      "description": "Restaurantbeschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben"
+    },
+    "location": {
+      "title": "Standort",
+      "street": "Straße",
+      "number": "Nr.",
+      "zip": "PLZ",
+      "city": "Stadt"
+    },
+    "operations": {
+      "title": "Betrieb",
+      "activeMenu": "Aktives Menü",
+      "enableDelivery": "Lieferung aktivieren",
+      "enableCod": "Nachnahme aktivieren",
+      "hoursTitle": "Öffnungstage & Zeiten",
+      "workingDays": "Arbeitstage",
+      "from": "Von",
+      "to": "Bis",
+      "addMore": "Mehr hinzufügen",
+      "delete": "Löschen"
+    },
+    "team": {
+      "title": "Team",
+      "manager": "Manager",
+      "drivers": "Lieferfahrer",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "menu": {
+      "title": "Menü",
+      "activeMenu": "Aktives Menü",
+      "lastUpdated": "Zuletzt aktualisiert",
+      "products": "Produkte",
+      "categories": "Kategorien"
+    },
+    "orders": {
+      "title": "Bestellungen",
+      "tabs": {
+        "all": "Alle",
+        "new": "Neu",
+        "preparing": "In Vorbereitung",
+        "ready": "Bereit",
+        "pickedup": "Abgeholt",
+        "delivered": "Geliefert",
+        "cancelled": "Storniert"
+      },
+      "noDriver": "Kein Fahrer zugewiesen",
+      "items": "Artikel",
+      "status": {
+        "new": "Neu",
+        "preparing": "In Vorbereitung",
+        "ready": "Bereit",
+        "ontheway": "Unterwegs",
+        "cancelled": "Storniert"
+      }
+    },
+    "reviews": {
+      "title": "Bewertung",
+      "reviewsCount": "Bewertungen"
+    },
+    "support": {
+      "title": "Support-Kontakt",
+      "phone": "Telefonnummer",
+      "whatsapp": "WhatsApp-Nummer",
+      "website": "Website-Link",
+      "email": "E-Mail"
+    },
+    "online": {
+      "title": "Online-Präsenz",
+      "website": "Website-Link",
+      "facebook": "Facebook-Link",
+      "instagram": "Instagram-Link",
+      "tiktok": "TikTok-Link"
     }
   },
   "products": {
@@ -670,7 +826,7 @@
       "lastUpdated": "Aktualisiert: {date}",
       "products": "Produkte",
       "categories": "Kategorien",
-      "editProduct": "Produkt bearbeiten"
+      "editMenu": "Menü bearbeiten"
     },
     "wizard": {
       "steps": {

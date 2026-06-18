@@ -86,7 +86,7 @@ export function MenuGridCard({ menu, onEdit, onDelete, onToggleStatus }: MenuGri
           disabled={archived}
           onClick={() => onEdit(menu)}
         >
-          <Edit size={14} /> {t('card.editProduct')}
+          <Edit size={14} /> {t('card.editMenu')}
         </Button>
       </div>
     </div>

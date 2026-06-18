@@ -11,7 +11,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { StatusToggle } from '@/components/ui/StatusToggle'
 import { RestaurantGridCard } from '@/components/restaurants/RestaurantGridCard'
 import { RestaurantWizardModal } from '@/components/restaurants/RestaurantWizardModal'
-import { UpdateRestaurantModal } from '@/components/restaurants/UpdateRestaurantModal'
+import { EditRestaurantModal } from '@/components/restaurants/EditRestaurantModal'
 import { DeleteRestaurantModal } from '@/components/restaurants/DeleteRestaurantModal'
 import { UnassignManagerModal } from '@/components/restaurants/UnassignManagerModal'
 import { SuccessModal } from '@/components/restaurants/SuccessModal'
@@ -194,11 +194,12 @@ export default function RestaurantsPage() {
         />
       )}
       {modal?.type === 'update' && (
-        <UpdateRestaurantModal
+        <EditRestaurantModal
           isOpen
           restaurant={modal.restaurant}
           onClose={() => setModal(null)}
-          onSaved={() => setModal({ type: 'success', variant: 'updated' })}
+          onSaved={() => setModal(null)}
+          onToggleStatus={handleToggleStatus}
         />
       )}
       {modal?.type === 'delete' && (

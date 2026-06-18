@@ -213,8 +213,16 @@
       "inactive": "Inactive Delivery Drivers",
       "archived": "Archived Delivery Drivers"
     },
-    "filters": { "all": "View all", "inactive": "Inactive", "active": "Active", "archived": "Archived" },
-    "view": { "grid": "Grid View", "list": "List View" },
+    "filters": {
+      "all": "View all",
+      "inactive": "Inactive",
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "view": {
+      "grid": "Grid View",
+      "list": "List View"
+    },
     "table": {
       "fullName": "Full Name",
       "phone": "Phone",
@@ -225,16 +233,41 @@
       "activeInactive": "Active/Inactive",
       "actions": "Actions"
     },
-    "verification": { "verified": "Verified", "pending": "Pending verification" },
+    "verification": {
+      "verified": "Verified",
+      "pending": "Pending verification"
+    },
     "role": "Delivery Driver",
-    "card": { "roleZone": "Delivery Driver : {zones}", "delete": "Delete", "edit": "Edit" },
-    "actionsMenu": { "edit": "Edit", "resend": "Resend Invitation", "delete": "Delete" },
+    "card": {
+      "roleZone": "Delivery Driver : {zones}",
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "actionsMenu": {
+      "edit": "Edit",
+      "resend": "Resend Invitation",
+      "delete": "Delete"
+    },
     "wizard": {
       "title": "Add New Driver",
-      "steps": { "personal": "Personal Info", "address": "Address Details", "id": "ID Verification", "vehicle": "Vehicle Info", "overview": "Overview" },
-      "cancel": "Cancel", "next": "Next", "previous": "Previous", "create": "+ Create Driver"
+      "steps": {
+        "personal": "Personal Info",
+        "address": "Address Details",
+        "id": "ID Verification",
+        "vehicle": "Vehicle Info",
+        "overview": "Overview"
+      },
+      "cancel": "Cancel",
+      "next": "Next",
+      "previous": "Previous",
+      "create": "+ Create Driver"
     },
-    "profile": { "label": "Profile picture", "hint": "PNG, JPEG under 15MB", "upload": "Upload Picture", "delete": "Delete" },
+    "profile": {
+      "label": "Profile picture",
+      "hint": "PNG, JPEG under 15MB",
+      "upload": "Upload Picture",
+      "delete": "Delete"
+    },
     "personal": {
       "sectionTitle": "Personal Information",
       "firstName": "First Name",
@@ -281,7 +314,12 @@
     },
     "orders": {
       "sectionTitle": "Assigned Orders",
-      "filters": { "all": "View all", "pending": "Pending", "completed": "Completed", "cancelled": "Cancelled" },
+      "filters": {
+        "all": "View all",
+        "pending": "Pending",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
       "searchPlaceholder": "Search",
       "filtersBtn": "Filters",
       "pickup": "Pick Up",
@@ -289,8 +327,17 @@
       "order": "Order",
       "items": "{count} items",
       "km": "{distance}Km",
-      "status": { "new": "New", "preparing": "Preparing", "ready": "Ready for pick up", "ontheway": "On the Way" },
-      "empty": { "title": "No orders assigned", "subtitle": "This driver has no orders matching the selected filter." }
+      "status": {
+        "new": "New",
+        "preparing": "Preparing",
+        "ready": "Ready for pick up",
+        "ontheway": "On the Way",
+        "cancelled": "Cancelled"
+      },
+      "empty": {
+        "title": "No orders assigned",
+        "subtitle": "This driver has no orders matching the selected filter."
+      }
     },
     "zone": {
       "sectionTitle": "Assigned Zone & Restaurants",
@@ -333,8 +380,16 @@
       "confirm": "Delete Driver",
       "cancel": "Cancel"
     },
-    "fail": { "title": "Oops! Something went wrong.", "subtitle": "We couldn't save the changes! Please try again.", "tryAgain": "Try Again", "back": "Back" },
-    "empty": { "title": "No Active Delivery Drivers", "subtitle": "Send an invitation to add users to your system." }
+    "fail": {
+      "title": "Oops! Something went wrong.",
+      "subtitle": "We couldn't save the changes! Please try again.",
+      "tryAgain": "Try Again",
+      "back": "Back"
+    },
+    "empty": {
+      "title": "No Active Delivery Drivers",
+      "subtitle": "Send an invitation to add users to your system."
+    }
   },
   "zones": {
     "pageTitle": "Zone Management",
@@ -531,6 +586,107 @@
       "assignManager": "Assign Manager",
       "unassign": "Unassign",
       "unassignManager": "Unassign Manager"
+    },
+    "edit": {
+      "navGroup": "General",
+      "nav": {
+        "info": "Restaurant Information",
+        "location": "Location",
+        "operations": "Operations",
+        "team": "Team",
+        "menu": "Menu",
+        "orders": "Orders",
+        "reviews": "Reviews",
+        "support": "Support Contact",
+        "online": "Online Presence"
+      },
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    },
+    "info": {
+      "title": "Restaurant Information",
+      "picture": "Restaurant picture",
+      "pictureHint": "PNG, JPEG under 15MB",
+      "delete": "Delete",
+      "name": "Restaurant Name",
+      "namePlaceholder": "Enter restaurant name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "manager": "Assigned Manager",
+      "description": "Restaurant Description",
+      "descriptionPlaceholder": "Enter description"
+    },
+    "location": {
+      "title": "Location",
+      "street": "Street",
+      "number": "N°",
+      "zip": "Zip",
+      "city": "City"
+    },
+    "operations": {
+      "title": "Operations",
+      "activeMenu": "Active Menu",
+      "enableDelivery": "Enable Delivery",
+      "enableCod": "Enable Cash On Delivery",
+      "hoursTitle": "Opening Days & Hours",
+      "workingDays": "Working Days",
+      "from": "From",
+      "to": "To",
+      "addMore": "Add More",
+      "delete": "Delete"
+    },
+    "team": {
+      "title": "Team",
+      "manager": "Manager",
+      "drivers": "Delivery Drivers",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "menu": {
+      "title": "Menu",
+      "activeMenu": "Active Menu",
+      "lastUpdated": "Last Updated",
+      "products": "Products",
+      "categories": "Categories"
+    },
+    "orders": {
+      "title": "Orders",
+      "tabs": {
+        "all": "All",
+        "new": "New",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "pickedup": "Picked up",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled"
+      },
+      "noDriver": "No Driver Assigned",
+      "items": "items",
+      "status": {
+        "new": "New",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "ontheway": "On the way",
+        "cancelled": "Cancelled"
+      }
+    },
+    "reviews": {
+      "title": "Review",
+      "reviewsCount": "Reviews"
+    },
+    "support": {
+      "title": "Support Contact",
+      "phone": "Phone Number",
+      "whatsapp": "Whatsapp Number",
+      "website": "Website Link",
+      "email": "Email"
+    },
+    "online": {
+      "title": "Online Presence",
+      "website": "Website Link",
+      "facebook": "Facebook Link",
+      "instagram": "Instagram Link",
+      "tiktok": "TikTok Link"
     }
   },
   "products": {
@@ -670,7 +826,7 @@
       "lastUpdated": "Last Updated: {date}",
       "products": "Products",
       "categories": "Categories",
-      "editProduct": "Edit Product"
+      "editMenu": "Edit Menu"
     },
     "wizard": {
       "steps": {

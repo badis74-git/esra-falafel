@@ -47,13 +47,16 @@
 #### `OrderStatusPill` ← Shared UI ← NEW
 **File:** `src/components/ui/OrderStatusPill.tsx`
 ```tsx
-{ status: 'new' | 'preparing' | 'ready' | 'ontheway' }
+{ status: 'new' | 'preparing' | 'ready' | 'ontheway' | 'cancelled' }
 // Rounded-full pill, 12px font-semibold. Color map:
 //   new        → text order-new      / bg order-new-bg        ("New")
 //   preparing  → text order-preparing / bg order-preparing-bg ("Preparing")
 //   ready      → text white          / bg order-ready          ("Ready for pick up")  ← solid green
 //   ontheway   → text order-ontheway / bg order-ontheway-bg   ("On the Way")
-// Labels are i18n keys; see §8 drivers.orders.status.*
+//   cancelled  → text white          / bg danger               ("Cancelled")          ← NEW (Edit Restaurant Orders)
+// Labels are i18n keys; see §8 drivers.orders.status.* and restaurants.orders.status.*
+// NOTE: Edit Restaurant Orders cards (modules/restaurants.md) use solid-fill pill variants; reuse this
+//   component and add the 'cancelled' variant rather than creating a second pill.
 ```
 
 #### `RatingStars` ← Shared UI ← NEW
@@ -697,4 +700,3 @@ interface AssignedOrder {
 
 
 ---
-

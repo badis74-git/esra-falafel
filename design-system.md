@@ -1,10 +1,10 @@
 # Esra Falafel — Design System
 > Stack: Next.js 16 + Tailwind CSS v4 (tokens via `@theme inline` in globals.css) · i18n: next-intl (en/de, cookie-based)
-> Last updated: 2026-06-18 (Edit Menu v2 added) | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ (v2 + mobile) · Zone Management ✅ · Restaurants ✅ · Menus Management 🔄 (Edit Menu v2) · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅ · Add-ons ✅
+> Last updated: 2026-06-18 (Edit Restaurant v2 added) | Modules: Auth ✅ · Restaurant Managers ✅ · Delivery Drivers ✅ (v2 + mobile) · Zone Management ✅ · Restaurants 🔄 (Edit Restaurant v2) · Menus Management 🔄 (Edit Menu v2) · Products ✅ · Categories ✅ · Sub-Categories ✅ · Add-on Groups ✅ · Add-ons ✅
 > **All modules are bilingual (English + German).** See §8 Internationalization before building or editing any module.
 > **All modules must be mobile-responsive.** See §5b Mobile / Responsive Rules before building any modal, stepper, or stat grid.
 > **This is the CORE file.** Per-module detail (components, pages, i18n namespaces) is split into:
-> `modules/drivers.md` · `modules/add-ons.md` · `modules/menus.md`. Load core + the relevant module file for each task.
+> `modules/drivers.md` · `modules/add-ons.md` · `modules/menus.md` · `modules/restaurants.md`. Load core + the relevant module file for each task.
 
 ---
 
@@ -16,7 +16,7 @@
 | Restaurant Managers | ✅ Done | `/managers` |
 | Delivery Drivers | 🔄 v2 redesign | `/drivers` |
 | Zone Management | ✅ Done | `/zones` |
-| Restaurants Management | ✅ Done | `/restaurants` |
+| Restaurants Management | 🔄 v2 redesign | `/restaurants` |
 | Menus Management | ✅ Done | `/menus` |
 | Products Management | ✅ Done | `/products` |
 | Categories Management | ✅ Done | `/categories` |
@@ -279,9 +279,12 @@ src/components/
 │   ├── OrderStatusPill.tsx            ← NEW (New / Preparing / Ready for pick up / On the Way)
 │   ├── SelectableCategoryRow.tsx      ← NEW (grid + list variants; checkbox category row — Edit Menu Categories)
 │   ├── SelectableProductRow.tsx       ← NEW (grid + list variants; checkbox product row — Edit Menu Products)
+│   ├── TeamMemberCard.tsx             ← NEW (tinted card: avatar+name+toggle+roleLine+phone+Edit/Delete — Edit Restaurant Team)
 │   ├── RatingStars.tsx                ← NEW (1–5 star row, supports half star)
 │   ├── RatingBarChart.tsx            ← NEW (5→1 horizontal distribution bars)
 │   └── DietaryBadge.tsx
+│
+│   (shared mock fixture: src/lib/mock/reviews.ts → `mockReviews` — see §6c. Reuse in ALL modules with a Reviews section.)
 ├── auth/
 │   ├── AuthLayout.tsx
 │   ├── OtpInput.tsx
@@ -372,6 +375,39 @@ Menu Management  ∧
 
 ---
 
+---
+
+## 6c. Shared Reviews fixture (`src/lib/mock/reviews.ts`) ← NEW — populate ALL Reviews sections
+> **Rule:** any module with a Reviews section (Drivers, Restaurants, and any future one) imports `mockReviews` from here so reviews are **never empty by default**. A Reviews section should only show the "0.0 / (0 Reviews)" empty state when explicitly given an empty array — not because no data was seeded.
+
+```ts
+// src/lib/mock/reviews.ts
+export interface Review {
+  id: string; reviewer: string; avatar: string
+  rating: number               // 1–5
+  comment: string
+  time: string                 // "Today, 16:40" | "Yesterday, 16:40" | "10/05/2026"
+  photos?: string[]            // optional attached photo thumbnails
+}
+
+// Default seed — 4 reviews → average 4.5, distribution 5:2,4:1,3:1.
+export const mockReviews: Review[] = [
+  { id:'r1', reviewer:'Daniel Hoffmann',  avatar:<asset>, rating:5, comment:'Fresh ingredients and very generous portion size.', time:'Today, 16:40', photos:[<asset>] },
+  { id:'r2', reviewer:'Victoria Champain', avatar:<asset>, rating:5, comment:'Loved the mix of falafel and halloumi. Fresh salad and excellent hummus.', time:'Today, 09:12', photos:[<asset>,<asset>] },
+  { id:'r3', reviewer:'Laura Smith',       avatar:<asset>, rating:3, comment:'Loved the halloumi and sauces. Delivery was fast.', time:'Yesterday, 16:40' },
+  { id:'r4', reviewer:'Maximilian W.',     avatar:<asset>, rating:4, comment:'Perfect choice for vegetarians. Fresh salad, warm bread, and delicious halloumi.', time:'10/05/2026' },
+]
+
+// Helper: average rounded to 1 decimal → "4.5"
+export const avgRating = (rs: Review[]) =>
+  rs.length ? Math.round((rs.reduce((s,r)=>s+r.rating,0)/rs.length)*10)/10 : 0
+```
+- Restaurant "Esra Falafel 3" Reviews → `mockReviews` (rating 4.5, 4 reviews) — matches the Reviews screen.
+- Drivers may keep their own driver-specific seed OR import these; either way, **non-empty by default**.
+- The `<asset>` placeholders = reuse existing avatar/food images already in the project's mock/public assets.
+
+---
+
 ## 6b. Module component specs → see module files
 
 Detailed component specs live in per-module files (load alongside this core file):
@@ -434,8 +470,8 @@ const updateForm = (patch: Partial<MenuFormData>) =>
   setFormData(prev => ({ ...prev, ...patch }))
 ```
 
-### Section-nav modal pattern (Edit Driver)
-**Responsive — see §5b R4 (mandatory).** Desktop: left rail of sections + right pane side by side. Mobile (`< md`): drill-in — section list only, tap → full-width section with a ← back header. Distinct from the wizard — sections are non-linear, each saves independently.
+### Section-nav modal pattern (Edit Driver / Edit Menu / Edit Restaurant)
+**Responsive — see §5b R4 (mandatory).** Desktop: left rail of sections + right pane side by side. Mobile (`< md`): drill-in — section list only, tap → full-width section with a ← back header. Distinct from the wizard — sections are non-linear, each saves independently. Used by `EditDriverModal` (7 sections), `EditMenuModal` (3 sections), `EditRestaurantModal` (9 sections).
 ```tsx
 const [activeSection, setActiveSection] = useState<DriverEditSection>('personal')
 const [mobileView, setMobileView] = useState<'list'|'section'>('list')  // ignored on desktop (both panes shown)

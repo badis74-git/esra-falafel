@@ -1,3 +1,5 @@
+import { mockReviews } from './reviews'
+
 export interface FileMeta {
   name: string
   date: string
@@ -68,7 +70,7 @@ export const mockDrivers: Driver[] = [
     verification: 'verified',
     status: 'active',
     rating: 4.5,
-    reviews: [],
+    reviews: mockReviews,
     assignedOrders: [
       {
         id: 'o1-1',
