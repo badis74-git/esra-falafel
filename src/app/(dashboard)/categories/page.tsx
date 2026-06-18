@@ -94,7 +94,7 @@ export default function CategoriesPage() {
   return (
     <DashboardLayout title={t('pageTitle')}>
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
         <StatCard
           label={t('stats.total')}
           count={counts.total}
