@@ -79,8 +79,8 @@ export function AddDriverModal({ isOpen, onClose, onCreated }: AddDriverModalPro
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40 p-4">
-      <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-3xl max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/40 md:flex md:items-center md:justify-center md:px-4">
+      <div className="bg-white shadow-dashboard-modal w-full flex flex-col h-full md:h-auto md:max-h-[90vh] md:max-w-3xl md:rounded-[16px]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <h2 className="text-lg font-semibold text-neutral-900">{t('wizard.title')}</h2>

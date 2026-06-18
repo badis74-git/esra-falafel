@@ -87,8 +87,8 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
-      <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-2xl flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/40 md:flex md:items-center md:justify-center md:px-4">
+      <div className="bg-white shadow-dashboard-modal w-full flex flex-col h-full md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-[16px]">
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
@@ -133,7 +133,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
           </div>
 
           {/* Category + Sub-Category */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SelectDropdown
               label={t('form.category')}
               placeholder={t('form.categoryPlaceholder')}
@@ -153,7 +153,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
           </div>
 
           {/* Dietary Type + Add-on Groups */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SelectDropdown
               label={t('form.dietaryType')}
               placeholder={t('form.dietaryTypePlaceholder')}
@@ -172,7 +172,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
           </div>
 
           {/* Min Prep Time + Max Prep Time */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label={t('form.minPrepTime')}
               placeholder={t('form.prepTimePlaceholder')}
@@ -190,7 +190,7 @@ export function EditProductModal({ isOpen, product, onClose, onSaved }: EditProd
           </div>
 
           {/* Assigned Menus + Base Price */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MultiSelectDropdown
               label={t('form.assignedMenus')}
               placeholder={t('form.assignedMenusPlaceholder')}

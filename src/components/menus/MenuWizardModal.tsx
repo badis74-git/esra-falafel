@@ -195,7 +195,7 @@ function Step1({ formData, updateForm }: Step1Props) {
 
       <SectionTitle>{t('wizard.step1.title')}</SectionTitle>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label={t('wizard.step1.menuName')}
           leftIcon={<ClipboardList size={16} />}
@@ -526,8 +526,8 @@ export function MenuWizardModal({
   const title = mode === 'create' ? t('addNew') : formData.name
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 backdrop-blur-sm bg-black/40">
-      <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-2xl max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/40 md:flex md:items-center md:justify-center md:px-4">
+      <div className="bg-white shadow-dashboard-modal w-full flex flex-col h-full md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-[16px]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <div className="flex items-center gap-3">

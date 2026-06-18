@@ -46,7 +46,7 @@ export function Step5Overview({ data, onChange }: Props) {
           onDelete={() => onChange({ avatar: null })}
         />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label={`${t('personal.firstName')} *`}
             leftIcon={<User size={14} />}
@@ -70,7 +70,7 @@ export function Step5Overview({ data, onChange }: Props) {
             value={data.phone}
             onChange={(v) => onChange({ phone: v })}
           />
-          <div className="col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <DateInput
               label={t('personal.dob')}
               placeholder={t('personal.dobPlaceholder')}
@@ -98,7 +98,7 @@ export function Step5Overview({ data, onChange }: Props) {
       {/* Address Details */}
       <div>
         <h3 className="text-sm font-semibold text-primary mb-3">{t('address.sectionTitle')}</h3>
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <Input
             label={t('address.street')}
             value={data.street}
@@ -126,7 +126,7 @@ export function Step5Overview({ data, onChange }: Props) {
       {/* ID Verification */}
       <div>
         <h3 className="text-sm font-semibold text-primary mb-3">{t('id.sectionTitle')}</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PhotoUploadBox
             label={`${t('id.front')} *`}
             value={data.idFront}
@@ -147,7 +147,7 @@ export function Step5Overview({ data, onChange }: Props) {
       {/* Vehicle Information */}
       <div>
         <h3 className="text-sm font-semibold text-primary mb-3">{t('vehicle.sectionTitle')}</h3>
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <SelectDropdown
             label={t('vehicle.type')}
             placeholder={t('vehicle.typePlaceholder')}

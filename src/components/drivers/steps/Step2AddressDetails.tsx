@@ -17,7 +17,7 @@ export function Step2AddressDetails({ data, onChange }: Props) {
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-primary">{t('address.sectionTitle')}</h3>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label={t('address.street')}
           placeholder={t('address.street')}

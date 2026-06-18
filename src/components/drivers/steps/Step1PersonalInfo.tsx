@@ -28,7 +28,7 @@ export function Step1PersonalInfo({ data, onChange }: Props) {
       />
       <div>
         <h3 className="text-sm font-semibold text-primary mb-4">{t('personal.sectionTitle')}</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Input
             label={`${t('personal.firstName')} *`}
             placeholder={t('personal.firstNamePlaceholder')}
@@ -55,7 +55,7 @@ export function Step1PersonalInfo({ data, onChange }: Props) {
             value={data.phone}
             onChange={(v) => onChange({ phone: v })}
           />
-          <div className="col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <DateInput
               label={t('personal.dob')}
               placeholder={t('personal.dobPlaceholder')}

@@ -58,8 +58,8 @@ export function EditDriverModal({ isOpen, driver, onClose, onSaved, onFail, onTo
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40 p-4">
-      <div className="bg-white rounded-[16px] shadow-dashboard-modal w-full max-w-5xl max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/40 md:flex md:items-center md:justify-center md:px-4">
+      <div className="bg-white shadow-dashboard-modal w-full flex flex-col h-full md:h-auto md:max-h-[92vh] md:max-w-5xl md:rounded-[16px]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-table-border flex-shrink-0">
           <div className="flex items-center gap-3">
