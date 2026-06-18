@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   /* Auth colors */
   --color-primary: #2D6A3F;
   --color-primary-dark: #1E4D2B;
@@ -39,6 +39,34 @@
   --color-trend-down: #DC2626;
   --color-danger: #DC2626;
   --color-danger-light: #FEF2F2;
+
+  /* Dietary badges */
+  --color-vegan-badge-bg: #DCFCE7;
+  --color-vegan-badge-text: #16A34A;
+  --color-meat-badge-bg: #F3F4F6;
+  --color-meat-badge-text: #6B7280;
+
+  /* Drivers v2 — verification pills */
+  --color-verified-text: #16A34A;
+  --color-verified-bg: #F0FDF4;
+  --color-pending-text: #CA8A04;
+  --color-pending-bg: #FEFCE8;
+
+  /* Drivers v2 — order status pills */
+  --color-order-new: #F97316;
+  --color-order-new-bg: #FFF7ED;
+  --color-order-preparing: #3B82F6;
+  --color-order-preparing-bg: #EFF6FF;
+  --color-order-ready: #2D6A3F;
+  --color-order-ready-bg: #EAF2EC;
+  --color-order-ontheway: #EAB308;
+  --color-order-ontheway-bg: #FEFCE8;
+  --color-order-pickedup: #16A34A;
+  --color-order-pickedup-bg: #F0FDF4;
+
+  /* Drivers v2 — review stars */
+  --color-star-filled: #F5A623;
+  --color-star-empty: #E5E7EB;
 
   /* Font family */
   --font-sans: 'Inter', sans-serif;

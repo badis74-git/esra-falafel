@@ -8,19 +8,20 @@ interface Step {
 interface StepperHeaderProps {
   steps: Step[]
   currentStep: number
+  centered?: boolean
 }
 
-export function StepperHeader({ steps, currentStep }: StepperHeaderProps) {
+export function StepperHeader({ steps, currentStep, centered = false }: StepperHeaderProps) {
   return (
     <div className="bg-primary rounded-[12px] px-6 py-4 mb-5">
-      <div className="flex items-start justify-between">
+      <div className={`flex items-start ${centered ? 'justify-center' : 'justify-between'}`}>
         {steps.map((step, index) => {
           const isCompleted = step.number < currentStep
           const isActive = step.number === currentStep
           const isLast = index === steps.length - 1
 
           return (
-            <div key={step.number} className="flex items-start flex-1">
+            <div key={step.number} className={`flex items-start ${centered ? '' : 'flex-1'}`}>
               {/* Step */}
               <div className="flex flex-col items-center">
                 <div
@@ -46,7 +47,7 @@ export function StepperHeader({ steps, currentStep }: StepperHeaderProps) {
               {/* Connector line */}
               {!isLast && (
                 <div
-                  className="flex-1 h-px mt-4 mx-2"
+                  className={`h-px mt-4 mx-2 ${centered ? 'w-10' : 'flex-1'}`}
                   style={{
                     backgroundColor: isCompleted ? 'white' : 'rgba(255,255,255,0.3)',
                   }}
