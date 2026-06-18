@@ -212,7 +212,7 @@ export function AssignedOrdersSection({ orders, onSave, onCancel }: Props) {
             subtitle={t('orders.empty.subtitle')}
           />
         ) : view === 'grid' ? (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-4">
             {paginated.map((order) => (
               <OrderCard key={order.id} order={order} t={t} />
             ))}
